@@ -1,5 +1,7 @@
 package com.redlongcitywork.easytourlite.requestcommand;
 
+import com.redlongcitywork.easytourlite.model.ResponseItem;
+
 /**
  *
  * @author redlongcity
@@ -8,6 +10,14 @@ package com.redlongcitywork.easytourlite.requestcommand;
  */
 public interface RequestCommand<T> {
     
-    void execute(T request);
+    ResponseItem execute(T request);
+    
+    int getPriority();
+    
+    void setPriority(int priority);
+    
+    T getRequest();
+    
+    void setRequest(T request);
     
 }
