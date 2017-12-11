@@ -1,0 +1,62 @@
+package com.redlongcitywork.easytourlite.service;
+
+import com.redlongcitywork.easytourlite.dao.CurrencyDao;
+import com.redlongcitywork.easytourlite.model.Currency;
+import java.util.List;
+import java.util.List;
+import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+
+/**
+ *
+ * @author redlongcity
+ */
+
+@Service("currencyService")
+@Transactional
+public class CurrencyServiceImpl implements CurrencyService {
+
+    @Autowired
+    CurrencyDao currencyDao;
+    
+    @Override
+    public Currency findById(String id) {
+        return currencyDao.findById(id);
+    }
+
+    @Override
+    public void saveCurrency(Currency currency) {
+        currencyDao.save(currency);
+    }
+
+    @Override
+    public void updateCurrency(Currency currency) {
+        Currency entity = currencyDao.findById(currency.getId());
+        if(entity!=null){
+            entity.setName(currency.getName());
+            currencyDao.mergeCurrency(entity);
+    }
+    }
+
+    @Override
+    public void deleteCurrency(Currency currency) {
+        currencyDao.deleteCurrency(currency);
+    }
+
+    @Override
+    public List<Currency> findAll() {
+        return currencyDao.findAll();
+    }
+
+    @Override
+    public void deleteAllCurrency() {
+        List<Currency> currencyList = currencyDao.findAll();
+        if(currencyList!=null){
+            for(Currency currency: currencyList){
+                currencyDao.deleteCurrency(currency);
+            }
+        }
+    }
+    
+}
