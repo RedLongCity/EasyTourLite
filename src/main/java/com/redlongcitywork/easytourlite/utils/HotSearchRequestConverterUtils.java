@@ -2,6 +2,7 @@ package com.redlongcitywork.easytourlite.utils;
 
 import com.redlongcitywork.easytourlite.model.Country;
 import com.redlongcitywork.easytourlite.model.From_Cities;
+import com.redlongcitywork.easytourlite.model.HotToursRequest;
 import com.redlongcitywork.easytourlite.model.Meal_Type;
 import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
 import java.util.ArrayList;
@@ -20,7 +21,8 @@ import org.springframework.stereotype.Service;
  * class for handling operations with ItTours Hot Search Request
  */
 @Service
-public class HotSearchRequestConverterUtils implements RequestConverterUtils, ItToursParserConstants {
+public class HotSearchRequestConverterUtils implements RequestConverterUtils<HotToursRequest>, 
+        ItToursUrls {
 
     private static final Logger LOG = Logger.getLogger(HotSearchRequestConverterUtils.class.getName());
 
@@ -31,7 +33,7 @@ public class HotSearchRequestConverterUtils implements RequestConverterUtils, It
     Hotel_RatingService service;
 
     @Override
-    public List<Criterion> getCriterionsByRequest(Request request) {
+    public List<Criterion> getCriterionsByRequest(HotToursRequest request) {
         List<Criterion> criterionsList = new ArrayList<Criterion>();
 
         Country country = request.getCountry();
@@ -86,7 +88,7 @@ public class HotSearchRequestConverterUtils implements RequestConverterUtils, It
     }
 
     @Override
-    public String getURLByRequest(Request request) {
+    public String getURLByRequest(HotToursRequest request) {
         String URL = api_base_url//http://api.ittour.com.ua/
                 + api_showcases//showcase/hot-offers
                 + api_showcases_search;// /search?
