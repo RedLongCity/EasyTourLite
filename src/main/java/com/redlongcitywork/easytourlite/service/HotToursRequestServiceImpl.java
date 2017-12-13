@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author redlongcity
  * 13/12/2017
  */
+
 @Service("hotToursRequestService")
 @Transactional
 public class HotToursRequestServiceImpl implements HotToursRequestService {
