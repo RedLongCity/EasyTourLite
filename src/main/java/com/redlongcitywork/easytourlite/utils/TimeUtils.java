@@ -2,7 +2,7 @@ package com.redlongcitywork.easytourlite.utils;
 
 import com.redlongcitywork.easytourlite.model.UpdateSession;
 import com.redlongcitywork.easytourlite.service.UpdateSessionService;
-import com.redlongcitywork.easytourlite.singletons.ProjectConsantsSingletone;
+import com.redlongcitywork.easytourlite.singletons.AppConstants;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
@@ -22,7 +22,7 @@ public class TimeUtils {
     UpdateSessionService sessionService;
 
     @Autowired
-    ProjectConsantsSingletone projectConsantsSingletone;
+    AppConstants projectConsantsSingletone;
 
     public Timestamp getCurrentTime() {
         Date date = new Date();

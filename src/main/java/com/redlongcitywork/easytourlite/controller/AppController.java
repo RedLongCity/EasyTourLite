@@ -1,7 +1,7 @@
 package com.redlongcitywork.easytourlite.controller;
 
 import com.redlongcitywork.easytourlite.quartz.services.QuartzService;
-import com.redlongcitywork.easytourlite.singletons.ProjectConsantsSingletone;
+import com.redlongcitywork.easytourlite.singletons.AppConstants;
 import com.redlongcitywork.easytourlite.utils.GlobalUpdateDelayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +25,7 @@ public class AppController {
     QuartzService quartzService;
 
     @Autowired
-    ProjectConsantsSingletone constatns;
+    AppConstants constatns;
     
     @Autowired
     GlobalUpdateDelayUtils delayUtils;

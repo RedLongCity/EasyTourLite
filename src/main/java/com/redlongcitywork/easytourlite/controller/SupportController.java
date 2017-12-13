@@ -1,7 +1,7 @@
 package com.redlongcitywork.easytourlite.controller;
 
 import org.springframework.http.ResponseEntity;
-import com.redlongcitywork.easytourlite.singletons.ProjectConsantsSingletone;
+import com.redlongcitywork.easytourlite.singletons.AppConstants;
 import com.redlongcitywork.easytourlite.utils.GlobalUpdateDelayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SupportController {
 
     @Autowired
-    ProjectConsantsSingletone constants;
+    AppConstants constants;
 
     @Autowired
     GlobalUpdateDelayUtils delayUtils;

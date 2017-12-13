@@ -1,6 +1,6 @@
 package com.redlongcitywork.easytourlite.quartz.services;
 
-import com.redlongcitywork.easytourlite.singletons.ProjectConsantsSingletone;
+import com.redlongcitywork.easytourlite.singletons.AppConstants;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.quartz.CronScheduleBuilder;
@@ -29,7 +29,7 @@ public class QuartzServiceImpl implements QuartzService {
     Scheduler scheduler;
     
     @Autowired
-    ProjectConsantsSingletone constants;
+    AppConstants constants;
     
     
     @Override

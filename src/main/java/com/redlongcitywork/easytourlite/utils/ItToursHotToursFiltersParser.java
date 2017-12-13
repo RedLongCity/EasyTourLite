@@ -12,7 +12,7 @@ import com.redlongcitywork.easytourlite.service.CurrencyService;
 import com.redlongcitywork.easytourlite.service.From_CitiesService;
 import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
 import com.redlongcitywork.easytourlite.service.Meal_TypeService;
-import com.redlongcitywork.easytourlite.singletons.ProjectConsantsSingletone;
+import com.redlongcitywork.easytourlite.singletons.AppConstants;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +43,7 @@ public class ItToursHotToursFiltersParser {
     CurrencyService currencyService;
     
     @Autowired
-    ProjectConsantsSingletone projectConstantsSingletone;
+    AppConstants projectConstantsSingletone;
     
     @Autowired
     CountryNodeParser countryNodeParser;

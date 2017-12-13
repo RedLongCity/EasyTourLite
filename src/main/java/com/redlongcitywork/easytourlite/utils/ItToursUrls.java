@@ -5,7 +5,7 @@ package com.redlongcitywork.easytourlite.utils;
  * @author redlongcity
  */
 
-public interface ItToursParserConstants {
+public interface ItToursUrls {
     
                     //Base 
     

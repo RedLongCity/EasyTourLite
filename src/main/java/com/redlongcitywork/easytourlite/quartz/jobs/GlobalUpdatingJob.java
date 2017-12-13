@@ -1,7 +1,7 @@
 package com.redlongcitywork.easytourlite.quartz.jobs;
 
 import com.redlongcitywork.easytourlite.quartz.services.QuartzService;
-import com.redlongcitywork.easytourlite.singletons.ProjectConsantsSingletone;
+import com.redlongcitywork.easytourlite.singletons.AppConstants;
 import com.redlongcitywork.easytourlite.utils.RequestsPullUtils;
 import com.redlongcitywork.easytourlite.utils.TimeUtils;
 import java.util.logging.Level;
@@ -34,7 +34,7 @@ public class GlobalUpdatingJob extends QuartzJobBean{
     TimeUtils timeUtils;
     
     @Autowired
-    ProjectConsantsSingletone constants;
+    AppConstants constants;
     
     @Autowired
     QuartzService quartzService;

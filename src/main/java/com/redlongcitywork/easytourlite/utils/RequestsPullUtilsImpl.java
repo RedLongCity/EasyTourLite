@@ -12,7 +12,7 @@ import com.redlongcitywork.easytourlite.command.request.ItToursSearchBaseRequest
 import com.redlongcitywork.easytourlite.command.request.RequestCommand;
 import com.redlongcitywork.easytourlite.service.RequestPullElementService;
 import com.redlongcitywork.easytourlite.service.UpdateSessionService;
-import com.redlongcitywork.easytourlite.singletons.ProjectConsantsSingletone;
+import com.redlongcitywork.easytourlite.singletons.AppConstants;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
@@ -32,7 +32,7 @@ public class RequestsPullUtilsImpl implements RequestsPullUtils {
     private static final Logger LOG = Logger.getLogger(RequestsPullUtilsImpl.class.getName());
 
     @Autowired
-    ProjectConsantsSingletone projectConsantsSingletone;
+    AppConstants projectConsantsSingletone;
 
     @Autowired
     ItToursHotSearchRequestHandler handler;

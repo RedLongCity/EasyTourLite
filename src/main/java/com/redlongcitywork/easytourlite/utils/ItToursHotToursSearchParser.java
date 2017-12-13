@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-public class ItToursHotToursSearchParser implements ItToursParserConstants {
+public class ItToursHotToursSearchParser implements ItToursUrls {
 
     private static final Logger LOG = Logger.getLogger(ItToursHotToursSearchParser.class.getName());
     

@@ -2,7 +2,7 @@ package com.redlongcitywork.easytourlite.quartz.jobs;
 
 import com.redlongcitywork.easytourlite.quartz.services.QuartzService;
 import com.redlongcitywork.easytourlite.command.request.RequestCommand;
-import com.redlongcitywork.easytourlite.singletons.ProjectConsantsSingletone;
+import com.redlongcitywork.easytourlite.singletons.AppConstants;
 import com.redlongcitywork.easytourlite.utils.RequestsPullUtils;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,7 +29,7 @@ public class ShortUpdatingJob extends QuartzJobBean{
     private RequestCommand command;
     
     @Autowired
-    ProjectConsantsSingletone constants;
+    AppConstants constants;
     
     @Autowired
     RequestsPullUtils pullUtils;

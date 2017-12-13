@@ -1,6 +1,6 @@
 package com.redlongcitywork.easytourlite.utils;
 
-import com.redlongcitywork.easytourlite.singletons.ProjectConsantsSingletone;
+import com.redlongcitywork.easytourlite.singletons.AppConstants;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class ComeBackUtils {
     private static final Logger LOG = Logger.getLogger(ComeBackUtils.class.getName());
 
     @Autowired
-    ProjectConsantsSingletone constants;
+    AppConstants constants;
 
 //    public long calculate(RequestCommand requestCommand){
 //        if(requestCommand.getDone()){

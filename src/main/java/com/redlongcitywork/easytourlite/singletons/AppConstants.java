@@ -35,6 +35,10 @@ public class AppConstants {
     private boolean globalRun=true;//indicator for global job running
     
     private boolean globalSuspended=false;//indicator of pausing job by itself
+    
+    private int requestPullSize = 10;//size of RequestCommand pull
+    
+    private int responsePullSize = 10;//size of ResponseItem pull
 
     @Autowired
     TimeUtils timeUtils;
@@ -102,5 +106,23 @@ public class AppConstants {
     public void setGlobalSuspended(boolean globalSuspended) {
         this.globalSuspended = globalSuspended;
     }
+
+    public int getRequestPullSize() {
+        return requestPullSize;
+    }
+
+    public void setRequestPullSize(int requestPullSize) {
+        this.requestPullSize = requestPullSize;
+    }
+
+    public int getResponsePullSize() {
+        return responsePullSize;
+    }
+
+    public void setResponsePullSize(int responsePullSize) {
+        this.responsePullSize = responsePullSize;
+    }
+    
+    
     
 }

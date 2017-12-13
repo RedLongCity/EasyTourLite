@@ -25,7 +25,7 @@ import org.apache.http.util.EntityUtils;
  * @author redlongcity
  */
 
-public class HttpUtils implements ItToursParserConstants{
+public class HttpUtils implements ItToursUrls{
 
     private static final Logger LOG = Logger.getLogger(HttpUtils.class.getName());
     

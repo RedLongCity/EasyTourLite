@@ -2,7 +2,7 @@ package com.redlongcitywork.easytourlite.configuration;
 
 import com.redlongcitywork.easytourlite.quartz.jobs.GlobalUpdatingJob;
 import com.redlongcitywork.easytourlite.quartz.jobs.ShortUpdatingJob;
-import com.redlongcitywork.easytourlite.singletons.ProjectConsantsSingletone;
+import com.redlongcitywork.easytourlite.singletons.AppConstants;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
 public class QuartzConfiguration {
     
     @Autowired
-    ProjectConsantsSingletone projectConsantsSingletone;
+    AppConstants projectConsantsSingletone;
     
 	@Bean
 	public SimpleTriggerFactoryBean simpleTriggerFactoryBean(){
