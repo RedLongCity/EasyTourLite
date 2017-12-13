@@ -1,8 +1,6 @@
 package com.redlongcitywork.easytourlite.utils;
 
-import com.redlongcitywork.easytourlite.model.Request;
 import java.util.List;
-import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 
 /**
@@ -11,10 +9,10 @@ import org.hibernate.criterion.Criterion;
  * 09.09.2017
  * interface for handling Request
  */
-public interface RequestConverterUtils {
+public interface RequestConverterUtils<T> {
     
-    List<Criterion> getCriterionsByRequest(Request request);
+    List<Criterion> getCriterionsByRequest(T request);
     
-    String getURLByRequest(Request request);
+    String getURLByRequest(T request);
     
 }
