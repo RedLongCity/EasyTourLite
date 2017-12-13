@@ -1,46 +1,61 @@
 package com.redlongcitywork.easytourlite.requestcommand;
 
 import com.redlongcitywork.easytourlite.model.HotToursRequest;
-import com.redlongcitywork.easytourlite.model.ResponseItem;
+import com.redlongcitywork.easytourlite.responseitem.ResponseItem;
 import java.util.Objects;
 
 /**
  *
- * @author redlongcity
- * 11/12/2017
+ * @author redlongcity 
+ * 11/12/2017 
  * class for creating request fot Hot Tours
  */
-public class HotToursRequestCommand implements RequestCommand<HotToursRequest>{
+public class HotToursRequestCommand implements RequestCommand<HotToursRequest> {
 
     private HotToursRequest request;
-    
+
     private int priority;
+
+    private boolean processed;
 
     public HotToursRequestCommand(HotToursRequest request, int priority) {
         this.request = request;
         this.priority = priority;
     }
-    
-    
+
     @Override
     public ResponseItem execute(HotToursRequest request) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
     public HotToursRequest getRequest() {
         return request;
     }
 
+    @Override
     public void setRequest(HotToursRequest request) {
         this.request = request;
     }
 
+    @Override
     public int getPriority() {
         return priority;
     }
 
+    @Override
     public void setPriority(int priority) {
         this.priority = priority;
+    }
+
+    @Override
+    public boolean isProcessed() {
+        return processed;
+    }
+
+    @Override
+    public void setProcessed(boolean processed) {
+        this.processed = processed;
     }
 
     @Override
@@ -70,9 +85,7 @@ public class HotToursRequestCommand implements RequestCommand<HotToursRequest>{
 
     @Override
     public String toString() {
-        return "HotToursRequestCommand{" + "request=" + request + ", priority=" + priority + '}';
+        return "HotToursRequestCommand{" + "request=" + request + ", priority=" + priority + ", processed=" + processed + '}';
     }
-    
-    
-    
+
 }

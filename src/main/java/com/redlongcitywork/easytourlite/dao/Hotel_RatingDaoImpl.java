@@ -3,7 +3,6 @@ package com.redlongcitywork.easytourlite.dao;
 import com.redlongcitywork.easytourlite.model.Hotel_Rating;
 import java.util.List;
 import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -19,20 +18,12 @@ public class Hotel_RatingDaoImpl extends AbstractDao<String,Hotel_Rating> implem
         Criteria crit = createCriteria();
         crit.addOrder(Order.asc("name"));
         List<Hotel_Rating> hotel_RatingList = (List<Hotel_Rating>)crit.list();
-            if(hotel_RatingList!=null){
-            for(Hotel_Rating hotel_Rating:hotel_RatingList){
-                Hibernate.initialize(hotel_Rating.getTours());
-            }
-        }
         return hotel_RatingList;
     }
 
     @Override
     public Hotel_Rating findById(String id) {
         Hotel_Rating hotel_Rating = getByKey(id);
-        if(hotel_Rating!=null){
-            Hibernate.initialize(hotel_Rating.getTours());
-        }
         return hotel_Rating;
     }
 
@@ -41,9 +32,6 @@ public class Hotel_RatingDaoImpl extends AbstractDao<String,Hotel_Rating> implem
         Criteria crit = createCriteria();
         crit.add(Restrictions.eq("name",name));
         Hotel_Rating hotel_Rating = (Hotel_Rating)crit.uniqueResult();
-        if(hotel_Rating!=null){
-            Hibernate.initialize(hotel_Rating.getTours());
-        }
         return hotel_Rating;
     }
     

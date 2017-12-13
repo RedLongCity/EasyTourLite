@@ -3,6 +3,7 @@ package com.redlongcitywork.easytourlite.model;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.redlongcitywork.easytourlite.json.view.HotToursRequestView;
 import com.redlongcitywork.easytourlite.json.view.TourView;
+import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.logging.Logger;
 import javax.persistence.Column;
@@ -61,6 +62,10 @@ public class HotToursRequest {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "meal_type_id", unique = false, nullable = true)
     private Meal_Type meal_Type;
+    
+    @JsonView(HotToursRequestView.class)
+    @Column(name = "request_time")
+    private Timestamp requestTime;
 
     public Integer getId() {
         return id;
@@ -118,6 +123,14 @@ public class HotToursRequest {
         this.meal_Type = meal_Type;
     }
 
+    public Timestamp getRequestTime() {
+        return requestTime;
+    }
+
+    public void setRequestTime(Timestamp requestTime) {
+        this.requestTime = requestTime;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 3;

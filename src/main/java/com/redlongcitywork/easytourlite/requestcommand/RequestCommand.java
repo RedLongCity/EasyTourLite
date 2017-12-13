@@ -1,6 +1,6 @@
 package com.redlongcitywork.easytourlite.requestcommand;
 
-import com.redlongcitywork.easytourlite.model.ResponseItem;
+import com.redlongcitywork.easytourlite.responseitem.ResponseItem;
 
 /**
  *
@@ -19,5 +19,9 @@ public interface RequestCommand<T> {
     T getRequest();
     
     void setRequest(T request);
+    
+    boolean isProcessed();
+    
+    void setProcessed(boolean processed);
     
 }
