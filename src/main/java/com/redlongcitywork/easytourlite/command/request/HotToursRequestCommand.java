@@ -1,9 +1,17 @@
 package com.redlongcitywork.easytourlite.command.request;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.redlongcitywork.easytourlite.converter.HotSearchConverter;
 import com.redlongcitywork.easytourlite.model.HotToursRequest;
+import com.redlongcitywork.easytourlite.responseitem.HotToursResponseItem;
 import com.redlongcitywork.easytourlite.responseitem.ResponseItem;
+import com.redlongcitywork.easytourlite.utils.HttpUtils;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -20,6 +28,9 @@ public class HotToursRequestCommand implements RequestCommand<HotToursRequest> {
     private boolean processed;
 
     private Timestamp creationTime;
+    
+    @Autowired
+    private HotSearchConverter converter;
 
     public HotToursRequestCommand(HotToursRequest request, Timestamp creationTime) {
         this.request = request;
@@ -28,8 +39,26 @@ public class HotToursRequestCommand implements RequestCommand<HotToursRequest> {
     }
 
     @Override
-    public ResponseItem execute(HotToursRequest request) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void execute(HttpUtils.GetCallBack callBack) {
+        if(request == null){
+            return;
+        }
+        try {
+            HttpUtils.getJsonNodeFromUrl(converter.getURLByRequest(request),
+                    new HttpUtils.GetCallBack() {
+                        @Override
+                        public void onDataReceived(JsonNode node) {
+                            callBack.onDataReceived(node);
+                        }
+                        
+                        @Override
+                        public void onDataNotAwailable() {
+                            callBack.onDataNotAwailable();
+                        }
+                    });
+        } catch (IOException ex) {
+            Logger.getLogger(HotToursRequestCommand.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override

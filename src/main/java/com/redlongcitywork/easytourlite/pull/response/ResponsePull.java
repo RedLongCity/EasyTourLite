@@ -1,7 +1,7 @@
 package com.redlongcitywork.easytourlite.pull.response;
 
-import com.redlongcitywork.easytourlite.command.request.RequestCommand;
 import com.redlongcitywork.easytourlite.responseitem.ResponseItem;
+import com.redlongcitywork.easytourlite.responseitem.factory.ResponseItemFactory;
 import com.redlongcitywork.easytourlite.utils.TimeUtils;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -17,19 +17,19 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ResponsePull {
-    
+
     private static final Logger LOG = Logger.getLogger(ResponsePull.class.getName());
-    
+
     private CopyOnWriteArrayList<ResponseItem> pull;
-    
+
     @Autowired
     private TimeUtils timeUtils;
-    
+
     public ResponseItem getResponse(Object request) {
         if (pull == null) {
             return null;
         }
-        
+
         Iterator<ResponseItem> it = pull.iterator();
         while (it.hasNext()) {
             ResponseItem item = it.next();
@@ -39,43 +39,47 @@ public class ResponsePull {
         }
         return null;
     }
-    
-    public ResponseItem getEmptyResponseItem() {
+
+    public ResponseItem getEmptyResponseItem(Object request) {
         if (pull == null) {
-            return null;
+            pull = new CopyOnWriteArrayList<ResponseItem>();
+            ResponseItem item = new ResponseItemFactory().getResponseItem(request);
+            item.setImmune(true);
+            pull.add(item);
+            return item;
         }
-        
+
         ResponseItem item = null;
-        
+
         Iterator<ResponseItem> it = pull.iterator();
         while (it.hasNext()) {
             ResponseItem inside = it.next();
-            
+
             if (inside.isImmune()) {//if inside command is immune to changes
                 continue;
             }
-            
+
             if (inside.getFreezeeTime().after(timeUtils.getCurrentTime())) {//if inside command is still freezzee
                 continue;
             }
-            
+
             if (item == null) {
                 item = inside;
                 continue;
             }
-            
+
             if (item.getPriority() > inside.getPriority()) {
                 item = inside;
                 continue;
             }
         }
-        
+
         if (item != null) {
+            item = new ResponseItemFactory().getResponseItem(request);
             item.setImmune(true);
-            item.setNode(null);
         }
-        
+
         return item;
     }
-    
+
 }

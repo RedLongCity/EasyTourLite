@@ -39,6 +39,8 @@ public class AppConstants {
     private int requestPullSize = 10;//size of RequestCommand pull
     
     private int responsePullSize = 10;//size of ResponseItem pull
+    
+    private long freezzeeTimeDelay = 5000;//time for untouchability of ResponseItem in pull
 
     @Autowired
     TimeUtils timeUtils;
@@ -122,7 +124,14 @@ public class AppConstants {
     public void setResponsePullSize(int responsePullSize) {
         this.responsePullSize = responsePullSize;
     }
-    
+
+    public long getFreezzeeTimeDelay() {
+        return freezzeeTimeDelay;
+    }
+
+    public void setFreezzeeTimeDelay(long freezzeeTime) {
+        this.freezzeeTimeDelay = freezzeeTime;
+    }
     
     
 }

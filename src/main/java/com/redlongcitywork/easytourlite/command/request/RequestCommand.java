@@ -1,6 +1,7 @@
 package com.redlongcitywork.easytourlite.command.request;
 
 import com.redlongcitywork.easytourlite.responseitem.ResponseItem;
+import com.redlongcitywork.easytourlite.utils.HttpUtils;
 import java.sql.Timestamp;
 
 /**
@@ -11,7 +12,7 @@ import java.sql.Timestamp;
  */
 public interface RequestCommand<T> {
     
-    ResponseItem execute(T request);
+    void execute(HttpUtils.GetCallBack callBack);
     
     int getPriority();
     

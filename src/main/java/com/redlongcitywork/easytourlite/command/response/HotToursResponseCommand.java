@@ -27,13 +27,13 @@ public class HotToursResponseCommand implements ResponseCommand<HotToursRequest>
 
     @Autowired
     private ResponsePull responsePull;
-    
+
     @Autowired
     private RequestPull requestPull;
-    
+
     @Autowired
     private TimeUtils timeUtils;
-    
+
     @Autowired
     private ComeBackUtils comeBackUtils;
 
@@ -64,12 +64,12 @@ public class HotToursResponseCommand implements ResponseCommand<HotToursRequest>
             return new Answer(0, item.getNode());
         }
 
-        RequestCommand command = new HotToursRequestCommand(request, 
+        RequestCommand command = new HotToursRequestCommand(request,
                 timeUtils.getCurrentTime());
-        
+
         requestPull.handleCommand(command);
-        
-        return new Answer(comeBackUtils.calculate(command),null);
+
+        return new Answer(comeBackUtils.calculate(command), null);
     }
 
 }

@@ -1,10 +1,11 @@
-package com.redlongcitywork.easytourlite.utils;
+package com.redlongcitywork.easytourlite.converter;
 
 import com.redlongcitywork.easytourlite.model.Country;
 import com.redlongcitywork.easytourlite.model.From_Cities;
 import com.redlongcitywork.easytourlite.model.HotToursRequest;
 import com.redlongcitywork.easytourlite.model.Meal_Type;
 import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
+import com.redlongcitywork.easytourlite.utils.ItToursUrls;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -21,12 +22,12 @@ import org.springframework.stereotype.Service;
  * class for handling operations with ItTours Hot Search Request
  */
 @Service
-public class HotSearchRequestConverterUtils implements RequestConverterUtils<HotToursRequest>, 
+public class HotSearchConverter implements RequestConverter<HotToursRequest>, 
         ItToursUrls {
 
-    private static final Logger LOG = Logger.getLogger(HotSearchRequestConverterUtils.class.getName());
+    private static final Logger LOG = Logger.getLogger(HotSearchConverter.class.getName());
 
-    public HotSearchRequestConverterUtils() {
+    public HotSearchConverter() {
     }
 
     @Autowired

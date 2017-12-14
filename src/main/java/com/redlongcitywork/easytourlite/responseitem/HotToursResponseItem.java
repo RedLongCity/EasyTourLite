@@ -22,6 +22,18 @@ public class HotToursResponseItem implements ResponseItem<HotToursRequest> {
     
     private int priority;
 
+    public HotToursResponseItem(HotToursRequest request, JsonNode node) {
+        this.request = request;
+        this.node = node;
+        this.priority = 0;
+    }
+
+    public HotToursResponseItem() {
+
+    }
+    
+    
+
     @Override
     public HotToursRequest getRequest() {
         return request;
