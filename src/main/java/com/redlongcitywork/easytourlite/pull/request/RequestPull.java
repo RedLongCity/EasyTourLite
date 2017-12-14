@@ -1,6 +1,6 @@
 package com.redlongcitywork.easytourlite.pull.request;
 
-import com.redlongcitywork.easytourlite.requestcommand.RequestCommand;
+import com.redlongcitywork.easytourlite.command.request.RequestCommand;
 import com.redlongcitywork.easytourlite.singletons.AppConstants;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -70,6 +70,21 @@ public class RequestPull {
         }
         
         return command;
+    }
+    
+    public RequestCommand getCommandByRequest(Object request){
+        if(pull == null){
+            return null;
+        }
+        
+        Iterator<RequestCommand> it = pull.iterator();
+        while(it.hasNext()){
+            RequestCommand command = it.next();
+            if(command.getRequest().equals(request)){
+                return command;
+            }
+        }
+        return null;
     }
     
     private void increasePriority(RequestCommand command){

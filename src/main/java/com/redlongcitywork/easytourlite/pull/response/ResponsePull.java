@@ -1,6 +1,6 @@
 package com.redlongcitywork.easytourlite.pull.response;
 
-import com.redlongcitywork.easytourlite.requestcommand.RequestCommand;
+import com.redlongcitywork.easytourlite.command.request.RequestCommand;
 import com.redlongcitywork.easytourlite.responseitem.ResponseItem;
 import com.redlongcitywork.easytourlite.utils.TimeUtils;
 import java.util.Iterator;
@@ -25,7 +25,7 @@ public class ResponsePull {
     @Autowired
     private TimeUtils timeUtils;
     
-    public ResponseItem getResponse(RequestCommand command) {
+    public ResponseItem getResponse(Object request) {
         if (pull == null) {
             return null;
         }
@@ -33,7 +33,7 @@ public class ResponsePull {
         Iterator<ResponseItem> it = pull.iterator();
         while (it.hasNext()) {
             ResponseItem item = it.next();
-            if (item.getRequest().equals(command.getRequest())) {
+            if (item.getRequest().equals(request)) {
                 return item;
             }
         }

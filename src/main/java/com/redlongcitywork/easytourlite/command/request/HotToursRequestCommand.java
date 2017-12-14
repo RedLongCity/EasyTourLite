@@ -1,4 +1,4 @@
-package com.redlongcitywork.easytourlite.requestcommand;
+package com.redlongcitywork.easytourlite.command.request;
 
 import com.redlongcitywork.easytourlite.model.HotToursRequest;
 import com.redlongcitywork.easytourlite.responseitem.ResponseItem;
@@ -21,9 +21,10 @@ public class HotToursRequestCommand implements RequestCommand<HotToursRequest> {
 
     private Timestamp creationTime;
 
-    public HotToursRequestCommand(HotToursRequest request, int priority) {
+    public HotToursRequestCommand(HotToursRequest request, Timestamp creationTime) {
         this.request = request;
-        this.priority = priority;
+        this.creationTime = creationTime;
+        this.priority = 0;
     }
 
     @Override

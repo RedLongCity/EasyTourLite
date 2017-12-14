@@ -1,5 +1,7 @@
 package com.redlongcitywork.easytourlite.utils;
 
+import com.redlongcitywork.easytourlite.command.request.RequestCommand;
+import com.redlongcitywork.easytourlite.pull.request.RequestPull;
 import com.redlongcitywork.easytourlite.singletons.AppConstants;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,18 +19,23 @@ public class ComeBackUtils {
     private static final Logger LOG = Logger.getLogger(ComeBackUtils.class.getName());
 
     @Autowired
-    AppConstants constants;
+    private AppConstants constants;
+    
+    @Autowired
+    private RequestPull pull;
 
-//    public long calculate(RequestCommand requestCommand){
-//        if(requestCommand.getDone()){
-//            return 0;
-//        }
-//        
-//        if(requestCommand.isProcessed()){
-//            return 1500;
-//        }
-//        
-//        return 5000;
-//        
-//    }
+    public long calculate(Object request){
+        
+        RequestCommand command = pull.getCommandByRequest(request);
+        
+        if(command == null){
+            return constants.getShortUpdatingDelay();
+        }
+        
+        if(command.isProcessed()){
+            return 1500;
+        }
+        
+        return constants.getShortUpdatingDelay();
+    }
 }

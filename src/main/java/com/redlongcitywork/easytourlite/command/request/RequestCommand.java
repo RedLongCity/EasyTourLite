@@ -1,4 +1,4 @@
-package com.redlongcitywork.easytourlite.requestcommand;
+package com.redlongcitywork.easytourlite.command.request;
 
 import com.redlongcitywork.easytourlite.responseitem.ResponseItem;
 import java.sql.Timestamp;
