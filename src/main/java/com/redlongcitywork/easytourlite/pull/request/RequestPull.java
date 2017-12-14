@@ -2,7 +2,6 @@ package com.redlongcitywork.easytourlite.pull.request;
 
 import com.redlongcitywork.easytourlite.requestcommand.RequestCommand;
 import com.redlongcitywork.easytourlite.singletons.AppConstants;
-import com.redlongcitywork.easytourlite.utils.TimeUtils;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
@@ -23,9 +22,6 @@ public class RequestPull {
     @Autowired
     private AppConstants constants;
 
-    @Autowired
-    private TimeUtils timeUtils;
-
     private CopyOnWriteArrayList<RequestCommand> pull;
 
     public void handleCommand(RequestCommand command) {
@@ -39,7 +35,7 @@ public class RequestPull {
         }
 
         if (pull.contains(command)) {
-            command.setPriority(command.getPriority()+1);
+            increasePriority(command);
             return;
         }
 
@@ -65,13 +61,28 @@ public class RequestPull {
                 continue;
             }
             
-            if(command.getPriority() < insideCommand.getPriority()){
+            if(command.getPriority() <= insideCommand.getPriority() &&
+                    command.getCreationTime().after(insideCommand.getCreationTime())){
                 command = insideCommand;
                 continue;
             }
         }
         
         return command;
+    }
+    
+    private void increasePriority(RequestCommand command){
+        if(pull == null){
+            return;
+        }
+        Iterator<RequestCommand> it = pull.iterator();
+        while(it.hasNext()){
+            RequestCommand inside = it.next();
+            if(inside.equals(command)){
+                inside.setPriority(inside.getPriority()+1);
+                return;
+            }
+        }
     }
 
 }
