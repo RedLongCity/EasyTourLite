@@ -45,7 +45,7 @@ public class ShortUpdatingJob extends QuartzJobBean {
 
     @Autowired
     QuartzService quartzService;
-    
+
     @Autowired
     TimeUtils timeUtils;
 
@@ -58,16 +58,16 @@ public class ShortUpdatingJob extends QuartzJobBean {
 
         command = requestPull.getNextCommand();
         if (command != null) {
-            ResponseItem item = responsePull.getEmptyResponseItem();
+            ResponseItem item = responsePull.getEmptyResponseItem(
+                    command.getRequest());
             if (item != null) {
                 command.execute(new HttpUtils.GetCallBack() {
                     @Override
                     public void onDataReceived(JsonNode node) {
                         item.setNode(node);
-                        item.setRequest(command.getRequest());
                         Timestamp freezeeTime = new Timestamp(
-                        timeUtils.getCurrentTime().getTime() + 
-                                constants.getFreezzeeTimeDelay());
+                                timeUtils.getCurrentTime().getTime()
+                                + constants.getFreezzeeTimeDelay());
                         item.setFreezeeTime(freezeeTime);
                         item.setImmune(false);
                     }
@@ -78,7 +78,6 @@ public class ShortUpdatingJob extends QuartzJobBean {
                     }
                 });
 
-                command.setDone(Boolean.TRUE);
                 constants.setGlobalDelay(true);
             }
         } else {

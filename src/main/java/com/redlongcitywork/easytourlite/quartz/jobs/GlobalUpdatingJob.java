@@ -2,8 +2,6 @@ package com.redlongcitywork.easytourlite.quartz.jobs;
 
 import com.redlongcitywork.easytourlite.quartz.services.QuartzService;
 import com.redlongcitywork.easytourlite.singletons.AppConstants;
-import com.redlongcitywork.easytourlite.utils.RequestsPullUtils;
-import com.redlongcitywork.easytourlite.utils.TimeUtils;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.quartz.DisallowConcurrentExecution;
@@ -18,7 +16,7 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
  *
  * @author redlongcity
  * 10.09.2017
- * class for construction pull of requests 
+ * class for refreshing filters
  */
 
 @PersistJobDataAfterExecution
@@ -26,12 +24,6 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 public class GlobalUpdatingJob extends QuartzJobBean{
 
     private static final Logger LOG = Logger.getLogger(GlobalUpdatingJob.class.getName());
-    
-    @Autowired
-    RequestsPullUtils requestsPullUtils;
-    
-    @Autowired
-    TimeUtils timeUtils;
     
     @Autowired
     AppConstants constants;
@@ -44,9 +36,7 @@ public class GlobalUpdatingJob extends QuartzJobBean{
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this); 
         LOG.log(Level.INFO, "Global Job Doing");
         constants.setGlobalSuspended(false);
-        timeUtils.updateTimeConstants();
-        requestsPullUtils.clearRequestsPull();
-        resumeShortUpdateJob(jec);
+        //resumeShortUpdateJob(jec);
         //pauseItSelf(jec);
     }
     

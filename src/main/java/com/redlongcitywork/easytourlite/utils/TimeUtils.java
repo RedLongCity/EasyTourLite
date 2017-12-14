@@ -1,12 +1,8 @@
 package com.redlongcitywork.easytourlite.utils;
 
-import com.redlongcitywork.easytourlite.model.UpdateSession;
-import com.redlongcitywork.easytourlite.service.UpdateSessionService;
-import com.redlongcitywork.easytourlite.singletons.AppConstants;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,12 +14,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class TimeUtils {
 
-    @Autowired
-    UpdateSessionService sessionService;
-
-    @Autowired
-    AppConstants projectConsantsSingletone;
-
     public Timestamp getCurrentTime() {
         Date date = new Date();
         Calendar cal = Calendar.getInstance();
@@ -33,13 +23,4 @@ public class TimeUtils {
         return time;
     }
 
-    public UpdateSession getCurrentSession() {
-        UpdateSession session = sessionService.findByUpdateTime(
-                projectConsantsSingletone.getTimeOfCurrentSession());
-        return session;
-    }
-
-    public void updateTimeConstants() {
-        projectConsantsSingletone.setTimeOfCurrentSession(getCurrentTime());
-    }
 }

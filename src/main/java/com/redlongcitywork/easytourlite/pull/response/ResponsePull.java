@@ -44,6 +44,7 @@ public class ResponsePull {
         if (pull == null) {
             pull = new CopyOnWriteArrayList<ResponseItem>();
             ResponseItem item = new ResponseItemFactory().getResponseItem(request);
+            item.setRequest(request);
             item.setImmune(true);
             pull.add(item);
             return item;
@@ -76,6 +77,7 @@ public class ResponsePull {
 
         if (item != null) {
             item = new ResponseItemFactory().getResponseItem(request);
+            item.setRequest(request);
             item.setImmune(true);
         }
 
