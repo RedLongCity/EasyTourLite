@@ -2,6 +2,7 @@ package com.redlongcitywork.easytourlite.requestcommand;
 
 import com.redlongcitywork.easytourlite.model.HotToursRequest;
 import com.redlongcitywork.easytourlite.responseitem.ResponseItem;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 /**
@@ -17,6 +18,8 @@ public class HotToursRequestCommand implements RequestCommand<HotToursRequest> {
     private int priority;
 
     private boolean processed;
+
+    private Timestamp creationTime;
 
     public HotToursRequestCommand(HotToursRequest request, int priority) {
         this.request = request;
@@ -56,6 +59,16 @@ public class HotToursRequestCommand implements RequestCommand<HotToursRequest> {
     @Override
     public void setProcessed(boolean processed) {
         this.processed = processed;
+    }
+
+    @Override
+    public Timestamp getCreationTime() {
+        return creationTime;
+    }
+
+    @Override
+    public void setCreationTime(Timestamp creationTime) {
+        this.creationTime = creationTime;
     }
 
     @Override

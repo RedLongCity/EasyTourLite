@@ -1,6 +1,7 @@
 package com.redlongcitywork.easytourlite.requestcommand;
 
 import com.redlongcitywork.easytourlite.responseitem.ResponseItem;
+import java.sql.Timestamp;
 
 /**
  *
@@ -23,5 +24,9 @@ public interface RequestCommand<T> {
     boolean isProcessed();
     
     void setProcessed(boolean processed);
+    
+    Timestamp getCreationTime();
+    
+    void setCreationTime(Timestamp creationTime);
     
 }

@@ -23,7 +23,7 @@ public interface ResponseItem<T> {
     
     void setFreezeeTime(Timestamp freezeeTime);
     
-    boolean getImmune();
+    boolean isImmune();
     
     void setImmune(boolean immune);
     

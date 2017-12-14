@@ -54,7 +54,7 @@ public class HotToursResponseItem implements ResponseItem<HotToursRequest> {
     
 
     @Override
-    public boolean getImmune() {
+    public boolean isImmune() {
         return immune;
     }
 

@@ -19,10 +19,11 @@ public class RequestPull {
 
     private static final Logger LOG = Logger.getLogger(RequestPull.class.getName());
 
+    private CopyOnWriteArrayList<RequestCommand> pull;
+    
     @Autowired
     private AppConstants constants;
 
-    private CopyOnWriteArrayList<RequestCommand> pull;
 
     public void handleCommand(RequestCommand command) {
         if (pull == null) {
