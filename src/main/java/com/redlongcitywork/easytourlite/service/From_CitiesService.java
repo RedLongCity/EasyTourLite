@@ -21,4 +21,6 @@ public interface From_CitiesService {
     
     void deleteAllFrom_Cities();
     
+    void saveOrUpdateFrom_Cities(From_Cities city);
+    
 }

@@ -51,5 +51,10 @@ public class Meal_TypeDaoImpl extends AbstractDao<String,Meal_Type> implements M
     public void mergeMeal_Type(Meal_Type meal_Type) {
         merge(meal_Type);
     }
+
+    @Override
+    public void saveOrUpdateMeal_Type(Meal_Type type) {
+        saveOrUpdate(type);
+    }
     
 }

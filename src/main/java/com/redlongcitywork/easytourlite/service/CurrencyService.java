@@ -21,4 +21,6 @@ public interface CurrencyService {
     
     void deleteAllCurrency();
     
+    void saveOrUpdateCurrency(Currency currency);
+    
 }

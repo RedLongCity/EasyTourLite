@@ -22,4 +22,6 @@ public interface Meal_TypeService {
     
     void deleteAllMeal_Type();
     
+    void saveOrUpdateMeal_Type(Meal_Type type);
+    
 }

@@ -51,5 +51,10 @@ public class Hotel_RatingDaoImpl extends AbstractDao<String,Hotel_Rating> implem
     public void mergeHotel_Rating(Hotel_Rating hotel_Rating) {
         merge(hotel_Rating);
     }
+
+    @Override
+    public void saveOrUpdateHotel_Rating(Hotel_Rating rating) {
+        saveOrUpdate(rating);
+    }
     
 }

@@ -18,45 +18,50 @@ import org.springframework.transaction.annotation.Transactional;
 public class CurrencyServiceImpl implements CurrencyService {
 
     @Autowired
-    CurrencyDao currencyDao;
+    CurrencyDao dao;
     
     @Override
     public Currency findById(String id) {
-        return currencyDao.findById(id);
+        return dao.findById(id);
     }
 
     @Override
     public void saveCurrency(Currency currency) {
-        currencyDao.save(currency);
+        dao.save(currency);
     }
 
     @Override
     public void updateCurrency(Currency currency) {
-        Currency entity = currencyDao.findById(currency.getId());
+        Currency entity = dao.findById(currency.getId());
         if(entity!=null){
             entity.setName(currency.getName());
-            currencyDao.mergeCurrency(entity);
+            dao.mergeCurrency(entity);
     }
     }
 
     @Override
     public void deleteCurrency(Currency currency) {
-        currencyDao.deleteCurrency(currency);
+        dao.deleteCurrency(currency);
     }
 
     @Override
     public List<Currency> findAll() {
-        return currencyDao.findAll();
+        return dao.findAll();
     }
 
     @Override
     public void deleteAllCurrency() {
-        List<Currency> currencyList = currencyDao.findAll();
+        List<Currency> currencyList = dao.findAll();
         if(currencyList!=null){
             for(Currency currency: currencyList){
-                currencyDao.deleteCurrency(currency);
+                dao.deleteCurrency(currency);
             }
         }
+    }
+
+    @Override
+    public void saveOrUpdateCurrency(Currency currency) {
+        dao.saveOrUpdateCurrency(currency);
     }
     
 }

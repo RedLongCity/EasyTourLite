@@ -21,4 +21,6 @@ public interface Meal_TypeDao {
     
     void deleteMeal_Type(Meal_Type meal_Type);
     
+    void saveOrUpdateMeal_Type(Meal_Type type);
+    
 }

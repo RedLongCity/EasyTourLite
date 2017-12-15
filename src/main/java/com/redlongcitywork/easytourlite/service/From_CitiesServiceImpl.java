@@ -56,4 +56,9 @@ public class From_CitiesServiceImpl implements From_CitiesService {
         }
     }
 
+    @Override
+    public void saveOrUpdateFrom_Cities(From_Cities city) {
+        from_CitiesDao.saveOrUpdateFrom_Cities(city);
+    }
+
 }

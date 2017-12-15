@@ -19,4 +19,6 @@ public interface CurrencyDao {
     
     void deleteCurrency(Currency currency);
     
+    void saveOrUpdateCurrency(Currency currency);
+    
 }

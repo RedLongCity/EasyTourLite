@@ -22,4 +22,6 @@ public interface CountryService {
     
     void deleteAllCountries();
     
+    void saveOrUpdateCountry(Country country);
+    
 }

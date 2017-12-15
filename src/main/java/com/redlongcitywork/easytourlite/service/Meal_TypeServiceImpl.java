@@ -15,51 +15,56 @@ import org.springframework.transaction.annotation.Transactional;
 public class Meal_TypeServiceImpl implements Meal_TypeService {
 
     @Autowired
-    Meal_TypeDao meal_TypeDao;
+    Meal_TypeDao dao;
 
     @Override
     public Meal_Type findById(String id) {
-        return meal_TypeDao.findById(id);
+        return dao.findById(id);
     }
 
     @Override
     public Meal_Type findByName(String name) {
-        return meal_TypeDao.findByName(name);
+        return dao.findByName(name);
     }
 
     @Override
     public void saveMeal_Type(Meal_Type meal_Type) {
-        meal_TypeDao.save(meal_Type);
+        dao.save(meal_Type);
     }
 
     @Override
     public void updateMeal_Type(Meal_Type meal_Type) {
-        Meal_Type entity = meal_TypeDao.findById(meal_Type.getId());
+        Meal_Type entity = dao.findById(meal_Type.getId());
         if (entity != null) {
             entity.setName(meal_Type.getName());
             entity.setName_Full(meal_Type.getName_Full());
-            meal_TypeDao.mergeMeal_Type(entity);
+            dao.mergeMeal_Type(entity);
         }
     }
 
     @Override
     public void deleteMeal_Type(Meal_Type meal_Type) {
-        meal_TypeDao.deleteMeal_Type(meal_Type);
+        dao.deleteMeal_Type(meal_Type);
     }
 
     @Override
     public List<Meal_Type> findAll() {
-        return meal_TypeDao.findAll();
+        return dao.findAll();
     }
 
     @Override
     public void deleteAllMeal_Type() {
-        List<Meal_Type> meal_TypeList = meal_TypeDao.findAll();
+        List<Meal_Type> meal_TypeList = dao.findAll();
         if (meal_TypeList != null) {
             for (Meal_Type meal_Type : meal_TypeList) {
-                meal_TypeDao.deleteMeal_Type(meal_Type);
+                dao.deleteMeal_Type(meal_Type);
             }
         }
+    }
+
+    @Override
+    public void saveOrUpdateMeal_Type(Meal_Type type) {
+        dao.saveOrUpdateMeal_Type(type);
     }
 
 }

@@ -42,4 +42,9 @@ public class From_CitiesDaoImpl extends AbstractDao<String,From_Cities> implemen
         merge(from_Cities);
     }
     
+    @Override
+    public void saveOrUpdateFrom_Cities(From_Cities city){
+        saveOrUpdate(city);
+    }
+    
 }

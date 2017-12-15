@@ -43,4 +43,11 @@ public class CurrencyDaoImpl extends AbstractDao<String, Currency> implements Cu
         delete(currency);
     }
 
+    @Override
+    public void saveOrUpdateCurrency(Currency currency) {
+        saveOrUpdate(currency);
+    }
+    
+    
+
 }

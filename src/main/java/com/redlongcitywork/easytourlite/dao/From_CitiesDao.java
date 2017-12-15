@@ -19,4 +19,6 @@ public interface From_CitiesDao {
     
     void deleteFrom_Cities(From_Cities from_Cities);
     
+    void saveOrUpdateFrom_Cities(From_Cities city);
+    
 }

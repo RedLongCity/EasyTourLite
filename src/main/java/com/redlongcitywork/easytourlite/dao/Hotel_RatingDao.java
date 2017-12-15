@@ -20,4 +20,6 @@ public interface Hotel_RatingDao {
     void mergeHotel_Rating(Hotel_Rating hotel_Rating);
     
     void deleteHotel_Rating(Hotel_Rating hotel_Rating);
+    
+    void saveOrUpdateHotel_Rating(Hotel_Rating rating);
 }

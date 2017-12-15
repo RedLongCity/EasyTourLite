@@ -21,5 +21,7 @@ public interface Hotel_RatingService {
    List<Hotel_Rating> findAll();
    
    void deleteAllHotel_Rating();
+   
+   void saveOrUpdateHotel_Rating(Hotel_Rating rating);
     
 }

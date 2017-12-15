@@ -19,4 +19,6 @@ public interface CountryDao {
     void mergeCountry(Country country);
     
     void deleteCountry(Country country);
+    
+    void saveOrUpdateCountry(Country country);
 }

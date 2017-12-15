@@ -56,4 +56,9 @@ public class CountryServiceImpl implements CountryService {
         }
     }
 
+    @Override
+    public void saveOrUpdateCountry(Country country) {
+        countryDao.saveOrUpdateCountry(country);
+    }
+    
 }

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
  *
  * @author redlongcity
  */
-
 @Repository("countryDao")
 public class CountryDaoImpl extends AbstractDao<String, Country> implements CountryDao {
 
@@ -41,6 +40,11 @@ public class CountryDaoImpl extends AbstractDao<String, Country> implements Coun
     @Override
     public void mergeCountry(Country country) {
         merge(country);
+    }
+
+    @Override
+    public void saveOrUpdateCountry(Country country) {
+        saveOrUpdateCountry(country);
     }
 
 }
