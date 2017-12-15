@@ -53,7 +53,6 @@ public class GlobalUpdatingJob extends QuartzJobBean {
                 LOG.log(Level.WARNING, "Hot Tours extracting was failed!");
             }
         });
-        //resumeShortUpdateJob(jec);
         //pauseItSelf(jec);
     }
     
