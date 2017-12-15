@@ -1,5 +1,7 @@
 package com.redlongcitywork.easytourlite.extractor;
 
+import com.redlongcitywork.easytourlite.utils.HttpUtils;
+
 /**
  *
  * @author redlongcity
@@ -8,5 +10,5 @@ package com.redlongcitywork.easytourlite.extractor;
  */
 public interface Extractor {
     
-    
+    void extract(HttpUtils.GetCallBack callBack);
 }

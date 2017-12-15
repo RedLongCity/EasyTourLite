@@ -1,12 +1,9 @@
 package com.redlongcitywork.easytourlite.parsers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.redlongcitywork.easytourlite.model.Currency;
-import com.redlongcitywork.easytourlite.service.CurrencyService;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,44 +13,27 @@ import org.springframework.stereotype.Service;
  * class for parsing Currency.class from JsonNode
  */
 @Service
-public class CurrencyNodeParser implements NodeParser {
+public class CurrencyNodeParser implements NodeParser<Currency> {
 
     private static final Logger LOG = Logger.getLogger(CurrencyNodeParser.class.getName());
 
-    @Autowired
-    CurrencyService currencyService;
-
     @Override
-    public Boolean parseNode(ArrayNode currencyNode) {
-        if (currencyNode.isMissingNode()) {
+    public Currency parseNode(JsonNode jsonNode) {
+        if (jsonNode.isMissingNode()) {
             LOG.log(Level.WARNING, "CurrencyNode: currencyNode is missing");
-            return false;
+            return null;
         }
-        for (int i = 0; i < currencyNode.size(); i++) {
-            Currency currency = new Currency();
-            JsonNode node;
+        Currency currency = new Currency();
 
-            node = currencyNode.get(i).path("id");
-            if (node.isMissingNode()) {
-                LOG.log(Level.WARNING, "CurrencyNode: id node is missing");
-                return false;
-            }
-            String id = node.asText();
-            if (currencyService.findById(id) != null) {
-                continue;
-            }
-            currency.setId(id);
-
-            node = currencyNode.get(i).path("name");
-            if (node.isMissingNode()) {
-                LOG.log(Level.WARNING, "CurrencyNode: name node is missing");
-                return false;
-            }
-            currency.setName(node.asText());
-
-            currencyService.saveCurrency(currency);
+        if (jsonNode.has("id")) {
+            currency.setId(jsonNode.path("id").asText());
         }
-        return true;
+
+        if (jsonNode.has("name")) {
+            currency.setName(jsonNode.path("name").asText());
+        }
+
+        return currency;
     }
 
 }

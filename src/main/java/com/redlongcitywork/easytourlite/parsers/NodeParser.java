@@ -1,6 +1,6 @@
 package com.redlongcitywork.easytourlite.parsers;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.JsonNode;
 
 /**
  *
@@ -8,8 +8,8 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
  * 08.09.2017
  * interface for series of parsers node
  */
-public interface NodeParser {
+public interface NodeParser<T> {
     
-    Boolean parseNode(ArrayNode arrayNode);
+    T parseNode(JsonNode arrayNode);
     
 }

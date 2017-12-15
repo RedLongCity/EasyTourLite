@@ -4,9 +4,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.redlongcitywork.easytourlite.parsers.CountryNodeParser;
 import com.redlongcitywork.easytourlite.parsers.CurrencyNodeParser;
-import com.redlongcitywork.easytourlite.parsers.From_CitiesNodeParser;
-import com.redlongcitywork.easytourlite.parsers.Hotel_RatingNodeParser;
-import com.redlongcitywork.easytourlite.parsers.Meal_TypeNodeParser;
+import com.redlongcitywork.easytourlite.parsers.CitiesNodeParser;
+import com.redlongcitywork.easytourlite.parsers.RatingNodeParser;
+import com.redlongcitywork.easytourlite.parsers.MealTypeNodeParser;
 import com.redlongcitywork.easytourlite.service.CountryService;
 import com.redlongcitywork.easytourlite.service.CurrencyService;
 import com.redlongcitywork.easytourlite.service.From_CitiesService;
@@ -49,13 +49,13 @@ public class ItToursHotToursFiltersParser {
     CountryNodeParser countryNodeParser;
     
     @Autowired
-    From_CitiesNodeParser from_CitiesNodeParser;
+    CitiesNodeParser from_CitiesNodeParser;
     
     @Autowired
-    Hotel_RatingNodeParser hotel_RatingNodeParser;
+    RatingNodeParser hotel_RatingNodeParser;
     
     @Autowired
-    Meal_TypeNodeParser meal_TypeNodeParser;
+    MealTypeNodeParser meal_TypeNodeParser;
     
     @Autowired
     CurrencyNodeParser currencyNodeParser;

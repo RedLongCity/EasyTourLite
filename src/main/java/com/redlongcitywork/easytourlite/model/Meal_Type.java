@@ -34,7 +34,7 @@ public class Meal_Type {
     @JsonView(TourView.class)
     @NotEmpty
     @Column(name="name_full",unique=false,nullable=false)
-    private String name_full;
+    private String name_Full;
     
     public String getId() {
         return id;
@@ -52,12 +52,12 @@ public class Meal_Type {
         this.name = name;
     }
 
-    public String getName_full() {
-        return name_full;
+    public String getName_Full() {
+        return name_Full;
     }
 
-    public void setName_full(String name_full) {
-        this.name_full = name_full;
+    public void setName_Full(String name_full) {
+        this.name_Full = name_full;
     }
 
     @Override
@@ -87,7 +87,7 @@ public class Meal_Type {
 
     @Override
     public String toString() {
-        return "Meal_Type{" + "id=" + id + ", name=" + name + ", name_full=" + name_full + '}';
+        return "Meal_Type{" + "id=" + id + ", name=" + name + ", name_full=" + name_Full + '}';
     }
     
     
