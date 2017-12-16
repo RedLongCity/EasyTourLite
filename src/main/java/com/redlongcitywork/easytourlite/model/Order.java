@@ -1,5 +1,7 @@
 package com.redlongcitywork.easytourlite.model;
 
+import java.util.Objects;
+
 /**
  * Created by redlongcity on 14.10.2017.
  * class for storing data about order
@@ -9,7 +11,7 @@ public class Order {
 
     private UserData data;
 
-    private Integer tourId;
+    private Tour tour;
 
     public Order() {
     }
@@ -22,14 +24,15 @@ public class Order {
         this.data = data;
     }
 
-    public Integer getTourId() {
-        return tourId;
+    public Tour getTour() {
+        return tour;
     }
 
-    public void setTourId(Integer tourId) {
-        this.tourId = tourId;
+    public void setTour(Tour tour) {
+        this.tour = tour;
     }
 
+    
     public boolean isEmpty(){
         if (data != null) {
             return data.isEmpty();
@@ -38,29 +41,39 @@ public class Order {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Order order = (Order) o;
-
-        if (data != null ? !data.equals(order.data) : order.data != null) return false;
-        return tourId != null ? tourId.equals(order.tourId) : order.tourId == null;
-
+    public int hashCode() {
+        int hash = 7;
+        hash = 89 * hash + Objects.hashCode(this.data);
+        hash = 89 * hash + Objects.hashCode(this.tour);
+        return hash;
     }
 
     @Override
-    public int hashCode() {
-        int result = data != null ? data.hashCode() : 0;
-        result = 31 * result + (tourId != null ? tourId.hashCode() : 0);
-        return result;
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Order other = (Order) obj;
+        if (!Objects.equals(this.data, other.data)) {
+            return false;
+        }
+        if (!Objects.equals(this.tour, other.tour)) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        return "Order{" +
-                "data=" + data +
-                ", tourId=" + tourId +
-                '}';
+        return "Order{" + "data=" + data + ", tour=" + tour + '}';
     }
+    
+    
+
 }

@@ -32,8 +32,6 @@ public class ShortUpdatingJob extends QuartzJobBean {
 
     private static final Logger LOG = Logger.getLogger(ShortUpdatingJob.class.getName());
 
-    private RequestCommand command;
-
     @Autowired
     AppConstants constants;
 
@@ -56,7 +54,7 @@ public class ShortUpdatingJob extends QuartzJobBean {
         constants.setShortSuspended(false);
         constants.setShortRun(true);
 
-        command = requestPull.getNextCommand();
+        RequestCommand command = requestPull.getNextCommand();
         if (command != null) {
             ResponseItem item = responsePull.getEmptyResponseItem(
                     command.getRequest());
@@ -75,6 +73,7 @@ public class ShortUpdatingJob extends QuartzJobBean {
                     @Override
                     public void onDataNotAwailable() {
                         item.setImmune(false);
+                        LOG.log(Level.WARNING, "Executing response command failed!");
                     }
                 });
 

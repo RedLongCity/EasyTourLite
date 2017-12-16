@@ -12,6 +12,7 @@ import com.redlongcitywork.easytourlite.utils.TimeUtils;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 /**
  *
@@ -57,6 +58,7 @@ public class HotToursResponseCommand implements ResponseCommand<HotToursRequest>
             LOG.log(Level.WARNING, "Response Command: request null!");
             return null;
         }
+        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 
         ResponseItem item = responsePull.getResponse(request);
 

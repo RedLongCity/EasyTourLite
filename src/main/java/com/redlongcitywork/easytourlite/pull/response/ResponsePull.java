@@ -2,6 +2,7 @@ package com.redlongcitywork.easytourlite.pull.response;
 
 import com.redlongcitywork.easytourlite.responseitem.ResponseItem;
 import com.redlongcitywork.easytourlite.responseitem.factory.ResponseItemFactory;
+import com.redlongcitywork.easytourlite.singletons.AppConstants;
 import com.redlongcitywork.easytourlite.utils.TimeUtils;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -25,6 +26,9 @@ public class ResponsePull {
     @Autowired
     private TimeUtils timeUtils;
 
+    @Autowired
+    private AppConstants constants;
+
     public ResponseItem getResponse(Object request) {
         if (pull == null) {
             return null;
@@ -43,11 +47,6 @@ public class ResponsePull {
     public ResponseItem getEmptyResponseItem(Object request) {
         if (pull == null) {
             pull = new CopyOnWriteArrayList<ResponseItem>();
-            ResponseItem item = new ResponseItemFactory().getResponseItem(request);
-            item.setRequest(request);
-            item.setImmune(true);
-            pull.add(item);
-            return item;
         }
 
         ResponseItem item = null;
@@ -79,6 +78,13 @@ public class ResponsePull {
             item = new ResponseItemFactory().getResponseItem(request);
             item.setRequest(request);
             item.setImmune(true);
+        } else {
+            if (pull.size() < constants.getResponsePullSize()) {
+                item = new ResponseItemFactory().getResponseItem(request);
+                item.setRequest(request);
+                item.setImmune(true);
+                pull.add(item);
+            }
         }
 
         return item;

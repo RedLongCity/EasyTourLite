@@ -7,7 +7,6 @@ import com.redlongcitywork.easytourlite.model.Price;
 import com.redlongcitywork.easytourlite.model.Tour;
 import com.redlongcitywork.easytourlite.model.UserData;
 import com.redlongcitywork.easytourlite.service.MailAddressService;
-import com.redlongcitywork.easytourlite.service.TourService;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -23,9 +22,6 @@ import org.springframework.stereotype.Service;
 public class EmailContentConverter {
 
     @Autowired
-    TourService tourService;
-
-    @Autowired
     MailAddressService mailService;
 
     public EmailContentConverter() {
@@ -34,7 +30,7 @@ public class EmailContentConverter {
     public String getMessage(Order order) {
         String message = "";
         UserData data = order.getData();
-        Tour tour = tourService.findById(order.getTourId());
+        Tour tour = order.getTour();
         Date date = new Date();
         message = message.concat(date.toString() + "\n\n");
         message = message.concat("Данные пользователя: " + "\n");
@@ -49,7 +45,7 @@ public class EmailContentConverter {
         message = message.concat("Регион: " + tour.getRegion() + "\n");
         message = message.concat("Рейтинг отеля: " + tour.getHotel_Rating().getName() + "\n");
         message = message.concat("Отель: " + tour.getHotel() + "\n");
-        message = message.concat("Тип питания: " + tour.getMeal_Type().getName_full() + "\n");
+        message = message.concat("Тип питания: " + tour.getMeal_Type().getName_Full() + "\n");
         message = message.concat("Room Type: " + tour.getRoom_Type() + "\n");
         message = message.concat("Взрослых: " + tour.getAdult_Amount() + "\n");
         message = message.concat("Детей: " + tour.getChild_Amount() + "\n");

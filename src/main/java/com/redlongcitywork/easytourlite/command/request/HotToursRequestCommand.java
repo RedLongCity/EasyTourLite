@@ -3,8 +3,6 @@ package com.redlongcitywork.easytourlite.command.request;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.redlongcitywork.easytourlite.converter.HotSearchConverter;
 import com.redlongcitywork.easytourlite.model.HotToursRequest;
-import com.redlongcitywork.easytourlite.responseitem.HotToursResponseItem;
-import com.redlongcitywork.easytourlite.responseitem.ResponseItem;
 import com.redlongcitywork.easytourlite.utils.HttpUtils;
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -12,6 +10,7 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 /**
  *
@@ -28,7 +27,7 @@ public class HotToursRequestCommand implements RequestCommand<HotToursRequest> {
     private boolean processed;
 
     private Timestamp creationTime;
-    
+
     @Autowired
     private HotSearchConverter converter;
 
@@ -40,22 +39,23 @@ public class HotToursRequestCommand implements RequestCommand<HotToursRequest> {
 
     @Override
     public void execute(HttpUtils.GetCallBack callBack) {
-        if(request == null){
+        if (request == null) {
             return;
         }
+        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
         try {
             HttpUtils.getJsonNodeFromUrl(converter.getURLByRequest(request),
                     new HttpUtils.GetCallBack() {
-                        @Override
-                        public void onDataReceived(JsonNode node) {
-                            callBack.onDataReceived(node);
-                        }
-                        
-                        @Override
-                        public void onDataNotAwailable() {
-                            callBack.onDataNotAwailable();
-                        }
-                    });
+                @Override
+                public void onDataReceived(JsonNode node) {
+                    callBack.onDataReceived(node);
+                }
+
+                @Override
+                public void onDataNotAwailable() {
+                    callBack.onDataNotAwailable();
+                }
+            });
         } catch (IOException ex) {
             Logger.getLogger(HotToursRequestCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
