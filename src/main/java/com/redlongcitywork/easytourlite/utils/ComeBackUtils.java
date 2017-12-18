@@ -2,7 +2,7 @@ package com.redlongcitywork.easytourlite.utils;
 
 import com.redlongcitywork.easytourlite.command.request.RequestCommand;
 import com.redlongcitywork.easytourlite.pull.request.RequestPull;
-import com.redlongcitywork.easytourlite.singletons.AppConstants;
+import com.redlongcitywork.easytourlite.constants.AppConstants;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

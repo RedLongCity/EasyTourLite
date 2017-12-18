@@ -1,7 +1,7 @@
 package com.redlongcitywork.easytourlite.controller;
 
 import org.springframework.http.ResponseEntity;
-import com.redlongcitywork.easytourlite.singletons.AppConstants;
+import com.redlongcitywork.easytourlite.constants.AppConstants;
 import com.redlongcitywork.easytourlite.utils.GlobalUpdateDelayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

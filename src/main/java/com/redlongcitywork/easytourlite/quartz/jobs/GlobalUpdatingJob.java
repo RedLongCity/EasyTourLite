@@ -3,7 +3,7 @@ package com.redlongcitywork.easytourlite.quartz.jobs;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.redlongcitywork.easytourlite.extractor.HotFiltersExtractor;
 import com.redlongcitywork.easytourlite.quartz.services.QuartzService;
-import com.redlongcitywork.easytourlite.singletons.AppConstants;
+import com.redlongcitywork.easytourlite.constants.AppConstants;
 import com.redlongcitywork.easytourlite.utils.HttpUtils;
 import java.util.logging.Level;
 import java.util.logging.Logger;

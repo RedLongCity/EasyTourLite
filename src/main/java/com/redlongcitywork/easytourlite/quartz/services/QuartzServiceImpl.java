@@ -1,6 +1,6 @@
 package com.redlongcitywork.easytourlite.quartz.services;
 
-import com.redlongcitywork.easytourlite.singletons.AppConstants;
+import com.redlongcitywork.easytourlite.constants.AppConstants;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.quartz.CronScheduleBuilder;

@@ -178,6 +178,22 @@ public class TourController {
         }
         return new ResponseEntity<Answer>(answer, HttpStatus.OK);
     }
+    
+            @JsonView(TourView.class)
+    @RequestMapping(value = "/push", method = RequestMethod.GET)
+    public ResponseEntity<Answer> doPush() {
+        HotToursRequest request = new HotToursRequest();
+        request.setHotel_Rating("3:78");
+        request.setNight_From(2);
+        request.setNight_Till(7);
+        ResponseCommand command = (ResponseCommand) handler.handle(request);
+        Answer answer = command.execute();
+        
+        if (answer == null) {
+            return new ResponseEntity<Answer>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<Answer>(answer, HttpStatus.OK);
+    }
 
     @RequestMapping(value = "/string", method = RequestMethod.POST)
     public ResponseEntity<String> getString(@RequestBody String string) {

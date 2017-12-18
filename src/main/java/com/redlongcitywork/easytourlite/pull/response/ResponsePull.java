@@ -2,7 +2,7 @@ package com.redlongcitywork.easytourlite.pull.response;
 
 import com.redlongcitywork.easytourlite.responseitem.ResponseItem;
 import com.redlongcitywork.easytourlite.responseitem.factory.ResponseItemFactory;
-import com.redlongcitywork.easytourlite.singletons.AppConstants;
+import com.redlongcitywork.easytourlite.constants.AppConstants;
 import com.redlongcitywork.easytourlite.utils.TimeUtils;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;

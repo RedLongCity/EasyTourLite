@@ -2,7 +2,7 @@ package com.redlongcitywork.easytourlite.pull.request;
 
 import com.redlongcitywork.easytourlite.command.request.RequestCommand;
 import com.redlongcitywork.easytourlite.quartz.services.QuartzService;
-import com.redlongcitywork.easytourlite.singletons.AppConstants;
+import com.redlongcitywork.easytourlite.constants.AppConstants;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
@@ -100,6 +100,20 @@ public class RequestPull {
             RequestCommand inside = it.next();
             if (inside.equals(command)) {
                 inside.setPriority(inside.getPriority() + 1);
+                return;
+            }
+        }
+    }
+    
+    public void deleteCommand(RequestCommand command){
+        if(pull == null){
+            return;
+        }
+        Iterator<RequestCommand> it = pull.iterator();
+        while(it.hasNext()){
+            RequestCommand inside = it.next();
+            if(inside.equals(command)){
+                pull.remove(command);
                 return;
             }
         }

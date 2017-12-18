@@ -6,7 +6,7 @@ import com.redlongcitywork.easytourlite.command.request.RequestCommand;
 import com.redlongcitywork.easytourlite.pull.request.RequestPull;
 import com.redlongcitywork.easytourlite.pull.response.ResponsePull;
 import com.redlongcitywork.easytourlite.responseitem.ResponseItem;
-import com.redlongcitywork.easytourlite.singletons.AppConstants;
+import com.redlongcitywork.easytourlite.constants.AppConstants;
 import com.redlongcitywork.easytourlite.utils.HttpUtils;
 import com.redlongcitywork.easytourlite.utils.TimeUtils;
 import java.sql.Timestamp;
@@ -56,23 +56,28 @@ public class ShortUpdatingJob extends QuartzJobBean {
 
         RequestCommand command = requestPull.getNextCommand();
         if (command != null) {
+            command.setProcessed(true);
             ResponseItem item = responsePull.getEmptyResponseItem(
                     command.getRequest());
             if (item != null) {
                 command.execute(new HttpUtils.GetCallBack() {
                     @Override
                     public void onDataReceived(JsonNode node) {
+                        requestPull.deleteCommand(command);
                         item.setNode(node);
-                        Timestamp freezeeTime = new Timestamp(
+                        item.setFreezeeTime(new Timestamp(
                                 timeUtils.getCurrentTime().getTime()
-                                + constants.getFreezzeeTimeDelay());
-                        item.setFreezeeTime(freezeeTime);
+                                + constants.getFreezzeeTimeDelay()));
+                        item.setRevelance(new Timestamp(timeUtils.getCurrentTime().getTime()
+                                + constants.getRevelance()));
                         item.setImmune(false);
+
                     }
 
                     @Override
                     public void onDataNotAwailable() {
                         item.setImmune(false);
+                        command.setProcessed(false);
                         LOG.log(Level.WARNING, "Executing response command failed!");
                     }
                 });

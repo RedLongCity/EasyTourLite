@@ -31,4 +31,8 @@ public interface ResponseItem<T> {
     
     void setPriority(int priority);
     
+    void setRevelance(Timestamp revelance);
+    
+    Timestamp getRevelance();
+    
 }

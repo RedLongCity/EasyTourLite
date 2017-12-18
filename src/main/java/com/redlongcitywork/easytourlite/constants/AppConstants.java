@@ -1,4 +1,4 @@
-package com.redlongcitywork.easytourlite.singletons;
+package com.redlongcitywork.easytourlite.constants;
 
 //import com.redlongcitywork.easytourlite.command.request.RequestCommand;
 import com.redlongcitywork.easytourlite.utils.TimeUtils;
@@ -19,32 +19,34 @@ import org.springframework.stereotype.Service;
 public class AppConstants {
 
     private static final Logger LOG = Logger.getLogger(AppConstants.class.getName());
-    
-    private boolean globalDelay=false;//for regulation access to out database
-    
-    private boolean filtersUpdate=false;//consist Country, From_Cities updating etc.
-    
-    private long shortUpdatingDelay=20000;//Previous or Current update time
-    
-    private boolean shortRun=true;//indicator for short job running
-    
-    private boolean shortSuspended=false;//indicator pause job by itself
-    
-    private String globalUpdatingDelay="0 0 0/2 * * ?";//delay between global updating
-    
-    private boolean globalRun=true;//indicator for global job running
-    
-    private boolean globalSuspended=false;//indicator of pausing job by itself
-    
-    private int requestPullSize = 10;//size of RequestCommand pull
-    
-    private int responsePullSize = 10;//size of ResponseItem pull
-    
+
+    private boolean globalDelay = false;//for regulation access to out database
+
+    private boolean filtersUpdate = false;//consist Country, From_Cities updating etc.
+
+    private long shortUpdatingDelay = 1000;//Previous or Current update time
+
+    private boolean shortRun = true;//indicator for short job running
+
+    private boolean shortSuspended = false;//indicator pause job by itself
+
+    private String globalUpdatingDelay = "0 0 0/2 * * ?";//delay between global updating
+
+    private boolean globalRun = true;//indicator for global job running
+
+    private boolean globalSuspended = false;//indicator of pausing job by itself
+
+    private int requestPullSize = 100;//size of RequestCommand pull
+
+    private int responsePullSize = 100;//size of ResponseItem pull
+
     private long freezzeeTimeDelay = 5000;//time for untouchability of ResponseItem in pull
+
+    private long revelance = 86400000;//time of revelance response items
 
     @Autowired
     TimeUtils timeUtils;
-    
+
     public boolean isFiltersUpdate() {
         return filtersUpdate;
     }
@@ -132,6 +134,13 @@ public class AppConstants {
     public void setFreezzeeTimeDelay(long freezzeeTime) {
         this.freezzeeTimeDelay = freezzeeTime;
     }
-    
-    
+
+    public long getRevelance() {
+        return revelance;
+    }
+
+    public void setRevelance(long revelance) {
+        this.revelance = revelance;
+    }
+
 }

@@ -2,7 +2,7 @@ package com.redlongcitywork.easytourlite.configuration;
 
 import com.redlongcitywork.easytourlite.quartz.jobs.GlobalUpdatingJob;
 import com.redlongcitywork.easytourlite.quartz.jobs.ShortUpdatingJob;
-import com.redlongcitywork.easytourlite.singletons.AppConstants;
+import com.redlongcitywork.easytourlite.constants.AppConstants;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;

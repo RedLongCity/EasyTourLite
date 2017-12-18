@@ -21,6 +21,8 @@ public class HotToursResponseItem implements ResponseItem<HotToursRequest> {
     private boolean immune;
     
     private int priority;
+    
+    private Timestamp revelance;
 
     public HotToursResponseItem(HotToursRequest request, JsonNode node) {
         this.request = request;
@@ -31,8 +33,6 @@ public class HotToursResponseItem implements ResponseItem<HotToursRequest> {
     public HotToursResponseItem() {
 
     }
-    
-    
 
     @Override
     public HotToursRequest getRequest() {
@@ -84,10 +84,20 @@ public class HotToursResponseItem implements ResponseItem<HotToursRequest> {
     public void setPriority(int priority) {
         this.priority = priority;
     }
-    
+
     @Override
-    public String toString() {
-        return "HotToursResponseItem{" + "request=" + request + ", node=" + node + ", freezeeTime=" + freezeeTime + ", immune=" + immune + '}';
+    public void setRevelance(Timestamp revelance) {
+        this.revelance = revelance;
     }
 
+    @Override
+    public Timestamp getRevelance() {
+        return this.revelance;
+    }
+
+    @Override
+    public String toString() {
+        return "HotToursResponseItem{" + "request=" + request + ", node=" + node + ", freezeeTime=" + freezeeTime + ", immune=" + immune + ", priority=" + priority + ", revelance=" + revelance + '}';
+    }
+    
 }
