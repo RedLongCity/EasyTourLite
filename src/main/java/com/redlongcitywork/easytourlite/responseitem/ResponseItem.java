@@ -1,6 +1,5 @@
 package com.redlongcitywork.easytourlite.responseitem;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import java.sql.Timestamp;
 
 /**
@@ -9,15 +8,15 @@ import java.sql.Timestamp;
  * 13/12/2017
  * interface like foundation for items of response information
  */
-public interface ResponseItem<T> {
+public interface ResponseItem<Request, Answer> {
     
-    T getRequest();
+    Request getRequest();
     
-    void setRequest(T request);
+    void setRequest(Request request);
     
-    JsonNode getNode();
+    Answer getAnswer();
     
-    void setNode(JsonNode node);
+    void setAnswer(Answer node);
     
     Timestamp getFreezeeTime();
     

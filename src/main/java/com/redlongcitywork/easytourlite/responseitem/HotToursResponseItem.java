@@ -1,8 +1,9 @@
 package com.redlongcitywork.easytourlite.responseitem;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.redlongcitywork.easytourlite.model.HotToursRequest;
+import com.redlongcitywork.easytourlite.model.Tour;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  *
@@ -10,11 +11,12 @@ import java.sql.Timestamp;
  * 13/12/2017
  * item for keeping information about Hot Tours Response
  */
-public class HotToursResponseItem implements ResponseItem<HotToursRequest> {
+public class HotToursResponseItem implements 
+        ResponseItem<HotToursRequest, List<Tour>> {
     
     private HotToursRequest request;
     
-    private JsonNode node;
+    private List<Tour> answer;
     
     private Timestamp freezeeTime;
     
@@ -24,9 +26,9 @@ public class HotToursResponseItem implements ResponseItem<HotToursRequest> {
     
     private Timestamp revelance;
 
-    public HotToursResponseItem(HotToursRequest request, JsonNode node) {
+    public HotToursResponseItem(HotToursRequest request, List<Tour> answer) {
         this.request = request;
-        this.node = node;
+        this.answer = answer;
         this.priority = 0;
     }
 
@@ -45,13 +47,13 @@ public class HotToursResponseItem implements ResponseItem<HotToursRequest> {
     }
 
     @Override
-    public JsonNode getNode() {
-        return node;
+    public List<Tour> getAnswer() {
+        return answer;
     }
 
     @Override
-    public void setNode(JsonNode node) {
-        this.node = node;
+    public void setAnswer(List<Tour> answer) {
+        this.answer = answer;
     }
     
     @Override
@@ -97,7 +99,7 @@ public class HotToursResponseItem implements ResponseItem<HotToursRequest> {
 
     @Override
     public String toString() {
-        return "HotToursResponseItem{" + "request=" + request + ", node=" + node + ", freezeeTime=" + freezeeTime + ", immune=" + immune + ", priority=" + priority + ", revelance=" + revelance + '}';
+        return "HotToursResponseItem{" + "request=" + request + ", answer=" + answer + ", freezeeTime=" + freezeeTime + ", immune=" + immune + ", priority=" + priority + ", revelance=" + revelance + '}';
     }
     
 }

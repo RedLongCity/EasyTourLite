@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
  * Class for getting Tours.class from JsonNode
  */
 @Service
-public class ToursNodeParser implements NodeParser<Tour> {
+public class TourNodeParser implements NodeParser<Tour> {
 
     @Autowired
     CountryService countryService;
@@ -49,7 +49,7 @@ public class ToursNodeParser implements NodeParser<Tour> {
     @Autowired
     TourService tourService;
 
-    private static final Logger LOG = Logger.getLogger(ToursNodeParser.class.getName());
+    private static final Logger LOG = Logger.getLogger(TourNodeParser.class.getName());
 
     @Override
     public Tour parseNode(JsonNode jsonNode) {

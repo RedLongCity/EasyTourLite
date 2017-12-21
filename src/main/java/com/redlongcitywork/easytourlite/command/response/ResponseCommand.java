@@ -1,6 +1,5 @@
 package com.redlongcitywork.easytourlite.command.response;
 
-import com.redlongcitywork.easytourlite.model.Answer;
 
 /**
  *
@@ -9,11 +8,11 @@ import com.redlongcitywork.easytourlite.model.Answer;
  * command for creating response to client
  */
 
-public interface ResponseCommand<T> {
+public interface ResponseCommand<Request, Answer> {
     
-    T getRequest();
+    Request getRequest();
     
-    void setRequest(T request);
+    void setRequest(Request request);
     
     Answer execute();
 }

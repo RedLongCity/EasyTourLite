@@ -4,12 +4,12 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.redlongcitywork.easytourlite.command.response.ResponseCommand;
 import com.redlongcitywork.easytourlite.handler.request.HotToursRequestHandler;
 import com.redlongcitywork.easytourlite.json.view.TourView;
-import com.redlongcitywork.easytourlite.model.Answer;
 import com.redlongcitywork.easytourlite.model.Country;
 import com.redlongcitywork.easytourlite.model.From_Cities;
 import com.redlongcitywork.easytourlite.model.HotToursRequest;
 import com.redlongcitywork.easytourlite.model.Hotel_Rating;
 import com.redlongcitywork.easytourlite.model.Meal_Type;
+import com.redlongcitywork.easytourlite.model.TourResponse;
 import com.redlongcitywork.easytourlite.service.CountryService;
 import com.redlongcitywork.easytourlite.service.From_CitiesService;
 import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
@@ -149,10 +149,10 @@ public class TourController {
 //    }
     @JsonView(TourView.class)
     @RequestMapping(value = "/gettoursbyrequest", method = RequestMethod.POST)
-    public ResponseEntity<Answer> getToursByRequest(
+    public ResponseEntity<TourResponse> getToursByRequest(
             @RequestBody HotToursRequest request) {
         if (request == null) {
-            return new ResponseEntity<Answer>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<TourResponse>(HttpStatus.BAD_REQUEST);
         }
         if (request.getHotel_Rating().isEmpty() || request.getHotel_Rating().equals("null")) {
             request.setHotel_Rating("3:78");
@@ -164,28 +164,28 @@ public class TourController {
             request.setNight_Till(7);
         }
         ResponseCommand command = (ResponseCommand) handler.handle(request);
-        Answer answer = command.execute();
+        TourResponse answer = (TourResponse) command.execute();
 
         if (answer == null) {
-            return new ResponseEntity<Answer>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<TourResponse>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<Answer>(answer, HttpStatus.OK);
+        return new ResponseEntity<TourResponse>(answer, HttpStatus.OK);
     }
 
     @JsonView(TourView.class)
     @RequestMapping(value = "/gettours", method = RequestMethod.GET)
-    public ResponseEntity<Answer> getTours() {
+    public ResponseEntity<TourResponse> getTours() {
         HotToursRequest request = new HotToursRequest();
         request.setHotel_Rating("3:78");
         request.setNight_From(2);
         request.setNight_Till(7);
         ResponseCommand command = (ResponseCommand) handler.handle(request);
-        Answer answer = command.execute();
+        TourResponse answer = (TourResponse) command.execute();
 
         if (answer == null) {
-            return new ResponseEntity<Answer>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<TourResponse>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<Answer>(answer, HttpStatus.OK);
+        return new ResponseEntity<TourResponse>(answer, HttpStatus.OK);
     }
 
     @JsonView(TourView.class)

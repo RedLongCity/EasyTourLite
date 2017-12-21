@@ -2,13 +2,15 @@ package com.redlongcitywork.easytourlite.command.response;
 
 import com.redlongcitywork.easytourlite.command.request.HotToursRequestCommand;
 import com.redlongcitywork.easytourlite.command.request.RequestCommand;
-import com.redlongcitywork.easytourlite.model.Answer;
 import com.redlongcitywork.easytourlite.model.HotToursRequest;
+import com.redlongcitywork.easytourlite.model.Tour;
+import com.redlongcitywork.easytourlite.model.TourResponse;
 import com.redlongcitywork.easytourlite.pull.request.RequestPull;
 import com.redlongcitywork.easytourlite.pull.response.ResponsePull;
 import com.redlongcitywork.easytourlite.responseitem.ResponseItem;
 import com.redlongcitywork.easytourlite.utils.ComeBackUtils;
 import com.redlongcitywork.easytourlite.utils.TimeUtils;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,8 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
  * 14/12/2017
  * class for getting answer for Hot Tours Requests
  */
-public class HotToursResponseCommand implements ResponseCommand<HotToursRequest> {
+public class HotToursResponseCommand implements 
+        ResponseCommand<HotToursRequest, TourResponse> {
 
     private static final Logger LOG = Logger.getLogger(HotToursResponseCommand.class.getName());
 
@@ -53,7 +56,7 @@ public class HotToursResponseCommand implements ResponseCommand<HotToursRequest>
     }
 
     @Override
-    public Answer execute() {
+    public TourResponse execute() {
         if (request == null) {
             LOG.log(Level.WARNING, "Response Command: request null!");
             return null;
@@ -63,7 +66,7 @@ public class HotToursResponseCommand implements ResponseCommand<HotToursRequest>
         ResponseItem item = responsePull.getResponse(request);
 
         if (item != null) {
-            return new Answer(0, item.getNode());
+            return new TourResponse(0, (List<Tour>) item.getAnswer(),request);
         }
 
         RequestCommand command = new HotToursRequestCommand(request,
@@ -71,7 +74,7 @@ public class HotToursResponseCommand implements ResponseCommand<HotToursRequest>
 
         requestPull.handleCommand(command);
 
-        return new Answer(comeBackUtils.calculate(command), null);
+        return new TourResponse(comeBackUtils.calculate(command), null, null);
     }
 
 }

@@ -7,6 +7,7 @@ import com.redlongcitywork.easytourlite.pull.request.RequestPull;
 import com.redlongcitywork.easytourlite.pull.response.ResponsePull;
 import com.redlongcitywork.easytourlite.responseitem.ResponseItem;
 import com.redlongcitywork.easytourlite.constants.AppConstants;
+import com.redlongcitywork.easytourlite.parsers.TourArrayNodeParser;
 import com.redlongcitywork.easytourlite.utils.HttpUtils;
 import com.redlongcitywork.easytourlite.utils.TimeUtils;
 import java.sql.Timestamp;
@@ -43,6 +44,9 @@ public class ShortUpdatingJob extends QuartzJobBean {
 
     @Autowired
     QuartzService quartzService;
+    
+    @Autowired
+    TourArrayNodeParser parser;
 
     @Autowired
     TimeUtils timeUtils;
@@ -64,7 +68,7 @@ public class ShortUpdatingJob extends QuartzJobBean {
                     @Override
                     public void onDataReceived(JsonNode node) {
                         requestPull.deleteCommand(command);
-                        item.setNode(node);
+                        item.setAnswer(parser.parseNode(node));
                         item.setFreezeeTime(new Timestamp(
                                 timeUtils.getCurrentTime().getTime()
                                 + constants.getFreezzeeTimeDelay()));
