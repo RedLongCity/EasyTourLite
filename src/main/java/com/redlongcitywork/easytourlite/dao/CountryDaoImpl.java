@@ -44,7 +44,7 @@ public class CountryDaoImpl extends AbstractDao<String, Country> implements Coun
 
     @Override
     public void saveOrUpdateCountry(Country country) {
-        saveOrUpdateCountry(country);
+        saveOrUpdate(country);
     }
 
 }

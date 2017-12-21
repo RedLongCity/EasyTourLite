@@ -5,7 +5,16 @@ import com.redlongcitywork.easytourlite.command.response.ResponseCommand;
 import com.redlongcitywork.easytourlite.handler.request.HotToursRequestHandler;
 import com.redlongcitywork.easytourlite.json.view.TourView;
 import com.redlongcitywork.easytourlite.model.Answer;
+import com.redlongcitywork.easytourlite.model.Country;
+import com.redlongcitywork.easytourlite.model.From_Cities;
 import com.redlongcitywork.easytourlite.model.HotToursRequest;
+import com.redlongcitywork.easytourlite.model.Hotel_Rating;
+import com.redlongcitywork.easytourlite.model.Meal_Type;
+import com.redlongcitywork.easytourlite.service.CountryService;
+import com.redlongcitywork.easytourlite.service.From_CitiesService;
+import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
+import com.redlongcitywork.easytourlite.service.Meal_TypeService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,28 +25,29 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author redlongcity
- * 21/11/2017
+ * @author redlongcity 21/11/2017
  */
 @RestController
 @RequestMapping("/json")
 public class TourController {
-    
+
     @Autowired
     HotToursRequestHandler handler;
 
-//    @Autowired
-//    private CountryService countryService;
-//
-//    @Autowired
-//    private From_CitiesService cityService;
-//
-//    @Autowired
-//    private Meal_TypeService meal_TypeService;
-//
+    @Autowired
+    private CountryService countryService;
+
+    @Autowired
+    private From_CitiesService cityService;
+
+    @Autowired
+    private Hotel_RatingService ratingService;
+
+    @Autowired
+    private Meal_TypeService typeService;
+
 //    @Autowired
 //    private ItToursHotSearchResponseHandler searchResponseHandler;
-
 //    @JsonView(TourView.class)
 //    @RequestMapping(value = "/gettours", method = RequestMethod.GET)
 //    public ResponseEntity<Response> getTours(
@@ -137,7 +147,6 @@ public class TourController {
 //        tourService.deleteToursBetweenDats(dateFrom, dateTill);
 //        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 //    }
-
     @JsonView(TourView.class)
     @RequestMapping(value = "/gettoursbyrequest", method = RequestMethod.POST)
     public ResponseEntity<Answer> getToursByRequest(
@@ -156,14 +165,14 @@ public class TourController {
         }
         ResponseCommand command = (ResponseCommand) handler.handle(request);
         Answer answer = command.execute();
-        
+
         if (answer == null) {
             return new ResponseEntity<Answer>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<Answer>(answer, HttpStatus.OK);
     }
-    
-        @JsonView(TourView.class)
+
+    @JsonView(TourView.class)
     @RequestMapping(value = "/gettours", method = RequestMethod.GET)
     public ResponseEntity<Answer> getTours() {
         HotToursRequest request = new HotToursRequest();
@@ -172,27 +181,40 @@ public class TourController {
         request.setNight_Till(7);
         ResponseCommand command = (ResponseCommand) handler.handle(request);
         Answer answer = command.execute();
-        
+
         if (answer == null) {
             return new ResponseEntity<Answer>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<Answer>(answer, HttpStatus.OK);
     }
-    
-            @JsonView(TourView.class)
+
+    @JsonView(TourView.class)
     @RequestMapping(value = "/push", method = RequestMethod.GET)
-    public ResponseEntity<Answer> doPush() {
-        HotToursRequest request = new HotToursRequest();
-        request.setHotel_Rating("3:78");
-        request.setNight_From(2);
-        request.setNight_Till(7);
-        ResponseCommand command = (ResponseCommand) handler.handle(request);
-        Answer answer = command.execute();
-        
-        if (answer == null) {
-            return new ResponseEntity<Answer>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<Void> doPush() {
+        List<Country> countryList = countryService.findAll();
+        List<From_Cities> cityList = cityService.findAll();
+        List<Hotel_Rating> ratingList = ratingService.findAll();
+        List<Meal_Type> typeList = typeService.findAll();
+
+        for (Country country : countryList) {
+            for (From_Cities city : cityList) {
+                for (Meal_Type type : typeList) {
+                    for (Hotel_Rating rating : ratingList) {
+                        HotToursRequest request = new HotToursRequest();
+                        request.setCountry(country);
+                        request.setFrom_Cities(city);
+                        request.setHotel_Rating(rating.getName());
+                        request.setMeal_Type(type);
+                        request.setNight_From(2);
+                        request.setNight_Till(7);
+                        ResponseCommand command = (ResponseCommand) handler.handle(request);
+                        command.execute();
+                    }
+                }
+            }
         }
-        return new ResponseEntity<Answer>(answer, HttpStatus.OK);
+
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "/string", method = RequestMethod.POST)
