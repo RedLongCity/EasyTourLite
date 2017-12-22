@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 
 /**
  *
- * @author redlongcity
- * 14/12/2017
+ * @author redlongcity 
+ * 14/12/2017 
  * class for storaging response elements
  */
 @Service
@@ -51,40 +51,42 @@ public class ResponsePull {
 
         ResponseItem item = null;
 
-        Iterator<ResponseItem> it = pull.iterator();
-        while (it.hasNext()) {
-            ResponseItem inside = it.next();
-
-            if (inside.isImmune()) {//if inside command is immune to changes
-                continue;
-            }
-
-            if (inside.getFreezeeTime().after(timeUtils.getCurrentTime())) {//if inside command is still freezzee
-                continue;
-            }
-
-            if (item == null) {
-                item = inside;
-                continue;
-            }
-
-            if (item.getPriority() > inside.getPriority()) {
-                item = inside;
-                continue;
-            }
-        }
-
-        if (item != null) {
+        if (pull.size() < constants.getResponsePullSize()) {
             item = new ResponseItemFactory().getResponseItem(request);
             item.setRequest(request);
             item.setImmune(true);
+            pull.add(item);
+            return item;
         } else {
-            if (pull.size() < constants.getResponsePullSize()) {
+            Iterator<ResponseItem> it = pull.iterator();
+            while (it.hasNext()) {
+                ResponseItem inside = it.next();
+
+                if (inside.isImmune()) {//if inside command is immune to changes
+                    continue;
+                }
+
+                if (inside.getFreezeeTime().after(timeUtils.getCurrentTime())) {//if inside command is still freezzee
+                    continue;
+                }
+
+                if (item == null) {
+                    item = inside;
+                    continue;
+                }
+
+                if (item.getPriority() > inside.getPriority()) {
+                    item = inside;
+                    continue;
+                }
+            }
+
+            if (item != null) {
                 item = new ResponseItemFactory().getResponseItem(request);
                 item.setRequest(request);
                 item.setImmune(true);
-                pull.add(item);
             }
+
         }
 
         return item;
