@@ -65,7 +65,7 @@ public class HotToursResponseCommand implements
 
         ResponseItem item = responsePull.getResponse(request);
 
-        if (item != null) {
+        if (item != null && !item.isImmune()) {
             return new TourResponse(0, (List<Tour>) item.getAnswer(),request);
         }
 

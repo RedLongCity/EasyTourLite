@@ -30,16 +30,16 @@ public class AppConstants {
 
     private boolean shortSuspended = false;//indicator pause job by itself
 
-//    private String globalUpdatingDelay = "0 0 0/2 * * ?";//delay between global updating
-    private String globalUpdatingDelay = "0 0/1 * * * ?";//delay between global updating
+    private String globalUpdatingDelay = "0 0 0/2 * * ?";//delay between global updating
+//    private String globalUpdatingDelay = "0 0/1 * * * ?";//delay between global updating
 
     private boolean globalRun = true;//indicator for global job running
 
     private boolean globalSuspended = false;//indicator of pausing job by itself
 
-    private int requestPullSize = 100;//size of RequestCommand pull
+    private int requestPullSize = 2;//size of RequestCommand pull
 
-    private int responsePullSize = 100;//size of ResponseItem pull
+    private int responsePullSize = 2;//size of ResponseItem pull
 
     private long freezzeeTimeDelay = 5000;//time for untouchability of ResponseItem in pull
 

@@ -82,9 +82,11 @@ public class ResponsePull {
             }
 
             if (item != null) {
+                pull.remove(item);
                 item = new ResponseItemFactory().getResponseItem(request);
                 item.setRequest(request);
                 item.setImmune(true);
+                pull.add(item);
             }
 
         }

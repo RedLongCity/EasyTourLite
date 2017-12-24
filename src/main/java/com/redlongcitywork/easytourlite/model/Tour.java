@@ -36,7 +36,7 @@ public class Tour {
     
     @JsonView(TourView.class)
     @Id
-    @Column(name="tour_key",unique=false,nullable=false)
+    @Column(name="tour_key",unique=true,nullable=false)
     private String key;
     
     @JsonView(TourView.class)
