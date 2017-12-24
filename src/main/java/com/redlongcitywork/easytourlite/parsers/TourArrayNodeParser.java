@@ -51,7 +51,7 @@ public class TourArrayNodeParser implements NodeParser<List<Tour>> {
     @Autowired
     private TimeUtils utils;
     
-    private Timestamp time;
+    private long time;
 
     @Override
     public List<Tour> parseNode(JsonNode arrayNode) {
@@ -68,11 +68,11 @@ public class TourArrayNodeParser implements NodeParser<List<Tour>> {
                 typeService.findAll(),
                 ratingService.findAll(),
                 currencyService.findAll());
-        time = utils.getCurrentTime();
+        time = System.currentTimeMillis();
         for (int i = 0; i < offersNode.size(); i++) {
             list.add(parser.parseNode(offersNode.get(i)));
         }
-        LOG.log(Level.INFO, "Time of operation: " + (time.getTime() - utils.getCurrentTime().getTime()));
+        LOG.log(Level.INFO, "Time of operation: " + (System.currentTimeMillis() - time));
 
         return list;
     }

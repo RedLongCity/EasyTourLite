@@ -28,13 +28,14 @@ import javax.persistence.Table;
 @Table(name="tours")
 public class Tour {
     
+//    @JsonView(TourView.class)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name="tour_id",unique=true,nullable=false)
+//    private Integer id;
+    
     @JsonView(TourView.class)
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="tour_id",unique=true,nullable=false)
-    private Integer id;
-    
-    //@JsonView(TourView.class)
     @Column(name="tour_key",unique=false,nullable=false)
     private String key;
     
@@ -133,13 +134,13 @@ public class Tour {
     @OneToMany(fetch=FetchType.LAZY,mappedBy="tour",cascade=CascadeType.ALL)
     private Set<Hotel_Image> hotel_ImageSet = new HashSet<Hotel_Image>();
     
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+//    public Integer getId() {
+//        return id;
+//    }
+//
+//    public void setId(Integer id) {
+//        this.id = id;
+//    }
 
     public String getKey() {
         return key;
@@ -332,11 +333,11 @@ public class Tour {
     public void setFrom_Cities(From_Cities from_Cities) {
         this.from_Cities = from_Cities;
     }
-    
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 13 * hash + Objects.hashCode(this.id);
+        int hash = 3;
+        hash = 29 * hash + Objects.hashCode(this.key);
         return hash;
     }
 
@@ -352,7 +353,7 @@ public class Tour {
             return false;
         }
         final Tour other = (Tour) obj;
-        if (!Objects.equals(this.id, other.id)) {
+        if (!Objects.equals(this.key, other.key)) {
             return false;
         }
         return true;
@@ -360,8 +361,7 @@ public class Tour {
 
     @Override
     public String toString() {
-        return "Tour{" + "id=" + id + ", key=" + key + ", type=" + type + ", country=" + country + ", region=" + region + ", hotel_id=" + hotel_id + ", hotel=" + hotel + ", hotel_Rating=" + hotel_Rating + ", meal_Type=" + meal_Type + ", room_Type=" + room_Type + ", adult_Amount=" + adult_Amount + ", child_Amount=" + child_Amount + ", accomodation=" + accomodation + ", duration=" + duration + ", date_From=" + date_From + ", date_From_Unix=" + date_From_Unix + ", currency_id=" + currency_id + ", currency_Symbol=" + currency_Symbol + ", prices=" + prices + ", price_Old=" + price_Old + ", price_Change_Percent=" + price_Change_Percent + ", from_Cities=" + from_Cities + ", from_City_Gen=" + from_City_Gen + ", transport_Type=" + transport_Type + ", hotel_ImageSet=" + hotel_ImageSet + '}';
+        return "Tour{" + "key=" + key + ", type=" + type + ", country=" + country + ", region=" + region + ", hotel_id=" + hotel_id + ", hotel=" + hotel + ", hotel_Rating=" + hotel_Rating + ", meal_Type=" + meal_Type + ", room_Type=" + room_Type + ", adult_Amount=" + adult_Amount + ", child_Amount=" + child_Amount + ", accomodation=" + accomodation + ", duration=" + duration + ", date_From=" + date_From + ", date_From_Unix=" + date_From_Unix + ", currency_id=" + currency_id + ", currency_Symbol=" + currency_Symbol + ", prices=" + prices + ", price_Old=" + price_Old + ", price_Change_Percent=" + price_Change_Percent + ", from_Cities=" + from_Cities + ", from_City_Gen=" + from_City_Gen + ", transport_Type=" + transport_Type + ", hotel_ImageSet=" + hotel_ImageSet + '}';
     }
-
-    
+ 
 }

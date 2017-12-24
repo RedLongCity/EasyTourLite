@@ -18,8 +18,6 @@ public interface TourDao {
     List<Tour> getToursBetweenDates(Integer dateBefore,
             Integer dateTill);
 
-    Tour findById(Integer id);
-
     Tour findByKey(String key);
 
     void save(Tour tour);
@@ -27,5 +25,7 @@ public interface TourDao {
     void mergeTour(Tour tour);
 
     void deleteTour(Tour tour);
+    
+    void saveOrUpdateTour(Tour tour);
 
 }

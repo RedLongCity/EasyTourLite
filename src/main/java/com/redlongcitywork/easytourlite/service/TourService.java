@@ -10,11 +10,11 @@ import java.util.List;
 
 public interface TourService {
     
-   Tour findById(Integer id);
-   
    Tour findByKey(String key);
    
    void saveTour(Tour tour);
+   
+   void saveOrUpdateTour(Tour tour);
    
    void updateTour(Tour tour);
    

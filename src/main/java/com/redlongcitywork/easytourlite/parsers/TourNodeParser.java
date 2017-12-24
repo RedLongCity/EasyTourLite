@@ -61,15 +61,11 @@ public class TourNodeParser implements NodeParser<Tour> {
         Tour tour = new Tour();
 
         if (jsonNode.has("key")) {
-            Tour entity = tourService.findByKey(jsonNode.path("key").asText());
-            if (entity != null) {
-                return entity;
-            } else {
-                tour.setKey(jsonNode.path("key").asText());
-            }
+            tour.setKey(jsonNode.path("key").asText());
         }
 
-        if (jsonNode.has("type")) {tour.setType(jsonNode.path("type").asInt());
+        if (jsonNode.has("type")) {
+            tour.setType(jsonNode.path("type").asInt());
         }
 
         if (jsonNode.has("country_id")) {

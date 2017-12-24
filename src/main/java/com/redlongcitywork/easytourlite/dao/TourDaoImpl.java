@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository("tourDao")
-public class TourDaoImpl extends AbstractDao<Integer, Tour> implements TourDao {
+public class TourDaoImpl extends AbstractDao<String, Tour> implements TourDao {
 
     @Override
     public List<Tour> findAll() {
@@ -73,25 +73,8 @@ public class TourDaoImpl extends AbstractDao<Integer, Tour> implements TourDao {
     }
 
     @Override
-    public Tour findById(Integer id) {
-        Tour tour = getByKey(id);
-        if (tour != null) {
-            Hibernate.initialize(tour.getCountry());
-            Hibernate.initialize(tour.getFrom_Cities());
-            Hibernate.initialize(tour.getPrices());
-            Hibernate.initialize(tour.getHotel_ImageSet());
-            Hibernate.initialize(tour.getHotel_Rating());
-            Hibernate.initialize(tour.getMeal_Type());
-
-        }
-        return tour;
-    }
-
-    @Override
     public Tour findByKey(String key) {
-        Criteria crit = createCriteria();
-        crit.add(Restrictions.eq("key", key));
-        Tour tour = (Tour) crit.uniqueResult();
+        Tour tour = getByKey(key);
         if (tour != null) {
             Hibernate.initialize(tour.getCountry());
             Hibernate.initialize(tour.getFrom_Cities());
@@ -118,4 +101,9 @@ public class TourDaoImpl extends AbstractDao<Integer, Tour> implements TourDao {
         delete(tour);
     }
 
+    @Override
+    public void saveOrUpdateTour(Tour tour) {
+        saveOrUpdate(tour);
+    }
+    
 }

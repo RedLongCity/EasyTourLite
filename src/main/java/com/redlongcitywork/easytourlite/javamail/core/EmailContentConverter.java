@@ -39,7 +39,7 @@ public class EmailContentConverter {
         message = message.concat("Телефонный номер: " + data.getMobileNumber() + "\n");
         message = message.concat("Город: " + data.getMobileNumber() + "\n\n");
         message = message.concat("Данные тура: \n");
-        message = message.concat("id: " + tour.getId() + "\n");
+        message = message.concat("key: " + tour.getKey() + "\n");
         message = message.concat("Страна: " + tour.getCountry().getName() + "\n");
         message = message.concat("Из города: " + tour.getFrom_Cities().getName() + "\n");
         message = message.concat("Регион: " + tour.getRegion() + "\n");

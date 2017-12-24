@@ -16,28 +16,27 @@ import org.springframework.transaction.annotation.Transactional;
 public class TourServiceImpl implements TourService {
 
     @Autowired
-    TourDao tourDao;
-
-    @Override
-    public Tour findById(Integer id) {
-        return tourDao.findById(id);
-    }
+    TourDao dao;
 
     @Override
     public Tour findByKey(String key) {
-        return tourDao.findByKey(key);
+        return dao.findByKey(key);
     }
 
     @Override
     public void saveTour(Tour tour) {
-        tourDao.save(tour);
+        dao.save(tour);
     }
 
     @Override
+    public void saveOrUpdateTour(Tour tour) {
+        dao.saveOrUpdateTour(tour);
+    }
+    
+    @Override
     public void updateTour(Tour tour) {
-        Tour entity = tourDao.findById(tour.getId());
+        Tour entity = dao.findByKey(tour.getKey());
         if (entity != null) {
-            entity.setKey(tour.getKey());
             entity.setType(tour.getType());
             entity.setCountry(tour.getCountry());
             entity.setRegion(tour.getRegion());
@@ -61,46 +60,46 @@ public class TourServiceImpl implements TourService {
             entity.setFrom_City_Gen(tour.getFrom_City_Gen());
             entity.setTransport_Type(tour.getTransport_Type());
             entity.setHotel_ImageSet(tour.getHotel_ImageSet());
-            tourDao.mergeTour(entity);
+            dao.mergeTour(entity);
         }
     }
 
     @Override
     public void deleteTour(Tour tour) {
-        tourDao.deleteTour(tour);
+        dao.deleteTour(tour);
     }
 
     @Override
     public void deleteToursBeforeDate(Integer date) {
-        List<Tour> tourList = tourDao.getToursBeforeDate(date);
+        List<Tour> tourList = dao.getToursBeforeDate(date);
         if (tourList != null) {
             for (Tour tour : tourList) {
-                tourDao.deleteTour(tour);
+                dao.deleteTour(tour);
             }
         }
     }
 
     @Override
     public void deleteToursBetweenDats(Integer dateFrom, Integer dateTill) {
-        List<Tour> tourList = tourDao.getToursBetweenDates(dateFrom, dateTill);
+        List<Tour> tourList = dao.getToursBetweenDates(dateFrom, dateTill);
         if (tourList != null) {
             for (Tour tour : tourList) {
-                tourDao.deleteTour(tour);
+                dao.deleteTour(tour);
             }
         }
     }
 
     @Override
     public List<Tour> findAll() {
-        return tourDao.findAll();
+        return dao.findAll();
     }
 
     @Override
     public void deleteAllTours() {
-        List<Tour> tourList = tourDao.findAll();
+        List<Tour> tourList = dao.findAll();
         if (tourList != null) {
             for (Tour tour : tourList) {
-                tourDao.deleteTour(tour);
+                dao.deleteTour(tour);
             }
         }
     }
