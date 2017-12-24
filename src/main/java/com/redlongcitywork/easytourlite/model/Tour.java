@@ -2,6 +2,7 @@ package com.redlongcitywork.easytourlite.model;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.redlongcitywork.easytourlite.json.view.TourView;
+import com.redlongcitywork.easytourlite.model.session.HotToursSession;
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.Objects;
@@ -10,130 +11,128 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 
 /**
  *
  * @author redlongcity
  */
 @Entity
-@Table(name="tours")
+@Table(name = "tours")
 public class Tour {
-    
+
 //    @JsonView(TourView.class)
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    @Column(name="tour_id",unique=true,nullable=false)
 //    private Integer id;
-    
     @JsonView(TourView.class)
     @Id
-    @Column(name="tour_key",unique=true,nullable=false)
+    @Column(name = "tour_key", unique = true, nullable = false)
     private String key;
-    
+
     @JsonView(TourView.class)
-    @Column(name="type",unique=false,nullable=false)
+    @Column(name = "type", unique = false, nullable = false)
     private Integer type;
-    
+
     @JsonView(TourView.class)
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="country_id",nullable=false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "country_id", nullable = false)
     private Country country;
-    
+
     @JsonView(TourView.class)
-    @Column(name="region",unique=false,nullable=false)
+    @Column(name = "region", unique = false, nullable = false)
     private String region;
-    
+
     @JsonView(TourView.class)
-    @Column(name="hotel_id",unique=false,nullable=false)
+    @Column(name = "hotel_id", unique = false, nullable = false)
     private Integer hotel_id;
-    
+
     @JsonView(TourView.class)
-    @Column(name="hotel",unique=false,nullable=false)
+    @Column(name = "hotel", unique = false, nullable = false)
     private String hotel;
-    
+
     @JsonView(TourView.class)
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="hotel_rating_id",nullable=false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "hotel_rating_id", nullable = false)
     private Hotel_Rating hotel_Rating;
-    
+
     @JsonView(TourView.class)
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="meal_type_id",nullable=false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "meal_type_id", nullable = false)
     private Meal_Type meal_Type;
-    
+
     @JsonView(TourView.class)
-    @Column(name="room_type",unique=false,nullable=false)
+    @Column(name = "room_type", unique = false, nullable = false)
     private String room_Type;
-    
+
     @JsonView(TourView.class)
-    @Column(name="adult_amount",unique=false,nullable=false)
+    @Column(name = "adult_amount", unique = false, nullable = false)
     private Integer adult_Amount;
-    
+
     @JsonView(TourView.class)
-    @Column(name="child_amount",unique=false,nullable=false)
+    @Column(name = "child_amount", unique = false, nullable = false)
     private Integer child_Amount;
-    
+
     @JsonView(TourView.class)
-    @Column(name="accomodation",unique=false,nullable=false)
+    @Column(name = "accomodation", unique = false, nullable = false)
     private String accomodation;
-    
+
     @JsonView(TourView.class)
-    @Column(name="duration",unique=false,nullable=false)
+    @Column(name = "duration", unique = false, nullable = false)
     private Integer duration;
-    
+
     @JsonView(TourView.class)
-    @Column(name="date_from",unique=false,nullable=false)// (формат YYYY-mm-dd)
+    @Column(name = "date_from", unique = false, nullable = false)// (формат YYYY-mm-dd)
     private Date date_From;
-    
-    @Column(name="date_from_unix",unique=false,nullable=false)
+
+    @Column(name = "date_from_unix", unique = false, nullable = false)
     private Integer date_From_Unix;
-    
+
     @JsonView(TourView.class)
-    @Column(name="currency_id",unique=false,nullable=false)
+    @Column(name = "currency_id", unique = false, nullable = false)
     private Integer currency_id;
-    
+
     @JsonView(TourView.class)
-    @Column(name="currency_symbol",unique=false,nullable=false)
+    @Column(name = "currency_symbol", unique = false, nullable = false)
     private String currency_Symbol;
-    
+
     @JsonView(TourView.class)
-    @OneToMany(fetch=FetchType.LAZY,mappedBy="tour",cascade=CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tour", cascade = CascadeType.ALL)
     private Set<Price> prices = new HashSet<Price>();
-    
+
     @JsonView(TourView.class)
-    @Column(name="price_old",unique=false,nullable=true)
+    @Column(name = "price_old", unique = false, nullable = true)
     private Integer price_Old;
-    
+
     @JsonView(TourView.class)
-    @Column(name="price_change_percent",unique=false,nullable=true)
+    @Column(name = "price_change_percent", unique = false, nullable = true)
     private Float price_Change_Percent;
-    
+
     @JsonView(TourView.class)
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="from_city_id",nullable=true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "from_city_id", nullable = true)
     private From_Cities from_Cities;
-    
+
     @JsonView(TourView.class)
-    @Column(name="from_city_gen",unique=false,nullable=true)
+    @Column(name = "from_city_gen", unique = false, nullable = true)
     private String from_City_Gen;
-    
+
     @JsonView(TourView.class)
-    @Column(name="transport_type",unique=false,nullable=true)
+    @Column(name = "transport_type", unique = false, nullable = true)
     private String transport_Type;
-    
+
     @JsonView(TourView.class)
-    @OneToMany(fetch=FetchType.LAZY,mappedBy="tour",cascade=CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tour", cascade = CascadeType.ALL)
     private Set<Hotel_Image> hotel_ImageSet = new HashSet<Hotel_Image>();
-    
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "session_id", nullable = true)
+    private HotToursSession session;
 //    public Integer getId() {
 //        return id;
 //    }
@@ -141,7 +140,6 @@ public class Tour {
 //    public void setId(Integer id) {
 //        this.id = id;
 //    }
-
     public String getKey() {
         return key;
     }
@@ -334,6 +332,14 @@ public class Tour {
         this.from_Cities = from_Cities;
     }
 
+    public HotToursSession getSession() {
+        return session;
+    }
+
+    public void setSession(HotToursSession session) {
+        this.session = session;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 3;
@@ -361,7 +367,7 @@ public class Tour {
 
     @Override
     public String toString() {
-        return "Tour{" + "key=" + key + ", type=" + type + ", country=" + country + ", region=" + region + ", hotel_id=" + hotel_id + ", hotel=" + hotel + ", hotel_Rating=" + hotel_Rating + ", meal_Type=" + meal_Type + ", room_Type=" + room_Type + ", adult_Amount=" + adult_Amount + ", child_Amount=" + child_Amount + ", accomodation=" + accomodation + ", duration=" + duration + ", date_From=" + date_From + ", date_From_Unix=" + date_From_Unix + ", currency_id=" + currency_id + ", currency_Symbol=" + currency_Symbol + ", prices=" + prices + ", price_Old=" + price_Old + ", price_Change_Percent=" + price_Change_Percent + ", from_Cities=" + from_Cities + ", from_City_Gen=" + from_City_Gen + ", transport_Type=" + transport_Type + ", hotel_ImageSet=" + hotel_ImageSet + '}';
+        return "Tour{" + "key=" + key + ", type=" + type + ", country=" + country + ", region=" + region + ", hotel_id=" + hotel_id + ", hotel=" + hotel + ", hotel_Rating=" + hotel_Rating + ", meal_Type=" + meal_Type + ", room_Type=" + room_Type + ", adult_Amount=" + adult_Amount + ", child_Amount=" + child_Amount + ", accomodation=" + accomodation + ", duration=" + duration + ", date_From=" + date_From + ", date_From_Unix=" + date_From_Unix + ", currency_id=" + currency_id + ", currency_Symbol=" + currency_Symbol + ", prices=" + prices + ", price_Old=" + price_Old + ", price_Change_Percent=" + price_Change_Percent + ", from_Cities=" + from_Cities + ", from_City_Gen=" + from_City_Gen + ", transport_Type=" + transport_Type + ", hotel_ImageSet=" + hotel_ImageSet + ", session=" + session + '}';
     }
- 
+    
 }
