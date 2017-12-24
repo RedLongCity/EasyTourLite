@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.redlongcitywork.easytourlite.json.view.HotToursSessionView;
 import com.redlongcitywork.easytourlite.model.HotToursRequest;
 import com.redlongcitywork.easytourlite.model.Tour;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -21,9 +22,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author redlongcity 
- * 24/12/2017 
- * model for keeping info about unit of request
+ * @author redlongcity 24/12/2017 model for keeping info about unit of request
  * from client
  */
 @Entity
@@ -45,6 +44,10 @@ public class HotToursSession {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "session",
             cascade = CascadeType.ALL)
     private Set<Tour> toursSet = new HashSet<Tour>();
+
+    @JsonView(HotToursSessionView.class)
+    @Column(name = "session_time", unique = false, nullable = false)
+    private Timestamp time;
 
     public Integer getId() {
         return id;
@@ -70,6 +73,14 @@ public class HotToursSession {
         this.toursSet = toursSet;
     }
 
+    public Timestamp getTime() {
+        return time;
+    }
+
+    public void setTime(Timestamp time) {
+        this.time = time;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 5;
@@ -97,7 +108,7 @@ public class HotToursSession {
 
     @Override
     public String toString() {
-        return "HotToursSession{" + "id=" + id + ", request=" + request + ", toursSet=" + toursSet + '}';
+        return "HotToursSession{" + "id=" + id + ", request=" + request + ", toursSet=" + toursSet + ", time=" + time + '}';
     }
-
+    
 }

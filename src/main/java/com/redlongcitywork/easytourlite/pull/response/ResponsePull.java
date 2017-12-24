@@ -94,4 +94,28 @@ public class ResponsePull {
         return item;
     }
 
+    public ResponseItem getItemForSave() {
+        if (pull == null) {
+            return null;
+        }
+        ResponseItem item = null;
+        Iterator<ResponseItem> it = pull.iterator();
+        while (it.hasNext()) {
+            ResponseItem inside = it.next();
+
+            if (item == null) {
+                item = inside;
+            }
+
+            if (inside.getPriority() > item.getPriority()) {
+                item = inside;
+            }
+        }
+        return item;
+    }
+
+    public void deleteResponseItem(ResponseItem item) {
+        pull.remove(item);
+    }
+
 }

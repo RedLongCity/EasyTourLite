@@ -8,5 +8,12 @@ package com.redlongcitywork.easytourlite.saver;
  */
 public interface Saver<Answer> {
     
-    void save(Answer answer);
+    void save(Answer answer, saveCallback callback);
+    
+    interface saveCallback{
+        
+        void onSaved();
+        
+        void onNotSaved();
+    }
 }
