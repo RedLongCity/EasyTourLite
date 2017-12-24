@@ -19,7 +19,7 @@ public interface HotToursRequestService {
     
     void deleteHotToursRequest(HotToursRequest request);
     
-    List<HotToursRequest> findAll();
+    List<HotToursRequest> findAllHotRequests();
     
     void deleteAllHotToursRequests();
     

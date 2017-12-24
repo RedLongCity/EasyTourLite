@@ -52,7 +52,7 @@ public class HotToursRequestServiceImpl implements HotToursRequestService {
     }
 
     @Override
-    public List<HotToursRequest> findAll() {
+    public List<HotToursRequest> findAllHotRequests() {
         return requestDao.findAll();
     }
 
