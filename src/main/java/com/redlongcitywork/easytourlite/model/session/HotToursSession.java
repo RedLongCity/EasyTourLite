@@ -16,13 +16,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
  *
- * @author redlongcity 24/12/2017 model for keeping info about unit of request
+ * @author redlongcity 
+ * 2import org.hibernate.annotations.Cascade;
+4/12/2017 
+ * model for keeping info about unit of request
  * from client
  */
 @Entity
@@ -41,8 +45,10 @@ public class HotToursSession {
     private HotToursRequest request;
 
     @JsonView(HotToursSessionView.class)
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "session",
-            cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "hot_tours_sessions_has_tours",
+            joinColumns = {@JoinColumn(name = "hot_tours_sessions_session_id")},
+            inverseJoinColumns = {@JoinColumn(name = "tours_tour_key")})
     private Set<Tour> toursSet = new HashSet<Tour>();
 
     @JsonView(HotToursSessionView.class)
@@ -80,7 +86,7 @@ public class HotToursSession {
     public void setTime(Timestamp time) {
         this.time = time;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 5;
@@ -110,5 +116,5 @@ public class HotToursSession {
     public String toString() {
         return "HotToursSession{" + "id=" + id + ", request=" + request + ", toursSet=" + toursSet + ", time=" + time + '}';
     }
-    
+
 }

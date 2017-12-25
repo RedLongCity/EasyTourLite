@@ -59,4 +59,9 @@ public class HotToursRequestDaoImpl extends AbstractDao<Integer, HotToursRequest
         delete(request);
     }
 
+    @Override
+    public void saveOrUpdateHotToursRequest(HotToursRequest request) {
+        saveOrUpdate(request);
+    }
+    
 }

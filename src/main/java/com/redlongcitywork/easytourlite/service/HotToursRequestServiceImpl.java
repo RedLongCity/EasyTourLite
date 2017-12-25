@@ -19,21 +19,21 @@ import org.springframework.transaction.annotation.Transactional;
 public class HotToursRequestServiceImpl implements HotToursRequestService {
 
     @Autowired
-    HotToursRequestDao requestDao;
+    HotToursRequestDao dao;
 
     @Override
     public HotToursRequest findById(Integer id) {
-        return requestDao.findById(id);
+        return dao.findById(id);
     }
 
     @Override
     public void saveHotToursRequest(HotToursRequest request) {
-        requestDao.save(request);
+        dao.save(request);
     }
 
     @Override
     public void updateHotToursRequest(HotToursRequest request) {
-        HotToursRequest entity = requestDao.findById(request.getId());
+        HotToursRequest entity = dao.findById(request.getId());
         if (entity != null) {
             entity.setCountry(request.getCountry());
             entity.setFrom_Cities(request.getFrom_Cities());
@@ -42,27 +42,34 @@ public class HotToursRequestServiceImpl implements HotToursRequestService {
             entity.setNight_From(request.getNight_From());
             entity.setNight_Till(request.getNight_Till());
             entity.setRequestTime(request.getRequestTime());
-            requestDao.mergeHotToursRequest(entity);
+            dao.mergeHotToursRequest(entity);
         }
     }
 
     @Override
     public void deleteHotToursRequest(HotToursRequest request) {
-        requestDao.deleteHotToursRequest(request);
+        dao.deleteHotToursRequest(request);
     }
 
     @Override
     public List<HotToursRequest> findAllHotRequests() {
-        return requestDao.findAll();
+        return dao.findAll();
     }
 
     @Override
     public void deleteAllHotToursRequests() {
-        List<HotToursRequest> requestList = requestDao.findAll();
+        List<HotToursRequest> requestList = dao.findAll();
         if (requestList != null) {
             for (HotToursRequest request : requestList) {
-                requestDao.deleteHotToursRequest(request);
+                dao.deleteHotToursRequest(request);
             }
         }
     }
+
+    @Override
+    public void saveOrUpdateHotToursRequest(HotToursRequest request) {
+        dao.saveOrUpdateHotToursRequest(request);
+    }
+    
+    
 }

@@ -19,4 +19,6 @@ public interface HotToursRequestDao {
     void mergeHotToursRequest(HotToursRequest request);
 
     void deleteHotToursRequest(HotToursRequest request);
+    
+    void saveOrUpdateHotToursRequest(HotToursRequest request);
 }

@@ -136,14 +136,17 @@ public class TourNodeParser implements NodeParser<Tour> {
             Price priceUsd = new Price();
             priceUsd.setCurrency(findCurrency("1"));
             priceUsd.setCost(jsonNode.path("prices").path("1").asInt());
+            priceUsd.setTour(tour);
 
             Price priceUah = new Price();
             priceUah.setCurrency(findCurrency("2"));
             priceUah.setCost(jsonNode.path("prices").path("2").asInt());
+            priceUah.setTour(tour);
 
             Price priceEur = new Price();
             priceEur.setCurrency(findCurrency("10"));
             priceEur.setCost(jsonNode.path("prices").path("10").asInt());
+            priceEur.setTour(tour);
 
             tour.getPrices().add(priceUsd);
             tour.getPrices().add(priceUah);
@@ -215,9 +218,9 @@ public class TourNodeParser implements NodeParser<Tour> {
         return null;
     }
 
-    private Hotel_Rating findRating(String id) {
+    private Hotel_Rating findRating(String name) {
         for (Hotel_Rating rating : ratingList) {
-            if (rating.getId().equals(id)) {
+            if (rating.getName().equals(name)) {
                 return rating;
             }
         }

@@ -1,13 +1,16 @@
 package com.redlongcitywork.easytourlite.saver;
 
+import com.redlongcitywork.easytourlite.model.HotToursRequest;
 import com.redlongcitywork.easytourlite.model.session.HotToursSession;
 import com.redlongcitywork.easytourlite.responseitem.HotToursResponseItem;
+import com.redlongcitywork.easytourlite.service.HotToursRequestService;
 import com.redlongcitywork.easytourlite.service.HotToursSessionService;
 import com.redlongcitywork.easytourlite.utils.TimeUtils;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 /**
  *
@@ -21,6 +24,9 @@ public class HotToursSaver implements Saver<HotToursResponseItem> {
 
     @Autowired
     private HotToursSessionService service;
+    
+    @Autowired
+    private HotToursRequestService requestService;
 
     @Autowired
     private TimeUtils utils;
@@ -30,7 +36,14 @@ public class HotToursSaver implements Saver<HotToursResponseItem> {
         if (item == null) {
             return;
         }
-
+        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+        
+        HotToursRequest request = item.getRequest();
+        if(request == null){
+            return;
+        }
+        request.setRequestTime(utils.getCurrentTime());
+        requestService.saveOrUpdateHotToursRequest(request);
         HotToursSession session = new HotToursSession();
         session.setRequest(item.getRequest());
         session.getToursSet().addAll(item.getAnswer());

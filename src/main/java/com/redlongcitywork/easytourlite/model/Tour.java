@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -24,12 +25,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tours")
 public class Tour {
-
-//    @JsonView(TourView.class)
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name="tour_id",unique=true,nullable=false)
-//    private Integer id;
+    
     @JsonView(TourView.class)
     @Id
     @Column(name = "tour_key", unique = true, nullable = false)
@@ -130,16 +126,8 @@ public class Tour {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "tour", cascade = CascadeType.ALL)
     private Set<Hotel_Image> hotel_ImageSet = new HashSet<Hotel_Image>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "session_id", nullable = true)
-    private HotToursSession session;
-//    public Integer getId() {
-//        return id;
-//    }
-//
-//    public void setId(Integer id) {
-//        this.id = id;
-//    }
+    @ManyToMany(mappedBy = "toursSet")
+    private Set<HotToursSession> sessions = new HashSet<HotToursSession>();
     public String getKey() {
         return key;
     }
@@ -332,13 +320,13 @@ public class Tour {
         this.from_Cities = from_Cities;
     }
 
-    public HotToursSession getSession() {
-        return session;
-    }
-
-    public void setSession(HotToursSession session) {
-        this.session = session;
-    }
+//    public HotToursSession getSession() {
+//        return session;
+//    }
+//
+//    public void setSession(HotToursSession session) {
+//        this.session = session;
+//    }
     
     @Override
     public int hashCode() {
@@ -367,7 +355,7 @@ public class Tour {
 
     @Override
     public String toString() {
-        return "Tour{" + "key=" + key + ", type=" + type + ", country=" + country + ", region=" + region + ", hotel_id=" + hotel_id + ", hotel=" + hotel + ", hotel_Rating=" + hotel_Rating + ", meal_Type=" + meal_Type + ", room_Type=" + room_Type + ", adult_Amount=" + adult_Amount + ", child_Amount=" + child_Amount + ", accomodation=" + accomodation + ", duration=" + duration + ", date_From=" + date_From + ", date_From_Unix=" + date_From_Unix + ", currency_id=" + currency_id + ", currency_Symbol=" + currency_Symbol + ", prices=" + prices + ", price_Old=" + price_Old + ", price_Change_Percent=" + price_Change_Percent + ", from_Cities=" + from_Cities + ", from_City_Gen=" + from_City_Gen + ", transport_Type=" + transport_Type + ", hotel_ImageSet=" + hotel_ImageSet + ", session=" + session + '}';
+        return "Tour{" + "key=" + key + ", type=" + type + ", country=" + country + ", region=" + region + ", hotel_id=" + hotel_id + ", hotel=" + hotel + ", hotel_Rating=" + hotel_Rating + ", meal_Type=" + meal_Type + ", room_Type=" + room_Type + ", adult_Amount=" + adult_Amount + ", child_Amount=" + child_Amount + ", accomodation=" + accomodation + ", duration=" + duration + ", date_From=" + date_From + ", date_From_Unix=" + date_From_Unix + ", currency_id=" + currency_id + ", currency_Symbol=" + currency_Symbol + ", prices=" + prices + ", price_Old=" + price_Old + ", price_Change_Percent=" + price_Change_Percent + ", from_Cities=" + from_Cities + ", from_City_Gen=" + from_City_Gen + ", transport_Type=" + transport_Type + ", hotel_ImageSet=" + hotel_ImageSet + '}';
     }
-    
+
 }

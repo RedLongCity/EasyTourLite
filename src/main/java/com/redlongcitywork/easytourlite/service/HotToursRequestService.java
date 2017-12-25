@@ -23,4 +23,6 @@ public interface HotToursRequestService {
     
     void deleteAllHotToursRequests();
     
+    void saveOrUpdateHotToursRequest(HotToursRequest request);
+    
 }

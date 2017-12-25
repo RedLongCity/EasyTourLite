@@ -7,11 +7,13 @@ import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author redlongcity 24/12/2017
  */
+@Repository("hotToursSessionDao")
 public class HotToursSessionDaoImpl
         extends AbstractDao<Integer, HotToursSession>
         implements HotToursSessionDao {
