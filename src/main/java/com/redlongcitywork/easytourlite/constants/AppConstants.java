@@ -1,10 +1,6 @@
 package com.redlongcitywork.easytourlite.constants;
 
-//import com.redlongcitywork.easytourlite.command.request.RequestCommand;
 import com.redlongcitywork.easytourlite.utils.TimeUtils;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,6 +40,8 @@ public class AppConstants {
     private long freezzeeTimeDelay = 5000;//time for untouchability of ResponseItem in pull
 
     private long revelance = 86400000;//time of revelance response items
+    
+    private boolean saving = false;//indicator of saving process in database
 
     @Autowired
     TimeUtils timeUtils;
@@ -144,4 +142,12 @@ public class AppConstants {
         this.revelance = revelance;
     }
 
+    public boolean isSaving() {
+        return saving;
+    }
+
+    public void setSaving(boolean saving) {
+        this.saving = saving;
+    }
+    
 }

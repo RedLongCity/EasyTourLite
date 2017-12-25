@@ -7,6 +7,7 @@ import com.redlongcitywork.easytourlite.pull.request.RequestPull;
 import com.redlongcitywork.easytourlite.pull.response.ResponsePull;
 import com.redlongcitywork.easytourlite.responseitem.ResponseItem;
 import com.redlongcitywork.easytourlite.constants.AppConstants;
+import com.redlongcitywork.easytourlite.handler.save.SaveHandler;
 import com.redlongcitywork.easytourlite.parsers.TourArrayNodeParser;
 import com.redlongcitywork.easytourlite.utils.HttpUtils;
 import com.redlongcitywork.easytourlite.utils.TimeUtils;
@@ -50,6 +51,9 @@ public class ShortUpdatingJob extends QuartzJobBean {
 
     @Autowired
     TimeUtils timeUtils;
+    
+    @Autowired
+    SaveHandler handler;
 
     @Override
     protected void executeInternal(JobExecutionContext jec) throws JobExecutionException {
@@ -90,12 +94,14 @@ public class ShortUpdatingJob extends QuartzJobBean {
             }
         } else {
             constants.setGlobalDelay(false);
+            constants.setShortSuspended(true);
             pauseItSelf(jec);
         }
     }
 
     private void pauseItSelf(JobExecutionContext jec) {
         constants.setShortSuspended(true);
+        handler.saveData();
         quartzService.pauseShortJob();
     }
 }
