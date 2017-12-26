@@ -320,14 +320,14 @@ public class Tour {
         this.from_Cities = from_Cities;
     }
 
-//    public HotToursSession getSession() {
-//        return session;
-//    }
-//
-//    public void setSession(HotToursSession session) {
-//        this.session = session;
-//    }
-    
+    public Set<HotToursSession> getSessions() {
+        return sessions;
+    }
+
+    public void setSessions(Set<HotToursSession> sessions) {
+        this.sessions = sessions;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;

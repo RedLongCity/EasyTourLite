@@ -7,6 +7,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+
 /**
  *
  * @author redlongcity
@@ -29,6 +30,7 @@ public class TourDaoImpl extends AbstractDao<String, Tour> implements TourDao {
                 Hibernate.initialize(tour.getHotel_Rating());
                 Hibernate.initialize(tour.getHotel_ImageSet());
                 Hibernate.initialize(tour.getMeal_Type());
+                Hibernate.initialize(tour.getSessions());
             }
         }
         return tourList;
@@ -48,6 +50,7 @@ public class TourDaoImpl extends AbstractDao<String, Tour> implements TourDao {
                 Hibernate.initialize(tour.getHotel_Rating());
                 Hibernate.initialize(tour.getHotel_ImageSet());
                 Hibernate.initialize(tour.getMeal_Type());
+                Hibernate.initialize(tour.getSessions());
             }
         }
         return tourList;
@@ -67,6 +70,7 @@ public class TourDaoImpl extends AbstractDao<String, Tour> implements TourDao {
                 Hibernate.initialize(tour.getHotel_Rating());
                 Hibernate.initialize(tour.getHotel_ImageSet());
                 Hibernate.initialize(tour.getMeal_Type());
+                Hibernate.initialize(tour.getSessions());
             }
         }
         return tourList;
@@ -82,10 +86,11 @@ public class TourDaoImpl extends AbstractDao<String, Tour> implements TourDao {
             Hibernate.initialize(tour.getHotel_ImageSet());
             Hibernate.initialize(tour.getHotel_Rating());
             Hibernate.initialize(tour.getMeal_Type());
+            Hibernate.initialize(tour.getSessions());
         }
         return tour;
     }
-
+    
     @Override
     public void save(Tour tour) {
         persist(tour);
@@ -105,5 +110,5 @@ public class TourDaoImpl extends AbstractDao<String, Tour> implements TourDao {
     public void saveOrUpdateTour(Tour tour) {
         saveOrUpdate(tour);
     }
-    
+
 }

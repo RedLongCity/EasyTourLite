@@ -35,12 +35,12 @@ public class HotToursRequest {
     @Column(name = "request_id", unique = true, nullable = false)
     private Integer id;
 
-    @JsonView(HotToursRequestView.class)
+    @JsonView(TourView.class)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id", nullable = true)
     private Country country;
 
-    @JsonView(HotToursRequestView.class)
+    @JsonView(TourView.class)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "from_city_id", nullable = true)
     private From_Cities from_Cities;
@@ -58,12 +58,12 @@ public class HotToursRequest {
     @Column(name = "night_till", unique = false, nullable = false)
     private Integer night_Till;
 
-    @JsonView(HotToursRequestView.class)
+    @JsonView(TourView.class)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "meal_type_id", unique = false, nullable = true)
     private Meal_Type meal_Type;
     
-    @JsonView(HotToursRequestView.class)
+    @JsonView(TourView.class)
     @Column(name = "request_time")
     private Timestamp requestTime;
 

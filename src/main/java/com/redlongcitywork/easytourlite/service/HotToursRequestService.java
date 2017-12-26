@@ -13,6 +13,8 @@ public interface HotToursRequestService {
         
     HotToursRequest findById(Integer id);
     
+    HotToursRequest findByFields(HotToursRequest request);
+    
     void saveHotToursRequest(HotToursRequest request);
     
     void updateHotToursRequest(HotToursRequest request);

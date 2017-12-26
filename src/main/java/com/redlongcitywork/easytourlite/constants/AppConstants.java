@@ -39,7 +39,7 @@ public class AppConstants {
 
     private long freezzeeTimeDelay = 5000;//time for untouchability of ResponseItem in pull
 
-    private long revelance = 86400000;//time of revelance response items
+    private long revelance = 24;//time of revelance response items in hours
     
     private boolean saving = false;//indicator of saving process in database
 

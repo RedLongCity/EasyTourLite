@@ -2,6 +2,7 @@ package com.redlongcitywork.easytourlite.model.session;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.redlongcitywork.easytourlite.json.view.HotToursSessionView;
+import com.redlongcitywork.easytourlite.json.view.TourView;
 import com.redlongcitywork.easytourlite.model.HotToursRequest;
 import com.redlongcitywork.easytourlite.model.Tour;
 import java.sql.Timestamp;
@@ -24,8 +25,7 @@ import javax.persistence.Table;
 /**
  *
  * @author redlongcity 
- * 2import org.hibernate.annotations.Cascade;
-4/12/2017 
+ * 24/12/2017 
  * model for keeping info about unit of request
  * from client
  */
@@ -33,7 +33,7 @@ import javax.persistence.Table;
 @Table(name = "hot_tours_sessions")
 public class HotToursSession {
 
-    @JsonView(HotToursSessionView.class)
+    @JsonView(TourView.class)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "session_id", unique = true, nullable = false)
@@ -47,11 +47,13 @@ public class HotToursSession {
     @JsonView(HotToursSessionView.class)
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "hot_tours_sessions_has_tours",
-            joinColumns = {@JoinColumn(name = "hot_tours_sessions_session_id")},
-            inverseJoinColumns = {@JoinColumn(name = "tours_tour_key")})
+            joinColumns = {
+                @JoinColumn(name = "hot_tours_sessions_session_id")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "tours_tour_key")})
     private Set<Tour> toursSet = new HashSet<Tour>();
 
-    @JsonView(HotToursSessionView.class)
+    @JsonView(TourView.class)
     @Column(name = "session_time", unique = false, nullable = false)
     private Timestamp time;
 

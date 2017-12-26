@@ -27,6 +27,11 @@ public class HotToursRequestServiceImpl implements HotToursRequestService {
     }
 
     @Override
+    public HotToursRequest findByFields(HotToursRequest request) {
+        return dao.findByFields(request);
+    }
+
+    @Override
     public void saveHotToursRequest(HotToursRequest request) {
         dao.save(request);
     }

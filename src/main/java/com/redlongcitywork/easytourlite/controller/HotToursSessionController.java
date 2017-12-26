@@ -2,6 +2,7 @@ package com.redlongcitywork.easytourlite.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.redlongcitywork.easytourlite.json.view.HotToursSessionView;
+import com.redlongcitywork.easytourlite.json.view.TourView;
 import com.redlongcitywork.easytourlite.model.session.HotToursSession;
 import com.redlongcitywork.easytourlite.service.HotToursSessionService;
 import java.util.List;

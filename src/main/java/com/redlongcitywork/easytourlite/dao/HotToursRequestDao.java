@@ -14,11 +14,13 @@ public interface HotToursRequestDao {
 
     HotToursRequest findById(Integer id);
 
+    HotToursRequest findByFields(HotToursRequest request);
+
     void save(HotToursRequest request);
 
     void mergeHotToursRequest(HotToursRequest request);
 
     void deleteHotToursRequest(HotToursRequest request);
-    
+
     void saveOrUpdateHotToursRequest(HotToursRequest request);
 }

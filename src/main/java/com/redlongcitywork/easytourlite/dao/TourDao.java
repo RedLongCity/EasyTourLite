@@ -1,6 +1,7 @@
 package com.redlongcitywork.easytourlite.dao;
 
 import com.redlongcitywork.easytourlite.model.Tour;
+import com.redlongcitywork.easytourlite.model.session.HotToursSession;
 import java.util.List;
 /**
  *
@@ -17,7 +18,7 @@ public interface TourDao {
 
     List<Tour> getToursBetweenDates(Integer dateBefore,
             Integer dateTill);
-
+    
     Tour findByKey(String key);
 
     void save(Tour tour);

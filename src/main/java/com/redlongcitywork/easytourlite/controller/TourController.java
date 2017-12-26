@@ -9,11 +9,13 @@ import com.redlongcitywork.easytourlite.model.From_Cities;
 import com.redlongcitywork.easytourlite.model.HotToursRequest;
 import com.redlongcitywork.easytourlite.model.Hotel_Rating;
 import com.redlongcitywork.easytourlite.model.Meal_Type;
+import com.redlongcitywork.easytourlite.model.Tour;
 import com.redlongcitywork.easytourlite.model.TourResponse;
 import com.redlongcitywork.easytourlite.service.CountryService;
 import com.redlongcitywork.easytourlite.service.From_CitiesService;
 import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
 import com.redlongcitywork.easytourlite.service.Meal_TypeService;
+import com.redlongcitywork.easytourlite.service.TourService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,6 +47,9 @@ public class TourController {
 
     @Autowired
     private Meal_TypeService typeService;
+    
+    @Autowired
+    private TourService tourService;
 
 //    @Autowired
 //    private ItToursHotSearchResponseHandler searchResponseHandler;
@@ -98,15 +103,15 @@ public class TourController {
 //        return new ResponseEntity<Response>(response, HttpStatus.OK);
 //    }
 //
-//    @JsonView(TourView.class)
-//    @RequestMapping(value = "/tour", method = RequestMethod.GET)
-//    public ResponseEntity<List<Tour>> getAllTours() {
-//        List<Tour> tourList = tourService.findAll();
-//        if (tourList == null) {
-//            return new ResponseEntity<List<Tour>>(HttpStatus.NO_CONTENT);
-//        }
-//        return new ResponseEntity<List<Tour>>(tourList, HttpStatus.OK);
-//    }
+    @JsonView(TourView.class)
+    @RequestMapping(value = "/tour", method = RequestMethod.GET)
+    public ResponseEntity<List<Tour>> getAllTours() {
+        List<Tour> tourList = tourService.findAll();
+        if (tourList == null) {
+            return new ResponseEntity<List<Tour>>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<List<Tour>>(tourList, HttpStatus.OK);
+    }
 //
 //    @JsonView(TourView.class)
 //    @RequestMapping(value = "/tour/{id}", method = RequestMethod.GET)
