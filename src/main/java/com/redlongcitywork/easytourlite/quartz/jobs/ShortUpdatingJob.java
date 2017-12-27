@@ -54,6 +54,8 @@ public class ShortUpdatingJob extends QuartzJobBean {
     
     @Autowired
     SaveHandler handler;
+    
+    private long time;
 
     @Override
     protected void executeInternal(JobExecutionContext jec) throws JobExecutionException {
@@ -68,6 +70,7 @@ public class ShortUpdatingJob extends QuartzJobBean {
             ResponseItem item = responsePull.getEmptyResponseItem(
                     command.getRequest());
             if (item != null) {
+                time = System.currentTimeMillis();
                 command.execute(new HttpUtils.GetCallBack() {
                     @Override
                     public void onDataReceived(JsonNode node) {
@@ -79,7 +82,7 @@ public class ShortUpdatingJob extends QuartzJobBean {
                         item.setRevelance(new Timestamp(timeUtils.getCurrentTime().getTime()
                                 + constants.getRevelance()));
                         item.setImmune(false);
-
+                        LOG.log(Level.INFO, "Operation of extracting from server: "+(System.currentTimeMillis() - time));
                     }
 
                     @Override

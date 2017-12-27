@@ -55,7 +55,7 @@ public class HotToursSaver implements Saver<HotToursResponseItem> {
             session.setRequest(request);
             session.getToursSet().addAll(item.getAnswer());
             try {
-                service.saveHotToursSession(session);
+                service.saveOrUpdateHotToursSession(session);
                 callback.onSaved();
                 LOG.log(Level.INFO, "HotToursSession saved succesfully");
             } catch (HibernateException e) {
@@ -78,7 +78,7 @@ public class HotToursSaver implements Saver<HotToursResponseItem> {
                 return;
             }
             try {
-                service.saveHotToursSession(session);
+                service.saveOrUpdateHotToursSession(session);
                 entity.setRequestTime(utils.getCurrentTime());
                 requestService.updateHotToursRequest(entity);
                 callback.onSaved();

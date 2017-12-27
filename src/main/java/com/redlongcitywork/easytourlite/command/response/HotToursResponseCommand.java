@@ -52,6 +52,8 @@ public class HotToursResponseCommand implements
 
     @Autowired
     private TourService tourService;
+    
+    private long time;
 
     public HotToursResponseCommand(HotToursRequest request) {
         this.request = request;
@@ -84,11 +86,13 @@ public class HotToursResponseCommand implements
         HotToursRequest entity = requestService.findByFields(request);
 
         if (entity != null) {
+            
             if (entity.getRequestTime().after(timeUtils.getRevelanceTime())) {
-                return new TourResponse(0,
-                        tourService.findByCriterions(
-                                converter.getCriterionsByRequest(request)),
-                        request);
+                time = System.currentTimeMillis();
+                List<Tour> list = tourService.findByCriterions(
+                        converter.getCriterionsByRequest(request));
+                LOG.log(Level.INFO,"Operation of extracting from database: "+(System.currentTimeMillis()-time));
+                return new TourResponse(0,list,request);
             }
         }
 
