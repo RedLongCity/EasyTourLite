@@ -3,6 +3,7 @@ package com.redlongcitywork.easytourlite.service;
 import com.redlongcitywork.easytourlite.dao.TourDao;
 import com.redlongcitywork.easytourlite.model.Tour;
 import java.util.List;
+import org.hibernate.criterion.Criterion;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -94,6 +95,11 @@ public class TourServiceImpl implements TourService {
         return dao.findAll();
     }
 
+    @Override
+    public List<Tour> findByCriterions(List<Criterion> list) {
+        return dao.getToursByCriterions(list);
+    }
+    
     @Override
     public void deleteAllTours() {
         List<Tour> tourList = dao.findAll();

@@ -1,8 +1,8 @@
 package com.redlongcitywork.easytourlite.dao;
 
 import com.redlongcitywork.easytourlite.model.Tour;
-import com.redlongcitywork.easytourlite.model.session.HotToursSession;
 import java.util.List;
+import org.hibernate.criterion.Criterion;
 /**
  *
  * @author redlongcity
@@ -13,6 +13,8 @@ import java.util.List;
 public interface TourDao {
 
     List<Tour> findAll();
+    
+    List<Tour> getToursByCriterions(List<Criterion> list);
 
     List<Tour> getToursBeforeDate(Integer date);
 

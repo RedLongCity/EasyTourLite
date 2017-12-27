@@ -1,11 +1,13 @@
 package com.redlongcitywork.easytourlite.saver;
 
 import com.redlongcitywork.easytourlite.model.HotToursRequest;
+import com.redlongcitywork.easytourlite.model.Tour;
 import com.redlongcitywork.easytourlite.model.session.HotToursSession;
 import com.redlongcitywork.easytourlite.responseitem.HotToursResponseItem;
 import com.redlongcitywork.easytourlite.service.HotToursRequestService;
 import com.redlongcitywork.easytourlite.service.HotToursSessionService;
 import com.redlongcitywork.easytourlite.utils.TimeUtils;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.hibernate.HibernateException;
@@ -24,9 +26,12 @@ public class HotToursSaver implements Saver<HotToursResponseItem> {
 
     @Autowired
     private HotToursSessionService service;
-    
+
     @Autowired
     private HotToursRequestService requestService;
+
+    @Autowired
+    private HotToursSessionService sessionService;
 
     @Autowired
     private TimeUtils utils;
@@ -37,25 +42,53 @@ public class HotToursSaver implements Saver<HotToursResponseItem> {
             return;
         }
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
-        
+
         HotToursRequest request = item.getRequest();
-        if(request == null){
+        if (request == null) {
             return;
         }
-        request.setRequestTime(utils.getCurrentTime());
-        requestService.saveOrUpdateHotToursRequest(request);
-        HotToursSession session = new HotToursSession();
-        session.setRequest(item.getRequest());
-        session.getToursSet().addAll(item.getAnswer());
-        session.setTime(utils.getCurrentTime());
-        try {
-            service.saveHotToursSession(session);
-            callback.onSaved();
-            LOG.log(Level.INFO, "HotToursSession saved succesfully");
-        } catch (HibernateException e) {
-            LOG.log(Level.WARNING, e.getMessage());
-            callback.onNotSaved();
+        HotToursRequest entity = requestService.findByFields(request);
+        if (entity == null) {
+            request.setRequestTime(utils.getCurrentTime());
+            requestService.saveHotToursRequest(request);
+            HotToursSession session = new HotToursSession();
+            session.setRequest(request);
+            session.getToursSet().addAll(item.getAnswer());
+            try {
+                service.saveHotToursSession(session);
+                callback.onSaved();
+                LOG.log(Level.INFO, "HotToursSession saved succesfully");
+            } catch (HibernateException e) {
+                LOG.log(Level.WARNING, e.getMessage());
+                callback.onNotSaved();
+            }
+        } else {
+            HotToursSession session = sessionService.findByRequest(entity);
+            if (session == null) {
+                LOG.log(Level.WARNING, "Session is null");
+                callback.onNotSaved();
+            }
+            Set<Tour> set = session.getToursSet();
+            if (set != null) {
+                session.getToursSet().clear();
+                session.getToursSet().addAll(item.getAnswer());
+            } else {
+                LOG.log(Level.WARNING, "Tour set is null!");
+                callback.onNotSaved();
+                return;
+            }
+            try {
+                service.saveHotToursSession(session);
+                entity.setRequestTime(utils.getCurrentTime());
+                requestService.updateHotToursRequest(entity);
+                callback.onSaved();
+            } catch (HibernateException e) {
+                LOG.log(Level.WARNING, e.getMessage());
+                callback.onNotSaved();
+            }
+
         }
+
     }
 
 }

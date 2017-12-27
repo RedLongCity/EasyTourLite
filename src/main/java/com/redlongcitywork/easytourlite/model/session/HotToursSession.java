@@ -53,10 +53,6 @@ public class HotToursSession {
                 @JoinColumn(name = "tours_tour_key")})
     private Set<Tour> toursSet = new HashSet<Tour>();
 
-    @JsonView(TourView.class)
-    @Column(name = "session_time", unique = false, nullable = false)
-    private Timestamp time;
-
     public Integer getId() {
         return id;
     }
@@ -79,14 +75,6 @@ public class HotToursSession {
 
     public void setToursSet(Set<Tour> toursSet) {
         this.toursSet = toursSet;
-    }
-
-    public Timestamp getTime() {
-        return time;
-    }
-
-    public void setTime(Timestamp time) {
-        this.time = time;
     }
 
     @Override
@@ -116,7 +104,7 @@ public class HotToursSession {
 
     @Override
     public String toString() {
-        return "HotToursSession{" + "id=" + id + ", request=" + request + ", toursSet=" + toursSet + ", time=" + time + '}';
+        return "HotToursSession{" + "id=" + id + ", request=" + request + ", toursSet=" + toursSet + '}';
     }
 
 }

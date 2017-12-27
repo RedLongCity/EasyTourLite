@@ -4,6 +4,7 @@ import com.redlongcitywork.easytourlite.model.Tour;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Repository;
  *
  * @author redlongcity
  */
-
 @Repository("tourDao")
 public class TourDaoImpl extends AbstractDao<String, Tour> implements TourDao {
 
@@ -90,7 +90,31 @@ public class TourDaoImpl extends AbstractDao<String, Tour> implements TourDao {
         }
         return tour;
     }
-    
+
+    @Override
+    public List<Tour> getToursByCriterions(List<Criterion> list) {
+        Criteria crit = createCriteria();
+        if (list != null) {
+            for (Criterion criterion : list) {
+                crit.add(criterion);
+            }
+        }
+        crit.setMaxResults(100);
+        List<Tour> tourList = (List<Tour>) crit.list();
+        if (tourList != null) {
+            for (Tour tour : tourList) {
+                Hibernate.initialize(tour.getCountry());
+                Hibernate.initialize(tour.getFrom_Cities());
+                Hibernate.initialize(tour.getPrices());
+                Hibernate.initialize(tour.getHotel_Rating());
+                Hibernate.initialize(tour.getHotel_ImageSet());
+                Hibernate.initialize(tour.getMeal_Type());
+                Hibernate.initialize(tour.getSessions());
+            }
+        }
+        return tourList;
+    }
+
     @Override
     public void save(Tour tour) {
         persist(tour);

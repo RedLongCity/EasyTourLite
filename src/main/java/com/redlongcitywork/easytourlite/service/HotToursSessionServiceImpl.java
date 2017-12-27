@@ -41,7 +41,6 @@ public class HotToursSessionServiceImpl implements HotToursSessionService {
         if (entity != null) {
             entity.setRequest(session.getRequest());
             entity.setToursSet(session.getToursSet());
-            entity.setTime(session.getTime());
             dao.mergeHotToursSession(entity);
         }
     }

@@ -2,6 +2,7 @@ package com.redlongcitywork.easytourlite.service;
 
 import com.redlongcitywork.easytourlite.model.Tour;
 import java.util.List;
+import org.hibernate.criterion.Criterion;
 
 /**
  *
@@ -26,6 +27,8 @@ public interface TourService {
            Integer dateTill);
    
    List<Tour> findAll();
+   
+   List<Tour> findByCriterions(List<Criterion> list);
    
    void deleteAllTours();
     
