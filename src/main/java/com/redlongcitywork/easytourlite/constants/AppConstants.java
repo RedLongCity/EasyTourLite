@@ -39,7 +39,7 @@ public class AppConstants {
 
     private long freezzeeTimeDelay = 5000;//time for untouchability of ResponseItem in pull
 
-    private long revelance = 24;//time of revelance response items in hours
+    private int revelance = 24;//time of revelance response items in hours
     
     private boolean saving = false;//indicator of saving process in database
 
@@ -134,11 +134,11 @@ public class AppConstants {
         this.freezzeeTimeDelay = freezzeeTime;
     }
 
-    public long getRevelance() {
+    public int getRevelance() {
         return revelance;
     }
 
-    public void setRevelance(long revelance) {
+    public void setRevelance(int revelance) {
         this.revelance = revelance;
     }
 

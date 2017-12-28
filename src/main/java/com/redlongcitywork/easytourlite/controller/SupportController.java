@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @author redlongcity
  * 21/11/2017
  */
-
 @RestController
 @RequestMapping("/json")
 public class SupportController {
@@ -57,6 +56,30 @@ public class SupportController {
     public ResponseEntity<Integer> getGlobalDelay() {
         Integer delay = delayUtils.getHumanData(constants.getGlobalUpdatingDelay());
         return new ResponseEntity<Integer>(delay, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getrequestpullsize", method = RequestMethod.GET)
+    public ResponseEntity<Integer> getRequestPullSize() {
+        Integer size = constants.getRequestPullSize();
+        return new ResponseEntity<Integer>(size, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getresponsepullsize", method = RequestMethod.GET)
+    public ResponseEntity<Integer> getResponsePullSize() {
+        Integer size = constants.getResponsePullSize();
+        return new ResponseEntity<Integer>(size, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getfreezzeetime", method = RequestMethod.GET)
+    public ResponseEntity<Long> getFreezzeeTimeDelay() {
+        Long delay = constants.getFreezzeeTimeDelay();
+        return new ResponseEntity<Long>(delay, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getrevelance", method = RequestMethod.GET)
+    public ResponseEntity<Integer> getRevelance() {
+        Integer revelance = constants.getRevelance();
+        return new ResponseEntity<Integer>(revelance, HttpStatus.OK);
     }
 
 }
