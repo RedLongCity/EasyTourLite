@@ -235,27 +235,34 @@
                                     <div class="card mb-4 text-center">
                                         <div class="card-block pull-right">
                                             <h3 class="card-title">Constants</h3>
-                                            <h4>Request Pull Size:</h4>
+                                            <h5>Request Pull Size:</h5>
                                             <input type="number" ng-model="ctrl.requestPullSize">
-                                            <button type="button" class="btn btn-primary" ng-click="ctrl.setRequestPullSize(ctrl.requestPullSize)">
+                                            <button type="button" class="btn btn-primary btn-sm" ng-click="ctrl.setRequestPullSize(ctrl.requestPullSize)">
                                                 Save
                                             </button>
 
-                                            <h4>Response Pull Size:</h4>
+                                            <div class="divider"></div>
+
+
+                                            <h5>Response Pull Size:</h5>
                                             <input type="number" ng-model="ctrl.responsePullSize">
-                                            <button type="button" class="btn btn-primary" ng-click="ctrl.setResponsePullSize(ctrl.responsePullSize)">
+                                            <button type="button" class="btn btn-primary btn-sm" ng-click="ctrl.setResponsePullSize(ctrl.responsePullSize)">
                                                 Save
                                             </button>
 
-                                            <h4>Freezzee Time:</h4>
+                                            <div class="divider"></div>
+
+                                            <h5>Freezzee Time:</h5>
                                             <input type="number" ng-model="ctrl.freezzeeTime">
-                                            <button type="button" class="btn btn-primary" ng-click="ctrl.setFreezzeeTime(ctrl.freezzeeTime)">
+                                            <button type="button" class="btn btn-primary btn-sm" ng-click="ctrl.setFreezzeeTime(ctrl.freezzeeTime)">
                                                 Save
                                             </button>
 
-                                            <h4>Revelance:</h4>
+                                            <div class="divider"></div>
+
+                                            <h5>Revelance:</h5>
                                             <input type="number" ng-model="ctrl.revelance">
-                                            <button type="button" class="btn btn-primary" ng-click="ctrl.setRevelance(ctrl.revelance)">
+                                            <button type="button" class="btn btn-primary btn-sm" ng-click="ctrl.setRevelance(ctrl.revelance)">
                                                 Save
                                             </button>
 
