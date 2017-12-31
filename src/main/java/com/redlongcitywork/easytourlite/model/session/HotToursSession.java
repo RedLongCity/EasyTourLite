@@ -44,7 +44,6 @@ public class HotToursSession {
     @JoinColumn(name = "request_id", nullable = false)
     private HotToursRequest request;
 
-    @JsonView(HotToursSessionView.class)
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "hot_tours_sessions_has_tours",
             joinColumns = {

@@ -17,8 +17,6 @@
 
         <meta name="author" content="">
 
-        <link rel="icon" href="images/favicon.ico">
-
         <title>Searching</title>
 
         <!-- Bootstrap core CSS -->
@@ -37,15 +35,15 @@
     <body ng-app="myApp" class="ng-cloak">
         <div class="container-fluid" id="wrapper" ng-controller="ConstantsController as constants">
             <div class="row">
-                <nav class="sidebar col-xs-12 col-sm-4 col-lg-3 col-xl-2 bg-faded sidebar-style-1">
-                    <h1 class="site-title"><a href="http://localhost:8084/EasyTour/search"><em class="fa fa-globe" aria-hidden="true"></em> Easy Tours</a></h1>
+                <nav class="sidebar col-xs-12 col-sm-4 col-lg-3 col-xl-2 bg-faded sidebar-style-1" ng-controller="UrlController as url">
+                    <h1 class="site-title"><a ng-href="{{url.serverUrl}}/search"><em class="fa fa-globe" aria-hidden="true"></em> Easy Tours</a></h1>
 
                     <a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><em class="fa fa-bars"></em></a>
 
                     <ul class="nav nav-pills flex-column sidebar-nav">
-                        <li class="nav-item"><a class="nav-link active" href="http://rest-easytour.193b.starter-ca-central-1.openshiftapps.com/search"><em class="fa fa-search" aria-hidden="true"></em> Searching <span class="sr-only">(current)</span></a></li>
-                        <li class="nav-item"><a class="nav-link" href="http://rest-easytour.193b.starter-ca-central-1.openshiftapps.com/statistics"><em class="fa fa-bar-chart"></em> Statistics</a></li>
-                        <li class="nav-item"><a class="nav-link" href="hhttp://rest-easytour.193b.starter-ca-central-1.openshiftapps.com/settings"><em class="fa fa-cogs" aria-hidden="true"></em> Settings</a></li>
+                        <li class="nav-item"><a class="nav-link active" ng-href="{{url.serverUrl}}/search"><em class="fa fa-search" aria-hidden="true"></em> Searching <span class="sr-only">(current)</span></a></li>
+                        <li class="nav-item"><a class="nav-link" ng-href="{{url.serverUrl}}/statistics"><em class="fa fa-bar-chart"></em> Statistics</a></li>
+                        <li class="nav-item"><a class="nav-link" ng-href="{{url.serverUrl}}/settings"><em class="fa fa-cogs" aria-hidden="true"></em> Settings</a></li>
                     </ul>
 
                     <a href="#" class="logout-button"><em class="fa fa-power-off"></em> Signout</a></nav>
@@ -334,18 +332,6 @@
 <script src="<c:url value='/static/js/service/meal_type_service.js' />"></script>
 <script src="<c:url value='/static/js/controller/meal_type_controller.js' />"></script>
 <script src="<c:url value='/static/js/controller/date_controller.js' />"></script>
-<script>
-                                                            window.onload = function () {
-                                                            var chart1 = document.getElementById("line-chart").getContext("2d");
-                                                            window.myLine = new Chart(chart1).Line(lineChartData, {
-                                                            responsive: true,
-                                                                    scaleLineColor: "rgba(0,0,0,.2)",
-                                                                    scaleGridLineColor: "rgba(0,0,0,.05)",
-                                                                    scaleFontColor: "#c5c7cc"
-                                                            });
-                                                            };</script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-
+<script src="<c:url value='/static/js/controller/url_controller.js' />"></script>
 </body>
 </html>

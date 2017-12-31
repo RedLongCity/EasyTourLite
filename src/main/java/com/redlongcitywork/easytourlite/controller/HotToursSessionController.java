@@ -28,7 +28,7 @@ public class HotToursSessionController {
 
     @JsonView(HotToursSessionView.class)
     @RequestMapping(value = "/hotsession", method = RequestMethod.GET)
-    public ResponseEntity<List<HotToursSession>> getCountries() {
+    public ResponseEntity<List<HotToursSession>> getAll() {
         List<HotToursSession> hotsessionList = service.findAll();
         if (hotsessionList == null) {
             return new ResponseEntity<List<HotToursSession>>(HttpStatus.NO_CONTENT);
@@ -38,7 +38,7 @@ public class HotToursSessionController {
 
     @JsonView(HotToursSessionView.class)
     @RequestMapping(value = "/hotsession/{id}", method = RequestMethod.GET)
-    public ResponseEntity<HotToursSession> getHotToursSession(@PathVariable("id") Integer id) {
+    public ResponseEntity<HotToursSession> getById(@PathVariable("id") Integer id) {
         HotToursSession hotsession = service.findById(id);
         if (hotsession == null) {
             return new ResponseEntity<HotToursSession>(HttpStatus.NO_CONTENT);
@@ -47,13 +47,13 @@ public class HotToursSessionController {
     }
 
     @RequestMapping(value = "/hotsession", method = RequestMethod.DELETE)
-    public ResponseEntity<Void> deleteAllHotToursSession() {
+    public ResponseEntity<Void> deleteAll() {
         service.deleteAllHotToursSessions();
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
 
     @RequestMapping(value = "/hotsession/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Void> deleteHotToursSessionById(
+    public ResponseEntity<Void> deleteById(
             @PathVariable("id") Integer id) {
         HotToursSession hotsession = service.findById(id);
         if (hotsession == null) {

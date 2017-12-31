@@ -1,13 +1,13 @@
 'use strict';
  
-App.controller('RequestController', ['$scope', 'Request', function($scope, Request) {
+App.controller('HotRequestController', ['$scope', 'HotRequest', function($scope, HotRequest) {
           var self = this;
           self.requests=[];
           self.request={id:null,country:'',from_Cities:'',hotel_Rating:'',
           night_From:'',night_Till:'',meal_Type:'',requestDelay:''};     
                
           self.fetchAllRequests = function(){
-              Request.fetchAll()
+             HotRequest.fetchAll()
                   .then(
                                function(d) {
                                     self.requests = d;
@@ -19,7 +19,7 @@ App.controller('RequestController', ['$scope', 'Request', function($scope, Reque
           };
             
           self.fetchRequest= function(id){
-              Request.fetch(id)
+             HotRequest.fetch(id)
                   .then(
                                function(d) {
                                     self.request = d;
@@ -31,7 +31,7 @@ App.controller('RequestController', ['$scope', 'Request', function($scope, Reque
           };
           
           self.deleteRequest=function(id){
-              Request.delete(id).then(
+             HotRequest.delete(id).then(
                       self.fetchAllRequests(),
                           function(errResponse){
                             console.error('Error while deleting request');
@@ -40,7 +40,7 @@ App.controller('RequestController', ['$scope', 'Request', function($scope, Reque
           };
           
           self.deleteAllRequests=function(){
-              Request.deleteAll().then(
+             HotRequest.deleteAll().then(
                       self.fetchAllRequests(),
                             function(errResponse){
                             console.error('Error while deleting requests');

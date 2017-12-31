@@ -1,11 +1,11 @@
-App.factory('Request', ['$http', '$q','UrlService', function($http, $q,UrlService){
+App.factory('HotRequest', ['$http', '$q','UrlService', function($http, $q,UrlService){
         
       var SERVER_URL_JSON =  UrlService.getServerUrlJson();
       
     return {
          
     fetchAll: function() {
-            return $http.get(SERVER_URL_JSON+"/request")
+            return $http.get(SERVER_URL_JSON+"/hotrequest")
             .then(
                     function(response){
                         return response.data;
@@ -19,7 +19,7 @@ App.factory('Request', ['$http', '$q','UrlService', function($http, $q,UrlServic
      
      
    fetch: function(id){
-            return $http.get(SERVER_URL_JSON+"/request/"+id)
+            return $http.get(SERVER_URL_JSON+"/hotrequest/"+id)
             .then(
                     function(response){
                         return response.data;
@@ -32,7 +32,7 @@ App.factory('Request', ['$http', '$q','UrlService', function($http, $q,UrlServic
         },
         
     deleteAll: function() {
-            return $http.delete(SERVER_URL_JSON+"/request")
+            return $http.delete(SERVER_URL_JSON+"/hotrequest")
             .then(
                     function(response){
                         return response.data;
@@ -46,7 +46,7 @@ App.factory('Request', ['$http', '$q','UrlService', function($http, $q,UrlServic
      
      
    delete: function(id){
-            return $http.delete(SERVER_URL_JSON+"/request/"+id)
+            return $http.delete(SERVER_URL_JSON+"/hotrequest/"+id)
             .then(
                     function(response){
                         return response.data;
