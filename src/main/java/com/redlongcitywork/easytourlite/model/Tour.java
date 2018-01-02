@@ -128,6 +128,10 @@ public class Tour {
 
     @ManyToMany(mappedBy = "toursSet")
     private Set<HotToursSession> sessions = new HashSet<HotToursSession>();
+
+    public Tour() {
+    }
+    
     public String getKey() {
         return key;
     }
