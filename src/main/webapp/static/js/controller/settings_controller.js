@@ -18,7 +18,6 @@ App.controller('SettingsController', ['$scope', 'SettingsService', 'MailAddress'
         self.addresses = [];
 
         self.globalDelaysArray_Human = [1, 10, 15, 30, 60, 120, 180, 300];
-        self.shortDelaysArray = [1000, 2000, 5000, 10000, 12000, 20000, 30000];
 
         self.fetchShortStatus = function () {
             SettingsService.getShort_Status()
@@ -239,8 +238,8 @@ App.controller('SettingsController', ['$scope', 'SettingsService', 'MailAddress'
             self.address = {id: null, name: '', emailAddress: ''};
         };
 
-        self.setShortDelay = function (delay) {
-            SettingsService.setShortDelay(delay).then(
+        self.setShortDelay = function () {
+            SettingsService.setShortDelay(self.shortDelay).then(
                     self.fetchShortDelay,
                     function (errResponse) {
                         console.error('Error while setting short delay');

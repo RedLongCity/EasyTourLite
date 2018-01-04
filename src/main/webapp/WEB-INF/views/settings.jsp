@@ -164,19 +164,11 @@
                                             <h3 class="card-title">Short Delay</h3>
 
                                             <section class='text-center'>
-                                                <div class="btn-group btn-lg" role="group" >
-                                                    <div class="btn-group">
-                                                        <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
-                                                            <em class="fa fa-globe fa-lg"></em> Every: <span ng-bind="ctrl.shortDelay / 1000"></span> sec
-                                                        </button>
-                                                        <div class="dropdown-menu">
-                                                            <div ng-repeat="c in ctrl.shortDelaysArray">
-                                                                <button class="dropdown-item" ng-click="ctrl.shortDelay = c; ctrl.setShortDelay(c)">
-                                                                    Every: <span ng-bind="c / 1000"></span> sec</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div> 
+                                                <input type="number" ng-model="ctrl.shortDelay">
+                                                <button type="button" class="btn btn-primary btn-sm" ng-click="ctrl.setShortDelay()">
+                                                    Save
+                                                </button>
+
                                             </section>
                                         </div>
                                     </div>

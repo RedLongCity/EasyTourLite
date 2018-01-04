@@ -25,7 +25,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tours")
 public class Tour {
-    
+
     @JsonView(TourView.class)
     @Id
     @Column(name = "tour_key", unique = true, nullable = false)
@@ -131,7 +131,7 @@ public class Tour {
 
     public Tour() {
     }
-    
+
     public String getKey() {
         return key;
     }

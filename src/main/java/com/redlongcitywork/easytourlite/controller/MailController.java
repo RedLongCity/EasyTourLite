@@ -37,18 +37,26 @@ public class MailController {
         String from = "HotToursUkraine@gmail.com";
         String to = converter.getAddresses();
         String subject = "Order";
-        String message = converter.getMessage(order);
+        
+        converter.getMessage(order, new EmailContentConverter.GetMessageCallBack() {
+            @Override
+            public void onDataReceived(String message) {
+                Email email = new SimpleEmail(from, to, subject, message);
+                EmailSender sender = new SimpleEmailSender(new EmailConfiguration());
 
-        Email email = new SimpleEmail(from, to, subject, message);
-        EmailSender sender = new SimpleEmailSender(new EmailConfiguration());
+                try {
+                    sender.send(email);
+                    LOG.log(Level.INFO, "Sent message succesfully!");
+                } catch (MessagingException e) {
+                    LOG.log(Level.INFO, "Sending message was failed! " + e.getMessage());
+                }
+            }
 
-        try {
-            sender.send(email);
-            LOG.log(Level.INFO, "Sent message succesfully!");
-        } catch (MessagingException e) {
-            LOG.log(Level.INFO, "Sending message was failed! " + e.getMessage());
-            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-        }
+            @Override
+            public void onDataNotAwailable() {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
 
         return new ResponseEntity<Void>(HttpStatus.OK);
     }

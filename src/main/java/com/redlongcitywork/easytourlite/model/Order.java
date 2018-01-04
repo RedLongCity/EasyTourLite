@@ -11,7 +11,7 @@ public class Order {
 
     private UserData data;
 
-    private Tour tour;
+    private String key;
 
     public Order() {
     }
@@ -24,12 +24,12 @@ public class Order {
         this.data = data;
     }
 
-    public Tour getTour() {
-        return tour;
+    public String getKey() {
+        return key;
     }
 
-    public void setTour(Tour tour) {
-        this.tour = tour;
+    public void setKey(String key) {
+        this.key = key;
     }
 
     
@@ -43,8 +43,8 @@ public class Order {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 89 * hash + Objects.hashCode(this.data);
-        hash = 89 * hash + Objects.hashCode(this.tour);
+        hash = 29 * hash + Objects.hashCode(this.data);
+        hash = 29 * hash + Objects.hashCode(this.key);
         return hash;
     }
 
@@ -60,10 +60,10 @@ public class Order {
             return false;
         }
         final Order other = (Order) obj;
-        if (!Objects.equals(this.data, other.data)) {
+        if (!Objects.equals(this.key, other.key)) {
             return false;
         }
-        if (!Objects.equals(this.tour, other.tour)) {
+        if (!Objects.equals(this.data, other.data)) {
             return false;
         }
         return true;
@@ -71,9 +71,8 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" + "data=" + data + ", tour=" + tour + '}';
+        return "Order{" + "data=" + data + ", key=" + key + '}';
     }
-    
-    
+
 
 }

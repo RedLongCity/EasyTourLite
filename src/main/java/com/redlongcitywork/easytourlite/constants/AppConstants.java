@@ -20,7 +20,7 @@ public class AppConstants {
 
     private boolean filtersUpdate = false;//consist Country, From_Cities updating etc.
 
-    private long shortUpdatingDelay = 10;//Previous or Current update time
+    private long shortUpdatingDelay = 1000;//Previous or Current update time
 
     private boolean shortRun = true;//indicator for short job running
 
