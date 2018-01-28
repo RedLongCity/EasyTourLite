@@ -6,6 +6,7 @@ import com.redlongcitywork.easytourlite.model.HotToursRequest;
 import com.redlongcitywork.easytourlite.model.Meal_Type;
 import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
 import com.redlongcitywork.easytourlite.utils.ItToursUrls;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -83,6 +84,13 @@ public class HotSearchConverter implements RequestConverter<HotToursRequest>,
         Meal_Type meal_Type = request.getMeal_Type();
         if (meal_Type != null) {
             criterionsList.add(Restrictions.eq("meal_Type", meal_Type));
+        }
+        
+        Timestamp requestTime = request.getRequestTime();
+        if(requestTime != null){
+            criterionsList.add(Restrictions.ge("date_From", requestTime));
+        }else{
+            LOG.log(Level.WARNING,"RequestHandlerService: requestTime is null");
         }
 
         return criterionsList;
