@@ -90,7 +90,7 @@ public class HotToursResponseCommand implements
             if (entity.getRequestTime().after(timeUtils.getRevelanceTime())) {
                 time = System.currentTimeMillis();
                 List<Tour> list = tourService.findByCriterions(
-                        converter.getCriterionsByRequest(request));
+                        converter.getCriterionsByRequest(entity));
                 LOG.log(Level.INFO,"Operation of extracting from database: "+(System.currentTimeMillis()-time));
                 return new TourResponse(0,list,request);
             }
