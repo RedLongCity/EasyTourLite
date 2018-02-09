@@ -15,12 +15,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  *
  * @author redlongcity 08/02/2018 model for keeping info about searching request
  */
 @Entity
+@Table(name = "search_requests")
 public class SearchingRequest {
 
     @Id
