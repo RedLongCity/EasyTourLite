@@ -87,7 +87,8 @@ public class SearchingRequest {
     @Column(name = "price_till", unique = false, nullable = true)
     private Integer priceTill;
 
-    @Column(name = "currency_id", unique = false, nullable = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "currency_id", unique = false, nullable = true)
     private Currency currency;
 
     @Column(name = "only_standart", unique = false, nullable = true)

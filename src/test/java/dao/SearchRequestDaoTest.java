@@ -1,5 +1,8 @@
 package dao;
 
+import com.redlongcitywork.easytourlite.configuration.AppConfig;
+import com.redlongcitywork.easytourlite.configuration.AppInitializer;
+import com.redlongcitywork.easytourlite.configuration.HibernateConfiguration;
 import com.redlongcitywork.easytourlite.model.Country;
 import com.redlongcitywork.easytourlite.model.Currency;
 import com.redlongcitywork.easytourlite.model.From_Cities;
@@ -23,15 +26,16 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 /**
  *
  * @author redlongcity 09/02/2018
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@Configuration
+@ContextConfiguration(classes = {AppConfig.class, AppInitializer.class, HibernateConfiguration.class}, loader = AnnotationConfigContextLoader.class)
 public class SearchRequestDaoTest {
 
     @Autowired
