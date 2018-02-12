@@ -7,24 +7,27 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
+
 /**
  *
  * @author redlongcity
  */
 
 @Entity
-@Table(name="countrys")
+@Table(name = "countrys")
 public class Country {
-    
+
     @JsonView(TourView.class)
     @Id
-    @Column(name="country_id",nullable=false,unique=true)
+    @NotNull
+    @Column(name = "country_id", nullable = false, unique = true)
     private String id;
-    
+
     @JsonView(TourView.class)
     @NotEmpty
-    @Column(name="name",unique=false,nullable=false)
+    @Column(name = "name", unique = false, nullable = false)
     private String name;
 
     public String getId() {
@@ -72,7 +75,5 @@ public class Country {
     public String toString() {
         return "Country{" + "id=" + id + ", name=" + name + '}';
     }
-    
-    
 
 }

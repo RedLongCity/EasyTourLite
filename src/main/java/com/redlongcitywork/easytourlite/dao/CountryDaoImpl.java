@@ -5,12 +5,14 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author redlongcity
  */
 @Repository("countryDao")
+@Transactional
 public class CountryDaoImpl extends AbstractDao<String, Country> implements CountryDao {
 
     @Override

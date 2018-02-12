@@ -1,8 +1,15 @@
-package dao;
+package test.dao;
 
-import com.redlongcitywork.easytourlite.configuration.AppConfig;
-import com.redlongcitywork.easytourlite.configuration.AppInitializer;
-import com.redlongcitywork.easytourlite.configuration.HibernateConfiguration;
+import com.redlongcitywork.easytourlite.dao.CountryDao;
+import com.redlongcitywork.easytourlite.dao.CountryDaoImpl;
+import com.redlongcitywork.easytourlite.dao.CurrencyDao;
+import com.redlongcitywork.easytourlite.dao.CurrencyDaoImpl;
+import com.redlongcitywork.easytourlite.dao.From_CitiesDao;
+import com.redlongcitywork.easytourlite.dao.From_CitiesDaoImpl;
+import com.redlongcitywork.easytourlite.dao.Hotel_RatingDao;
+import com.redlongcitywork.easytourlite.dao.Hotel_RatingDaoImpl;
+import com.redlongcitywork.easytourlite.dao.Meal_TypeDao;
+import com.redlongcitywork.easytourlite.dao.Meal_TypeDaoImpl;
 import com.redlongcitywork.easytourlite.model.Country;
 import com.redlongcitywork.easytourlite.model.Currency;
 import com.redlongcitywork.easytourlite.model.From_Cities;
@@ -10,10 +17,15 @@ import com.redlongcitywork.easytourlite.model.Hotel_Rating;
 import com.redlongcitywork.easytourlite.model.Meal_Type;
 import com.redlongcitywork.easytourlite.model.SearchingRequest;
 import com.redlongcitywork.easytourlite.service.CountryService;
+import com.redlongcitywork.easytourlite.service.CountryServiceImpl;
 import com.redlongcitywork.easytourlite.service.CurrencyService;
+import com.redlongcitywork.easytourlite.service.CurrencyServiceImpl;
 import com.redlongcitywork.easytourlite.service.From_CitiesService;
+import com.redlongcitywork.easytourlite.service.From_CitiesServiceImpl;
 import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
+import com.redlongcitywork.easytourlite.service.Hotel_RatingServiceImpl;
 import com.redlongcitywork.easytourlite.service.Meal_TypeService;
+import com.redlongcitywork.easytourlite.service.Meal_TypeServiceImpl;
 import com.redlongcitywork.easytourlite.service.SearchingRequestService;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -26,17 +38,77 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 /**
  *
  * @author redlongcity 09/02/2018
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {AppConfig.class, AppInitializer.class, HibernateConfiguration.class}, loader = AnnotationConfigContextLoader.class)
+//@RunWith(classes = {TestJPAConfig.class})
+//@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration
+//@Configuration
+//@ContextConfiguration(classes = {TestJPAConfig.class})
+//@ContextConfiguration(classes = {AppConfig.class}, loader = AnnotationConfigContextLoader.class)
 public class SearchRequestDaoTest {
+
+    @Configuration
+    static class ContextConfiguration {
+        
+        @Bean
+        CountryDao countryDao(){
+            return new CountryDaoImpl();
+        }
+        
+        @Bean
+        From_CitiesDao cityDao(){
+            return new From_CitiesDaoImpl();
+        }
+        
+        @Bean
+        Meal_TypeDao typeDao(){
+            return new Meal_TypeDaoImpl();
+        }
+        
+        @Bean
+        CurrencyDao currencyDao(){
+            return new CurrencyDaoImpl();
+        }
+        
+        @Bean
+        Hotel_RatingDao ratingDao(){
+            return new Hotel_RatingDaoImpl();
+        }
+
+        @Bean
+        CountryService countryService() {
+            return new CountryServiceImpl();
+        }
+
+        @Bean
+        From_CitiesService cityService() {
+            return new From_CitiesServiceImpl();
+        }
+
+        @Bean
+        Meal_TypeService typeService() {
+            return new Meal_TypeServiceImpl();
+        }
+
+        @Bean
+        CurrencyService currencyService() {
+            return new CurrencyServiceImpl();
+        }
+
+        @Bean
+        Hotel_RatingService ratingService() {
+            return new Hotel_RatingServiceImpl();
+        }
+
+    }
 
     @Autowired
     private SearchingRequestService requestService;
@@ -123,7 +195,7 @@ public class SearchRequestDaoTest {
         request.setOnlyStandart(1);
     }
 
-    @Test
+    //@Test
     public void saveTest() {
         requestService.saveSearchingRequest(request);
 
@@ -157,34 +229,34 @@ public class SearchRequestDaoTest {
         assertTrue(entity.getOnlyStandart() == 1);
     }
 
-    @Test(expected = HibernateException.class)
+    //@Test(expected = HibernateException.class)
     public void exceptionTest_1() {
         request.setId(0);
         requestService.saveSearchingRequest(request);
     }
 
-    @Test(expected = HibernateException.class)
+    //@Test(expected = HibernateException.class)
     public void exceptionTest_2() {
         request.setId(null);
         request.setCountry(null);
         requestService.saveSearchingRequest(request);
     }
 
-    @Test(expected = HibernateException.class)
+    //@Test(expected = HibernateException.class)
     public void exceptionTest_3() {
         request.setCountry(country);
         request.setCity(null);
         requestService.saveSearchingRequest(request);
     }
 
-    @Test(expected = HibernateException.class)
+    //@Test(expected = HibernateException.class)
     public void exceptionTest_4() {
         request.setCity(city);
         request.setRatingSet(null);
         requestService.saveSearchingRequest(request);
     }
 
-    @Test(expected = HibernateException.class)
+    //@Test(expected = HibernateException.class)
     public void exceptionTest_5() {
         Set<Hotel_Rating> set = new HashSet<>();
         set.add(rating_1);
@@ -194,28 +266,28 @@ public class SearchRequestDaoTest {
         requestService.saveSearchingRequest(request);
     }
 
-    @Test(expected = HibernateException.class)
+    //@Test(expected = HibernateException.class)
     public void exceptionTest_6() {
         request.setAdultAmount(1);
         request.setNightFrom(null);
         requestService.saveSearchingRequest(request);
     }
 
-    @Test(expected = HibernateException.class)
+    //@Test(expected = HibernateException.class)
     public void exceptionTest_7() {
         request.setNightFrom(1);
         request.setNightTill(null);
         requestService.saveSearchingRequest(request);
     }
 
-    @Test(expected = HibernateException.class)
+    //@Test(expected = HibernateException.class)
     public void exceptionTest_8() {
         request.setNightTill(2);
         request.setDateFrom(null);
         requestService.saveSearchingRequest(request);
     }
 
-    @Test(expected = HibernateException.class)
+    //@Test(expected = HibernateException.class)
     public void exceptionTest_9() {
         request.setDateFrom(Date.valueOf(
                 LocalDate.parse("01.01.2018")));
@@ -223,7 +295,7 @@ public class SearchRequestDaoTest {
         requestService.saveSearchingRequest(request);
     }
 
-    @Test(expected = HibernateException.class)
+    //@Test(expected = HibernateException.class)
     public void exceptionTest_10() {
         request.setDateTill(Date.valueOf(
                 LocalDate.parse("02.01.2018")));
@@ -231,7 +303,7 @@ public class SearchRequestDaoTest {
         requestService.saveSearchingRequest(request);
     }
 
-    @Test
+    //@Test
     public void updateTest() {
         SearchingRequest entity = new SearchingRequest();
         entity.setId(request.getId());
@@ -292,7 +364,7 @@ public class SearchRequestDaoTest {
         assertEquals(expected.getOnlyStandart(), entity.getOnlyStandart());
     }
 
-    @Test
+    //@Test
     public void deleteTest() {
         Integer id = request.getId();
         requestService.deleteSearchingRequest(request);
