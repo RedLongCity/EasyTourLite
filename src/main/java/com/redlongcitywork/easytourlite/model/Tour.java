@@ -17,6 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -28,73 +29,90 @@ public class Tour {
 
     @JsonView(TourView.class)
     @Id
-    @Column(name = "tour_key", unique = true, nullable = false)
+    @NotNull
+    @Column(name = "tour_key", unique = true)
     private String key;
 
     @JsonView(TourView.class)
-    @Column(name = "type", unique = false, nullable = false)
+    @NotNull
+    @Column(name = "type", unique = false)
     private Integer type;
 
     @JsonView(TourView.class)
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "country_id", nullable = false)
+    @JoinColumn(name = "country_id")
     private Country country;
 
     @JsonView(TourView.class)
-    @Column(name = "region", unique = false, nullable = false)
+    @NotNull
+    @Column(name = "region", unique = false)
     private String region;
 
     @JsonView(TourView.class)
-    @Column(name = "hotel_id", unique = false, nullable = false)
+    @NotNull
+    @Column(name = "hotel_id", unique = false)
     private Integer hotel_id;
 
     @JsonView(TourView.class)
-    @Column(name = "hotel", unique = false, nullable = false)
+    @NotNull
+    @Column(name = "hotel", unique = false)
     private String hotel;
 
     @JsonView(TourView.class)
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hotel_rating_id", nullable = false)
+    @JoinColumn(name = "hotel_rating_id")
     private Hotel_Rating hotel_Rating;
 
     @JsonView(TourView.class)
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "meal_type_id", nullable = false)
+    @JoinColumn(name = "meal_type_id")
     private Meal_Type meal_Type;
 
     @JsonView(TourView.class)
-    @Column(name = "room_type", unique = false, nullable = false)
+    @NotNull
+    @Column(name = "room_type", unique = false)
     private String room_Type;
 
     @JsonView(TourView.class)
-    @Column(name = "adult_amount", unique = false, nullable = false)
+    @NotNull
+    @Column(name = "adult_amount", unique = false)
     private Integer adult_Amount;
 
     @JsonView(TourView.class)
-    @Column(name = "child_amount", unique = false, nullable = false)
+    @NotNull
+    @Column(name = "child_amount", unique = false)
     private Integer child_Amount;
 
     @JsonView(TourView.class)
-    @Column(name = "accomodation", unique = false, nullable = false)
+    @NotNull
+    @Column(name = "accomodation", unique = false)
     private String accomodation;
 
     @JsonView(TourView.class)
-    @Column(name = "duration", unique = false, nullable = false)
+    @NotNull
+    @Column(name = "duration", unique = false)
     private Integer duration;
 
     @JsonView(TourView.class)
-    @Column(name = "date_from", unique = false, nullable = false)// (формат YYYY-mm-dd)
+    @NotNull
+    @Column(name = "date_from", unique = false)// (формат YYYY-mm-dd)
     private Date date_From;
 
-    @Column(name = "date_from_unix", unique = false, nullable = false)
+    @NotNull
+    @Column(name = "date_from_unix", unique = false)
     private Integer date_From_Unix;
 
     @JsonView(TourView.class)
-    @Column(name = "currency_id", unique = false, nullable = false)
+    @NotNull
+    @Column(name = "currency_id", unique = false)
     private Integer currency_id;
 
     @JsonView(TourView.class)
-    @Column(name = "currency_symbol", unique = false, nullable = false)
+    @NotNull
+    @Column(name = "currency_symbol", unique = false)
     private String currency_Symbol;
 
     @JsonView(TourView.class)
@@ -110,6 +128,7 @@ public class Tour {
     private Float price_Change_Percent;
 
     @JsonView(TourView.class)
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "from_city_id", nullable = true)
     private From_Cities from_Cities;

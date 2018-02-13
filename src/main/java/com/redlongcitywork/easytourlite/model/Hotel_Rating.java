@@ -2,16 +2,11 @@ package com.redlongcitywork.easytourlite.model;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.redlongcitywork.easytourlite.json.view.TourView;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
 import org.hibernate.validator.constraints.NotEmpty;
 /**
  *

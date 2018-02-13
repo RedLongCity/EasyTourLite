@@ -1,7 +1,6 @@
 package com.redlongcitywork.easytourlite.model;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.redlongcitywork.easytourlite.json.view.HotToursRequestView;
 import com.redlongcitywork.easytourlite.json.view.TourView;
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -15,13 +14,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
- * @author redlongcity
- * 11/12/2017
- * model for containing request parameters
+ * @author redlongcity 11/12/2017 model for containing request parameters
  */
 @Entity
 @Table(name = "hot_tours_requests")
@@ -51,20 +49,23 @@ public class HotToursRequest {
     private String hotel_Rating;
 
     @JsonView(TourView.class)
-    @Column(name = "night_from", unique = false, nullable = false)
+    @NotNull
+    @Column(name = "night_from", unique = false)
     private Integer night_From;
 
     @JsonView(TourView.class)
-    @Column(name = "night_till", unique = false, nullable = false)
+    @NotNull
+    @Column(name = "night_till", unique = false)
     private Integer night_Till;
 
     @JsonView(TourView.class)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "meal_type_id", unique = false, nullable = true)
     private Meal_Type meal_Type;
-    
+
     @JsonView(TourView.class)
-    @Column(name = "request_time")
+    @NotNull
+    @Column(name = "request_time", unique = false)
     private Timestamp requestTime;
 
     public Integer getId() {
@@ -130,7 +131,7 @@ public class HotToursRequest {
     public void setRequestTime(Timestamp requestTime) {
         this.requestTime = requestTime;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 3;
