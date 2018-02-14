@@ -16,6 +16,8 @@ import com.redlongcitywork.easytourlite.dao.MailAddressDao;
 import com.redlongcitywork.easytourlite.dao.MailAddressDaoImpl;
 import com.redlongcitywork.easytourlite.dao.Meal_TypeDao;
 import com.redlongcitywork.easytourlite.dao.Meal_TypeDaoImpl;
+import com.redlongcitywork.easytourlite.dao.RegionDao;
+import com.redlongcitywork.easytourlite.dao.RegionDaoImpl;
 import com.redlongcitywork.easytourlite.dao.SearchingRequestDao;
 import com.redlongcitywork.easytourlite.dao.SearchingRequestDaoImpl;
 import com.redlongcitywork.easytourlite.dao.TourDao;
@@ -36,6 +38,8 @@ import com.redlongcitywork.easytourlite.service.MailAddressService;
 import com.redlongcitywork.easytourlite.service.MailAddressServiceImpl;
 import com.redlongcitywork.easytourlite.service.Meal_TypeService;
 import com.redlongcitywork.easytourlite.service.Meal_TypeServiceImpl;
+import com.redlongcitywork.easytourlite.service.RegionService;
+import com.redlongcitywork.easytourlite.service.RegionServiceImpl;
 import com.redlongcitywork.easytourlite.service.SearchingRequestService;
 import com.redlongcitywork.easytourlite.service.SearchingRequestServiceImpl;
 import com.redlongcitywork.easytourlite.service.TourService;
@@ -85,7 +89,7 @@ public class TestJPAConfig {
         public Properties hibernateProperties() {
             Properties properties = new Properties();
             properties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
-            properties.put("hibernate.show_sql", "true");
+            properties.put("hibernate.show_sql", "false");
             properties.put("hibernate.format_sql", "true");
             return properties;
         }
@@ -196,6 +200,15 @@ public class TestJPAConfig {
         @Bean
         public SearchingRequestService searchingRequestService() {
             return new SearchingRequestServiceImpl();
+        }
+        
+        @Bean
+        public RegionDao regionDao(){
+            return new RegionDaoImpl();
+        }
+        
+        @Bean RegionService regionService(){
+            return new RegionServiceImpl();
         }
 
     }

@@ -1,6 +1,5 @@
-package test.dao;
+package test.service;
 
-import com.redlongcitywork.easytourlite.dao.SearchingRequestDao;
 import com.redlongcitywork.easytourlite.model.Country;
 import com.redlongcitywork.easytourlite.model.Currency;
 import com.redlongcitywork.easytourlite.model.From_Cities;
@@ -12,6 +11,7 @@ import com.redlongcitywork.easytourlite.service.CurrencyService;
 import com.redlongcitywork.easytourlite.service.From_CitiesService;
 import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
 import com.redlongcitywork.easytourlite.service.Meal_TypeService;
+import com.redlongcitywork.easytourlite.service.SearchingRequestService;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -29,14 +29,14 @@ import test.database.TestJPAConfig;
 
 /**
  *
- * @author redlongcity 09/02/2018
+ * @author redlongcity 14/02/2018
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-public class SearchRequestDaoTest extends TestJPAConfig {
+public class SearchingRequestServiceTest extends TestJPAConfig {
 
     @Autowired
-    private SearchingRequestDao dao;
+    private SearchingRequestService service;
 
     @Autowired
     private CountryService countryService;
@@ -120,37 +120,36 @@ public class SearchRequestDaoTest extends TestJPAConfig {
 
     @Test
     public void crudTest() {
-        dao.saveSearchingRequest(request);
-        assertTrue(dao.findAll().contains(request));
+        service.saveSearchingRequest(request);
+        assertTrue(service.findAll().contains(request));
         request.setAdultAmount(3);
-        dao.mergeSearchingRequest(request);
-        assertTrue(dao.findAll().contains(request));
-        dao.deleteSearchingRequest(request);
-        assertFalse(dao.findAll().contains(request));
+        service.updateSearchingRequest(request);
+        assertTrue(service.findAll().contains(request));
+        service.deleteSearchingRequest(request);
+        assertFalse(service.findAll().contains(request));
     }
-
 
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest_1() {
         request.setCountry(null);
-        dao.saveSearchingRequest(request);
-        dao.findAll();
+        service.saveSearchingRequest(request);
+        service.findAll();
     }
 
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest_2() {
         request.setCountry(country);
         request.setCity(null);
-        dao.saveSearchingRequest(request);
-        dao.findAll();
+        service.saveSearchingRequest(request);
+        service.findAll();
     }
 
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest_3() {
         request.setCity(city);
         request.setRatingSet(null);
-        dao.saveSearchingRequest(request);
-        dao.findAll();
+        service.saveSearchingRequest(request);
+        service.findAll();
     }
 
     @Test(expected = ConstraintViolationException.class)
@@ -160,39 +159,40 @@ public class SearchRequestDaoTest extends TestJPAConfig {
         set.add(rating_2);
         request.setRatingSet(set);
         request.setAdultAmount(null);
-        dao.saveSearchingRequest(request);
-        dao.findAll();
+        service.saveSearchingRequest(request);
+        service.findAll();
     }
 
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest_5() {
         request.setAdultAmount(1);
         request.setNightFrom(null);
-        dao.saveSearchingRequest(request);
-        dao.findAll();
+        service.saveSearchingRequest(request);
+        service.findAll();
     }
 
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest_6() {
         request.setNightFrom(1);
         request.setNightTill(null);
-        dao.saveSearchingRequest(request);
-        dao.findAll();
+        service.saveSearchingRequest(request);
+        service.findAll();
     }
 
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest_7() {
         request.setNightTill(2);
         request.setDateFrom(null);
-        dao.saveSearchingRequest(request);
-        dao.findAll();
+        service.saveSearchingRequest(request);
+        service.findAll();
     }
 
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest_8() {
         request.setDateFrom(new Date(System.currentTimeMillis()));
         request.setDateTill(null);
-        dao.saveSearchingRequest(request);
-        dao.findAll();
+        service.saveSearchingRequest(request);
+        service.findAll();
     }
+
 }

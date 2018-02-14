@@ -27,6 +27,7 @@ public class SearchingRequestDaoImpl extends AbstractDao<Integer, SearchingReque
                 Hibernate.initialize(request.getCurrency());
                 Hibernate.initialize(request.getMealType());
                 Hibernate.initialize(request.getRatingSet());
+                Hibernate.initialize(request.getRegion());
             }
         }
         return list;
@@ -41,6 +42,7 @@ public class SearchingRequestDaoImpl extends AbstractDao<Integer, SearchingReque
             Hibernate.initialize(request.getCurrency());
             Hibernate.initialize(request.getMealType());
             Hibernate.initialize(request.getRatingSet());
+            Hibernate.initialize(request.getRegion());
         }
         return request;
     }
