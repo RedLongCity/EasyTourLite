@@ -22,6 +22,8 @@ import com.redlongcitywork.easytourlite.dao.SearchingRequestDao;
 import com.redlongcitywork.easytourlite.dao.SearchingRequestDaoImpl;
 import com.redlongcitywork.easytourlite.dao.TourDao;
 import com.redlongcitywork.easytourlite.dao.TourDaoImpl;
+import com.redlongcitywork.easytourlite.dao.TypeDao;
+import com.redlongcitywork.easytourlite.dao.TypeDaoImpl;
 import com.redlongcitywork.easytourlite.service.CountryService;
 import com.redlongcitywork.easytourlite.service.CountryServiceImpl;
 import com.redlongcitywork.easytourlite.service.CurrencyService;
@@ -44,6 +46,8 @@ import com.redlongcitywork.easytourlite.service.SearchingRequestService;
 import com.redlongcitywork.easytourlite.service.SearchingRequestServiceImpl;
 import com.redlongcitywork.easytourlite.service.TourService;
 import com.redlongcitywork.easytourlite.service.TourServiceImpl;
+import com.redlongcitywork.easytourlite.service.TypeService;
+import com.redlongcitywork.easytourlite.service.TypeServiceImpl;
 import java.util.Properties;
 import javax.sql.DataSource;
 import org.hibernate.SessionFactory;
@@ -123,12 +127,12 @@ public class TestJPAConfig {
         }
 
         @Bean
-        public Meal_TypeDao typeDao() {
+        public Meal_TypeDao mealTypeDao() {
             return new Meal_TypeDaoImpl();
         }
 
         @Bean
-        public Meal_TypeService typeService() {
+        public Meal_TypeService mealTypeService() {
             return new Meal_TypeServiceImpl();
         }
 
@@ -201,14 +205,25 @@ public class TestJPAConfig {
         public SearchingRequestService searchingRequestService() {
             return new SearchingRequestServiceImpl();
         }
-        
+
         @Bean
-        public RegionDao regionDao(){
+        public RegionDao regionDao() {
             return new RegionDaoImpl();
         }
-        
-        @Bean RegionService regionService(){
+
+        @Bean
+        public RegionService regionService() {
             return new RegionServiceImpl();
+        }
+
+        @Bean
+        public TypeDao typeDao() {
+            return new TypeDaoImpl();
+        }
+
+        @Bean
+        public TypeService typeService() {
+            return new TypeServiceImpl();
         }
 
     }
