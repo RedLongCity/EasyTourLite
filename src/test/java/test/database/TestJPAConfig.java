@@ -10,6 +10,8 @@ import com.redlongcitywork.easytourlite.dao.HotToursRequestDao;
 import com.redlongcitywork.easytourlite.dao.HotToursRequestDaoImpl;
 import com.redlongcitywork.easytourlite.dao.HotToursSessionDao;
 import com.redlongcitywork.easytourlite.dao.HotToursSessionDaoImpl;
+import com.redlongcitywork.easytourlite.dao.HotelDao;
+import com.redlongcitywork.easytourlite.dao.HotelDaoImpl;
 import com.redlongcitywork.easytourlite.dao.Hotel_RatingDao;
 import com.redlongcitywork.easytourlite.dao.Hotel_RatingDaoImpl;
 import com.redlongcitywork.easytourlite.dao.MailAddressDao;
@@ -34,6 +36,8 @@ import com.redlongcitywork.easytourlite.service.HotToursRequestService;
 import com.redlongcitywork.easytourlite.service.HotToursRequestServiceImpl;
 import com.redlongcitywork.easytourlite.service.HotToursSessionService;
 import com.redlongcitywork.easytourlite.service.HotToursSessionServiceImpl;
+import com.redlongcitywork.easytourlite.service.HotelService;
+import com.redlongcitywork.easytourlite.service.HotelServiceImpl;
 import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
 import com.redlongcitywork.easytourlite.service.Hotel_RatingServiceImpl;
 import com.redlongcitywork.easytourlite.service.MailAddressService;
@@ -224,6 +228,16 @@ public class TestJPAConfig {
         @Bean
         public TypeService typeService() {
             return new TypeServiceImpl();
+        }
+
+        @Bean
+        public HotelDao hotelDao() {
+            return new HotelDaoImpl();
+        }
+
+        @Bean
+        public HotelService hotelService() {
+            return new HotelServiceImpl();
         }
 
     }
