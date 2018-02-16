@@ -116,7 +116,8 @@ public class Tour {
     private String currency_Symbol;
 
     @JsonView(TourView.class)
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tour", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "fn_tour_key")
     private Set<Price> prices = new HashSet<Price>();
 
     @JsonView(TourView.class)

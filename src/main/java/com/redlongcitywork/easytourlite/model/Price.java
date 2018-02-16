@@ -36,10 +36,6 @@ public class Price {
     @JsonView(TourView.class)
     @Column(name="cost",unique=false,nullable=false)
     private Integer cost;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="tour_key", nullable=false)
-    private Tour tour;
 
     public Integer getId() {
         return id;
@@ -55,14 +51,6 @@ public class Price {
 
     public void setCost(Integer cost) {
         this.cost = cost;
-    }
-
-    public Tour getTour() {
-        return tour;
-    }
-
-    public void setTour(Tour tour) {
-        this.tour = tour;
     }
 
     public Currency getCurrency() {
@@ -105,11 +93,10 @@ public class Price {
         }
         return true;
     }
-    
-    
+
     @Override
     public String toString() {
-        return "Price{" + "id=" + id + ", currency=" + currency + ", cost=" + cost + ", tour=" + tour + '}';
+        return "Price{" + "id=" + id + ", currency=" + currency + ", cost=" + cost + '}';
     }
 
 }

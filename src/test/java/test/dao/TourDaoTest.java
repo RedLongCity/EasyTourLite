@@ -32,8 +32,6 @@ import test.database.TestJPAConfig;
 @Transactional
 public class TourDaoTest extends TestJPAConfig {
     
-    private static final Logger LOG = Logger.getLogger(TourDaoTest.class.getName());
-    
     @Autowired
     private TourDao dao;
     
