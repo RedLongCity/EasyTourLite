@@ -5,39 +5,31 @@ import com.redlongcitywork.easytourlite.json.view.TourView;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
  *
  * @author redlongcity
  */
-
 @Entity
-@Table(name="hotel_images")
+@Table(name = "hotel_images")
 public class Hotel_Image {
-    
+
     @JsonView(TourView.class)
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
+
     @JsonView(TourView.class)
-    @Column(name="full",unique=false,nullable=false)
+    @Column(name = "full", unique = false, nullable = false)
     private String full;
-    
+
     @JsonView(TourView.class)
-    @Column(name="thumb",unique=false,nullable=false)
+    @Column(name = "thumb", unique = false, nullable = false)
     private String thumb;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="tour_key", nullable=false)
-    private Tour tour;
 
     public Integer getId() {
         return id;
@@ -61,14 +53,6 @@ public class Hotel_Image {
 
     public void setThumb(String thumb) {
         this.thumb = thumb;
-    }
-
-    public Tour getTour() {
-        return tour;
-    }
-
-    public void setTour(Tour tour) {
-        this.tour = tour;
     }
 
     @Override
@@ -98,8 +82,7 @@ public class Hotel_Image {
 
     @Override
     public String toString() {
-        return "Hotel_Image{" + "id=" + id + ", full=" + full + ", thumb=" + thumb + ", tour=" + tour + '}';
+        return "Hotel_Image{" + "id=" + id + ", full=" + full + ", thumb=" + thumb + '}';
     }
-    
-    
+
 }

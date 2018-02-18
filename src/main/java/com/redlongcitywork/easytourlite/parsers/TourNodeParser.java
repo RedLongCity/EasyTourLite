@@ -180,7 +180,6 @@ public class TourNodeParser implements NodeParser<Tour> {
                 Hotel_Image hotel_Image = new Hotel_Image();
                 hotel_Image.setFull(hotel_ImagesNode.get(j).path("full").asText());
                 hotel_Image.setThumb(hotel_ImagesNode.get(j).path("thumb").asText());
-                hotel_Image.setTour(tour);
                 tour.getHotel_ImageSet().add(hotel_Image);
             }
         }

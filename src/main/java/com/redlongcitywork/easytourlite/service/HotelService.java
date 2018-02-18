@@ -5,11 +5,11 @@ import java.util.List;
 
 /**
  *
- * @author redlongcity 16/02/2018
+ * @author redlongcity 18/02/2018
  */
 public interface HotelService {
 
-    Hotel findById(String id);
+    Hotel findById(Integer id);
 
     void saveHotel(Hotel hotel);
 

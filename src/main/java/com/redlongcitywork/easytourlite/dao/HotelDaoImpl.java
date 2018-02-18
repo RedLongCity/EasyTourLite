@@ -9,33 +9,39 @@ import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author redlongcity 16/02/2018
+ * @author redlongcity 18/02/2018
  */
 @Repository("hotelDao")
-public class HotelDaoImpl extends AbstractDao<String, Hotel> implements HotelDao {
+public class HotelDaoImpl extends AbstractDao<Integer, Hotel> implements HotelDao {
 
     @Override
     public List<Hotel> findAll() {
         Criteria crit = createCriteria();
         crit.addOrder(Order.asc("name"));
-        List<Hotel> list = crit.list();
+        List<Hotel> list = (List<Hotel>) crit.list();
         if (list != null) {
             for (Hotel hotel : list) {
-                Hibernate.initialize(hotel.getRating());
+                Hibernate.initialize(hotel.getCountry());
                 Hibernate.initialize(hotel.getRegion());
-                Hibernate.initialize(hotel.getTypeSet());
+                Hibernate.initialize(hotel.getFacilities());
+                Hibernate.initialize(hotel.getImages());
+                Hibernate.initialize(hotel.getRating());
+                Hibernate.initialize(hotel.getTours());
             }
         }
         return list;
     }
 
     @Override
-    public Hotel findById(String id) {
+    public Hotel findById(Integer id) {
         Hotel hotel = getByKey(id);
         if (hotel != null) {
-            Hibernate.initialize(hotel.getRating());
+            Hibernate.initialize(hotel.getCountry());
             Hibernate.initialize(hotel.getRegion());
-            Hibernate.initialize(hotel.getTypeSet());
+            Hibernate.initialize(hotel.getFacilities());
+            Hibernate.initialize(hotel.getImages());
+            Hibernate.initialize(hotel.getRating());
+            Hibernate.initialize(hotel.getTours());
         }
         return hotel;
     }
@@ -46,18 +52,17 @@ public class HotelDaoImpl extends AbstractDao<String, Hotel> implements HotelDao
     }
 
     @Override
-    public void mergeHotel(Hotel hotel) {
-        merge(hotel);
+    public void deleteHotel(Hotel hotel) {
+        delete(hotel);
     }
 
     @Override
-    public void deleteHotel(Hotel hotel) {
-        delete(hotel);
+    public void mergeHotel(Hotel hotel) {
+        merge(hotel);
     }
 
     @Override
     public void saveOrUpdateHotel(Hotel hotel) {
         saveOrUpdate(hotel);
     }
-
 }

@@ -117,7 +117,7 @@ public class Tour {
 
     @JsonView(TourView.class)
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "fn_tour_key")
+    @JoinColumn(name = "tour_key_fn")
     private Set<Price> prices = new HashSet<Price>();
 
     @JsonView(TourView.class)
@@ -143,7 +143,8 @@ public class Tour {
     private String transport_Type;
 
     @JsonView(TourView.class)
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tour", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "tour_key_fn")
     private Set<Hotel_Image> hotel_ImageSet = new HashSet<Hotel_Image>();
 
     @ManyToMany(mappedBy = "toursSet")

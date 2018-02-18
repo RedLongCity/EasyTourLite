@@ -61,7 +61,7 @@ public class TourCasual {
 
     @NotNull
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "fn_tour_key")
+    @JoinColumn(name = "tour_key_fn")
     private Set<Price> prices = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)

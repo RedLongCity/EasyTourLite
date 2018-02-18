@@ -5,13 +5,13 @@ import java.util.List;
 
 /**
  *
- * @author redlongcity 16/02/2018
+ * @author redlongcity 18/02/2018
  */
 public interface HotelDao {
 
     List<Hotel> findAll();
 
-    Hotel findById(String id);
+    Hotel findById(Integer id);
 
     void save(Hotel hotel);
 
@@ -20,5 +20,4 @@ public interface HotelDao {
     void deleteHotel(Hotel hotel);
 
     void saveOrUpdateHotel(Hotel hotel);
-
 }

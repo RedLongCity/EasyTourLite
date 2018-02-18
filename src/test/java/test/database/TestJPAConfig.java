@@ -10,8 +10,7 @@ import com.redlongcitywork.easytourlite.dao.HotToursRequestDao;
 import com.redlongcitywork.easytourlite.dao.HotToursRequestDaoImpl;
 import com.redlongcitywork.easytourlite.dao.HotToursSessionDao;
 import com.redlongcitywork.easytourlite.dao.HotToursSessionDaoImpl;
-import com.redlongcitywork.easytourlite.dao.HotelDao;
-import com.redlongcitywork.easytourlite.dao.HotelDaoImpl;
+import com.redlongcitywork.easytourlite.dao.HotelFilterDaoImpl;
 import com.redlongcitywork.easytourlite.dao.Hotel_RatingDao;
 import com.redlongcitywork.easytourlite.dao.Hotel_RatingDaoImpl;
 import com.redlongcitywork.easytourlite.dao.MailAddressDao;
@@ -38,8 +37,7 @@ import com.redlongcitywork.easytourlite.service.HotToursRequestService;
 import com.redlongcitywork.easytourlite.service.HotToursRequestServiceImpl;
 import com.redlongcitywork.easytourlite.service.HotToursSessionService;
 import com.redlongcitywork.easytourlite.service.HotToursSessionServiceImpl;
-import com.redlongcitywork.easytourlite.service.HotelService;
-import com.redlongcitywork.easytourlite.service.HotelServiceImpl;
+import com.redlongcitywork.easytourlite.service.HotelFilterServiceImpl;
 import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
 import com.redlongcitywork.easytourlite.service.Hotel_RatingServiceImpl;
 import com.redlongcitywork.easytourlite.service.MailAddressService;
@@ -67,6 +65,8 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import com.redlongcitywork.easytourlite.dao.HotelFilterDao;
+import com.redlongcitywork.easytourlite.service.HotelFilterService;
 
 /**
  *
@@ -235,13 +235,13 @@ public class TestJPAConfig {
         }
 
         @Bean
-        public HotelDao hotelDao() {
-            return new HotelDaoImpl();
+        public HotelFilterDao hotelDao() {
+            return new HotelFilterDaoImpl();
         }
 
         @Bean
-        public HotelService hotelService() {
-            return new HotelServiceImpl();
+        public HotelFilterService hotelService() {
+            return new HotelFilterServiceImpl();
         }
         
         @Bean
