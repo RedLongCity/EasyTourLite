@@ -19,7 +19,7 @@ public class RegionServiceImpl implements RegionService {
     private RegionDao dao;
 
     @Override
-    public Region findById(Integer id) {
+    public Region findById(String id) {
         return dao.findById(id);
     }
 

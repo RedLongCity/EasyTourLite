@@ -11,7 +11,7 @@ public interface RegionDao {
 
     List<Region> findAll();
 
-    Region findById(Integer id);
+    Region findById(String id);
 
     void save(Region region);
 

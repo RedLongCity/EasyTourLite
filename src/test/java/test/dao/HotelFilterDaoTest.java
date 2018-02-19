@@ -59,7 +59,7 @@ public class HotelFilterDaoTest extends TestJPAConfig {
         rating.setId("0");
         rating.setName("RatingName");
         region = new Region();
-        region.setId(1);
+        region.setId("id");
         region.setName("RegionName");
         type1 = new Type();
         type1.setId("id_1");

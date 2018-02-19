@@ -19,17 +19,17 @@ public class Region {
     @Id
     @NotNull
     @Column(name = "region_id", unique = true)
-    private Integer Id;
+    private String Id;
     
     @NotNull
     @Column(name = "region_name", unique = false)
     private String name;
 
-    public Integer getId() {
+    public String getId() {
         return Id;
     }
 
-    public void setId(Integer Id) {
+    public void setId(String Id) {
         this.Id = Id;
     }
 

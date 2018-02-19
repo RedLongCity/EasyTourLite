@@ -93,7 +93,7 @@ public class HotelDaoTest extends TestJPAConfig {
         country.setId("id");
         country.setName("name");
         region = new Region();
-        region.setId(1);
+        region.setId("id");
         region.setName("name");
         rating = new Hotel_Rating();
         rating.setId("id");

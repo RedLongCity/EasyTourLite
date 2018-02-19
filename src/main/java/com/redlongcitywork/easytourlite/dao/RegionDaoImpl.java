@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
  * @author redlongcity 14/02/2018
  */
 @Repository("regionDao")
-public class RegionDaoImpl extends AbstractDao<Integer, Region>
+public class RegionDaoImpl extends AbstractDao<String, Region>
         implements RegionDao {
 
     @Override
@@ -23,7 +23,7 @@ public class RegionDaoImpl extends AbstractDao<Integer, Region>
     }
 
     @Override
-    public Region findById(Integer id) {
+    public Region findById(String id) {
         return getByKey(id);
     }
 

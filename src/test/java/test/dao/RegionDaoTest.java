@@ -30,7 +30,7 @@ public class RegionDaoTest extends TestJPAConfig {
     @Before
     public void populate() {
         region = new Region();
-        region.setId(1);
+        region.setId("id");
         region.setName("RegionName");
     }
 
@@ -53,7 +53,7 @@ public class RegionDaoTest extends TestJPAConfig {
 
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest_2() {
-        region.setId(0);
+        region.setId("id");
         region.setName(null);
         dao.save(region);
         dao.findAll();

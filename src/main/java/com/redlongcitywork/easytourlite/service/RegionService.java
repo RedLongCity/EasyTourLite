@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface RegionService {
 
-    Region findById(Integer id);
+    Region findById(String id);
 
     void saveRegion(Region region);
 

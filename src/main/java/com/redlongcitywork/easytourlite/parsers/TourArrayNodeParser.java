@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.redlongcitywork.easytourlite.parsers;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -14,7 +9,6 @@ import com.redlongcitywork.easytourlite.service.From_CitiesService;
 import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
 import com.redlongcitywork.easytourlite.service.Meal_TypeService;
 import com.redlongcitywork.easytourlite.utils.TimeUtils;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -24,9 +18,7 @@ import org.springframework.stereotype.Service;
 
 /**
  *
- * @author redlongcity
- * 22/12/2017
- * class for parsing List of Tour from ArrayNode
+ * @author redlongcity 22/12/2017 class for parsing List of Tour from ArrayNode
  */
 @Service
 public class TourArrayNodeParser implements NodeParser<List<Tour>> {
@@ -47,10 +39,10 @@ public class TourArrayNodeParser implements NodeParser<List<Tour>> {
 
     @Autowired
     private Hotel_RatingService ratingService;
-    
+
     @Autowired
     private TimeUtils utils;
-    
+
     private long time;
 
     @Override

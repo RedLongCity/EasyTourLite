@@ -21,9 +21,7 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 /**
  *
- * @author redlongcity 
- * 22/12/2017 
- * class for deserialization Tour object from
+ * @author redlongcity 22/12/2017 class for deserialization Tour object from
  * JsonNode
  */
 public class TourNodeParser implements NodeParser<Tour> {
@@ -41,7 +39,11 @@ public class TourNodeParser implements NodeParser<Tour> {
     @Autowired
     private TourService tourService;
 
-    public TourNodeParser(List<Country> countryList, List<From_Cities> cityList, List<Meal_Type> typeList, List<Hotel_Rating> ratingList, List<Currency> currencyList) {
+    public TourNodeParser(List<Country> countryList,
+            List<From_Cities> cityList,
+            List<Meal_Type> typeList,
+            List<Hotel_Rating> ratingList,
+            List<Currency> currencyList) {
         this.countryList = countryList;
         this.cityList = cityList;
         this.typeList = typeList;
