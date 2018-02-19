@@ -71,6 +71,10 @@ public class TourCasual {
     @Column(name = "transport_type", unique = false, nullable = true)
     private String transportType;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "hotel_id")
+    private Hotel hotel;
+
     public String getKey() {
         return key;
     }
@@ -159,6 +163,14 @@ public class TourCasual {
         this.transportType = transportType;
     }
 
+    public Hotel getHotel() {
+        return hotel;
+    }
+
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -186,7 +198,7 @@ public class TourCasual {
 
     @Override
     public String toString() {
-        return "TourCasual{" + "key=" + key + ", type=" + type + ", mealType=" + mealType + ", roomType=" + roomType + ", duration=" + duration + ", dateFrom=" + dateFrom + ", combined=" + combined + ", currency=" + currency + ", prices=" + prices + ", city=" + city + ", transportType=" + transportType + '}';
+        return "TourCasual{" + "key=" + key + ", type=" + type + ", mealType=" + mealType + ", roomType=" + roomType + ", duration=" + duration + ", dateFrom=" + dateFrom + ", combined=" + combined + ", currency=" + currency + ", prices=" + prices + ", city=" + city + ", transportType=" + transportType + ", hotel=" + hotel + '}';
     }
 
 }

@@ -25,7 +25,6 @@ import javax.validation.constraints.NotNull;
 public class Hotel {
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
@@ -50,8 +49,7 @@ public class Hotel {
     @Column(name = "hotel_review_count")
     private String hotelReviewCount;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "hotel_id_fn")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "hotel")
     private Set<Facility> facilities = new HashSet<>();
 
     @Column(name = "lat")

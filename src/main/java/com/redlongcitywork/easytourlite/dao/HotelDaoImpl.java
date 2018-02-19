@@ -17,7 +17,7 @@ public class HotelDaoImpl extends AbstractDao<Integer, Hotel> implements HotelDa
     @Override
     public List<Hotel> findAll() {
         Criteria crit = createCriteria();
-        crit.addOrder(Order.asc("name"));
+        crit.addOrder(Order.asc("hotelName"));
         List<Hotel> list = (List<Hotel>) crit.list();
         if (list != null) {
             for (Hotel hotel : list) {

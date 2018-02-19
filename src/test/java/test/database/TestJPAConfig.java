@@ -10,6 +10,8 @@ import com.redlongcitywork.easytourlite.dao.HotToursRequestDao;
 import com.redlongcitywork.easytourlite.dao.HotToursRequestDaoImpl;
 import com.redlongcitywork.easytourlite.dao.HotToursSessionDao;
 import com.redlongcitywork.easytourlite.dao.HotToursSessionDaoImpl;
+import com.redlongcitywork.easytourlite.dao.HotelDao;
+import com.redlongcitywork.easytourlite.dao.HotelDaoImpl;
 import com.redlongcitywork.easytourlite.dao.HotelFilterDaoImpl;
 import com.redlongcitywork.easytourlite.dao.Hotel_RatingDao;
 import com.redlongcitywork.easytourlite.dao.Hotel_RatingDaoImpl;
@@ -67,6 +69,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.redlongcitywork.easytourlite.dao.HotelFilterDao;
 import com.redlongcitywork.easytourlite.service.HotelFilterService;
+import com.redlongcitywork.easytourlite.service.HotelService;
+import com.redlongcitywork.easytourlite.service.HotelServiceImpl;
 
 /**
  *
@@ -235,12 +239,12 @@ public class TestJPAConfig {
         }
 
         @Bean
-        public HotelFilterDao hotelDao() {
+        public HotelFilterDao hotelFilterDao() {
             return new HotelFilterDaoImpl();
         }
 
         @Bean
-        public HotelFilterService hotelService() {
+        public HotelFilterService hotelFilterService() {
             return new HotelFilterServiceImpl();
         }
         
@@ -252,6 +256,16 @@ public class TestJPAConfig {
         @Bean
         public TourCasualService tourCasualService(){
             return new TourCasualServiceImpl();
+        }
+        
+        @Bean 
+        public HotelDao hotelDao(){
+            return new HotelDaoImpl();
+        }
+        
+        @Bean
+        public HotelService hotelService(){
+            return new HotelServiceImpl();
         }
 
     }
