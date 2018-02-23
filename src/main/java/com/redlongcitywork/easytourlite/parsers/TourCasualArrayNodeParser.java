@@ -49,14 +49,13 @@ public class TourCasualArrayNodeParser implements NodeParser<List<TourCasual>> {
         }
 
         List<TourCasual> list = new ArrayList<TourCasual>();
-        ArrayNode offersNode = (ArrayNode) arrayNode.path("offers");
         TourCasualNodeParser parser = new TourCasualNodeParser(
                 mealTypeService.findAll(),
                 currencyService.findAll(),
                 cityService.findAll(),
                 typeService.findAll());
-        for (int i = 0; i < offersNode.size(); i++) {
-            list.add(parser.parseNode(offersNode.get(i)));
+        for (int i = 0; i < arrayNode.size(); i++) {
+            list.add(parser.parseNode(arrayNode.get(i)));
         }
 
         return list;
