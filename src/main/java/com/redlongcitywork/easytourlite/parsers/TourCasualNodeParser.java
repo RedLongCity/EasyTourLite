@@ -13,13 +13,11 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.springframework.stereotype.Service;
 
 /**
  *
  * @author redlongcity 19/02/2018
  */
-@Service
 public class TourCasualNodeParser implements NodeParser<TourCasual> {
 
     private static final Logger LOG = Logger.getLogger(TourCasualNodeParser.class.getName());

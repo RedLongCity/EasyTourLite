@@ -1,0 +1,11 @@
+{
+    "hotels": [
+        {
+            "id": "1005594",
+            "name": "Ac Hotel Istanbul Macka By Marriott",
+            "hotel_rating_id": "4",
+            "region_id": "5498",
+            "type_id": "1,2"
+        }
+    ]
+}

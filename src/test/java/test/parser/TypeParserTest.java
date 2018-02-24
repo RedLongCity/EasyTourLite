@@ -1,8 +1,8 @@
 package test.parser;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.redlongcitywork.easytourlite.model.Region;
-import com.redlongcitywork.easytourlite.parsers.RegionArrayNodeParser;
+import com.redlongcitywork.easytourlite.model.Type;
+import com.redlongcitywork.easytourlite.parsers.TypeArrayNodeParser;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
@@ -16,22 +16,22 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @author redlongcity 24/02/2018
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-public class RegionParserTest extends TestJsonConfig {
+public class TypeParserTest extends TestJsonConfig {
 
     @Autowired
-    private JsonNode regionJsonNode;
+    private JsonNode typeJsonNode;
 
     @Autowired
-    private RegionArrayNodeParser parser;
+    private TypeArrayNodeParser parser;
 
     @Test
     public void parsingTest() {
-        Region region = new Region();
-        region.setId("8688");
-        region.setName("Абано Терме");
-        List<Region> list = new ArrayList<>();
-        list.add(region);
-        assertEquals(parser.parseNode(regionJsonNode), list);
+        Type type = new Type();
+        type.setId("1");
+        type.setName("Проезд включен");
+        List<Type> list = new ArrayList<>();
+        list.add(type);
+        assertEquals(parser.parseNode(typeJsonNode), list);
     }
 
 }

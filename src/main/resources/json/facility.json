@@ -1,0 +1,12 @@
+{
+    "hotel_facilities": [
+        {
+            "id": "1",
+            "name": "Wi-fi",
+            "category_id": "1",
+            "category": "Интернет",
+            "is_main": 0,
+            "is_paid": 0
+        }
+    ]
+}
