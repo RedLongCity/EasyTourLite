@@ -30,11 +30,6 @@ public class TourCasual {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "type_id")
-    private Type type;
-
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "meal_type_id")
     private Meal_Type mealType;
 
@@ -81,14 +76,6 @@ public class TourCasual {
 
     public void setKey(String key) {
         this.key = key;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
     }
 
     public Meal_Type getMealType() {
@@ -198,7 +185,7 @@ public class TourCasual {
 
     @Override
     public String toString() {
-        return "TourCasual{" + "key=" + key + ", type=" + type + ", mealType=" + mealType + ", roomType=" + roomType + ", duration=" + duration + ", dateFrom=" + dateFrom + ", combined=" + combined + ", currency=" + currency + ", prices=" + prices + ", city=" + city + ", transportType=" + transportType + ", hotel=" + hotel + '}';
+        return "TourCasual{" + "key=" + key + ", mealType=" + mealType + ", roomType=" + roomType + ", duration=" + duration + ", dateFrom=" + dateFrom + ", combined=" + combined + ", currency=" + currency + ", prices=" + prices + ", city=" + city + ", transportType=" + transportType + ", hotel=" + hotel + '}';
     }
 
 }

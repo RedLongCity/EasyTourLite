@@ -28,17 +28,13 @@ public class TourCasualNodeParser implements NodeParser<TourCasual> {
 
     private final List<From_Cities> cityList;
 
-    private final List<Type> typeList;
-
     public TourCasualNodeParser(
             List<Meal_Type> mealTypeList,
             List<Currency> currencyList,
-            List<From_Cities> cityList,
-            List<Type> typeList) {
+            List<From_Cities> cityList) {
         this.mealTypeList = mealTypeList;
         this.currencyList = currencyList;
         this.cityList = cityList;
-        this.typeList = typeList;
     }
 
     @Override
@@ -52,10 +48,6 @@ public class TourCasualNodeParser implements NodeParser<TourCasual> {
 
         if (jsonNode.has("key")) {
             tour.setKey(jsonNode.path("key").asText());
-        }
-
-        if (jsonNode.has("type")) {
-            tour.setType(findType(jsonNode.path("type").asText()));
         }
 
         if (jsonNode.has("meal_type")) {
@@ -140,15 +132,6 @@ public class TourCasualNodeParser implements NodeParser<TourCasual> {
         for (From_Cities city : cityList) {
             if (city.getName().equals(name)) {
                 return city;
-            }
-        }
-        return null;
-    }
-
-    private Type findType(String id) {
-        for (Type type : typeList) {
-            if (type.getId().equals(id)) {
-                return type;
             }
         }
         return null;

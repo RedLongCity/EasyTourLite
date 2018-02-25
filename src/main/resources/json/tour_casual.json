@@ -1,0 +1,22 @@
+{
+    "offers": [
+        {
+            "key": "10-02-7859fb5585b9e58792c85c75325a0691",
+            "meal_type": "AI",
+            "meal_type_full": "\u0412\u0441\u0451 \u0432\u043a\u043b\u044e\u0447\u0435\u043d\u043e",
+            "room_type": "Standart - Dbl",
+            "duration": 6,
+            "date_from": "2016-10-07",
+            "is_combined": 0,
+            "currency_id": 1,
+            "prices": {
+                "1": 510,
+                "2": 13208,
+                "10": 458
+            },
+            "(__is_operator_show)operator": "Tez Tour",
+            "from_city": "\u041a\u0438\u0435\u0432",
+            "transport_type": "flight"
+        }
+    ]
+}

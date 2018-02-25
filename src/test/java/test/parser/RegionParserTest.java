@@ -6,6 +6,7 @@ import com.redlongcitywork.easytourlite.parsers.RegionArrayNodeParser;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class RegionParserTest extends TestJsonConfig {
 
     @Autowired
+    private RegionArrayNodeParser parser;
+
     private JsonNode regionJsonNode;
 
-    @Autowired
-    private RegionArrayNodeParser parser;
+    @Before
+    public void populate() {
+        regionJsonNode = getJsonFromFile("json/region.json").path("regions");
+    }
 
     @Test
     public void parsingTest() {

@@ -28,17 +28,13 @@ public class TourCasualArrayNodeParser implements NodeParser<List<TourCasual>> {
 
     private final From_CitiesService cityService;
 
-    private final TypeService typeService;
-
     public TourCasualArrayNodeParser(
             Meal_TypeService mealTypeService,
             CurrencyService currencyService,
-            From_CitiesService cityService,
-            TypeService typeService) {
+            From_CitiesService cityService) {
         this.mealTypeService = mealTypeService;
         this.currencyService = currencyService;
         this.cityService = cityService;
-        this.typeService = typeService;
     }
 
     @Override
@@ -52,8 +48,7 @@ public class TourCasualArrayNodeParser implements NodeParser<List<TourCasual>> {
         TourCasualNodeParser parser = new TourCasualNodeParser(
                 mealTypeService.findAll(),
                 currencyService.findAll(),
-                cityService.findAll(),
-                typeService.findAll());
+                cityService.findAll());
         for (int i = 0; i < arrayNode.size(); i++) {
             list.add(parser.parseNode(arrayNode.get(i)));
         }

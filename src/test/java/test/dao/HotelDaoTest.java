@@ -84,8 +84,6 @@ public class HotelDaoTest extends TestJPAConfig {
 
     private Price price;
 
-    private Type type;
-
     @Before
     public void populate() {
         hotel = new Hotel();
@@ -111,9 +109,6 @@ public class HotelDaoTest extends TestJPAConfig {
         price = new Price();
         price.setCost(1);
         price.setCurrency(currency);
-        type = new Type();
-        type.setId("id");
-        type.setName("name");
         tour = new TourCasual();
         tour.setCity(city);
         tour.setCombined(true);
@@ -125,13 +120,11 @@ public class HotelDaoTest extends TestJPAConfig {
         tour.getPrices().add(price);
         tour.setRoomType("roomType");
         tour.setTransportType("transportType");
-        tour.setType(type);
 
         countryService.saveCountry(country);
         cityService.saveFrom_Cities(city);
         currencyService.saveCurrency(currency);
         mealTypeService.saveMeal_Type(mealType);
-        typeService.saveType(type);
         regionService.saveRegion(region);
         ratingService.saveHotel_Rating(rating);
 

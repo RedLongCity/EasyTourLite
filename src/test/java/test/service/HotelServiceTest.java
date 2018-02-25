@@ -9,7 +9,6 @@ import com.redlongcitywork.easytourlite.model.Meal_Type;
 import com.redlongcitywork.easytourlite.model.Price;
 import com.redlongcitywork.easytourlite.model.Region;
 import com.redlongcitywork.easytourlite.model.TourCasual;
-import com.redlongcitywork.easytourlite.model.Type;
 import com.redlongcitywork.easytourlite.service.CountryService;
 import com.redlongcitywork.easytourlite.service.CurrencyService;
 import com.redlongcitywork.easytourlite.service.From_CitiesService;
@@ -18,7 +17,6 @@ import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
 import com.redlongcitywork.easytourlite.service.Meal_TypeService;
 import com.redlongcitywork.easytourlite.service.RegionService;
 import com.redlongcitywork.easytourlite.service.TourCasualService;
-import com.redlongcitywork.easytourlite.service.TypeService;
 import java.sql.Date;
 import javax.validation.ConstraintViolationException;
 import static org.junit.Assert.assertFalse;
@@ -63,9 +61,6 @@ public class HotelServiceTest extends TestJPAConfig {
     @Autowired
     private Meal_TypeService mealTypeService;
 
-    @Autowired
-    private TypeService typeService;
-
     private Hotel hotel;
 
     private Country country;
@@ -83,8 +78,6 @@ public class HotelServiceTest extends TestJPAConfig {
     private Meal_Type mealType;
 
     private Price price;
-
-    private Type type;
 
     @Before
     public void populate() {
@@ -111,9 +104,6 @@ public class HotelServiceTest extends TestJPAConfig {
         price = new Price();
         price.setCost(1);
         price.setCurrency(currency);
-        type = new Type();
-        type.setId("id");
-        type.setName("name");
         tour = new TourCasual();
         tour.setCity(city);
         tour.setCombined(true);
@@ -125,13 +115,11 @@ public class HotelServiceTest extends TestJPAConfig {
         tour.getPrices().add(price);
         tour.setRoomType("roomType");
         tour.setTransportType("transportType");
-        tour.setType(type);
 
         countryService.saveCountry(country);
         cityService.saveFrom_Cities(city);
         currencyService.saveCurrency(currency);
         mealTypeService.saveMeal_Type(mealType);
-        typeService.saveType(type);
         regionService.saveRegion(region);
         ratingService.saveHotel_Rating(rating);
 

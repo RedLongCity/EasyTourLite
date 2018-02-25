@@ -70,18 +70,6 @@ public class TestJsonConfig {
         }
 
         @Bean
-        public JsonNode regionJsonNode() {
-            JsonNode node = getJsonFromFile("json/region.json");
-            return node.path("regions");
-        }
-
-        @Bean
-        public JsonNode typeJsonNode() {
-            JsonNode node = getJsonFromFile("json/type.json");
-            return node.path("types");
-        }
-
-        @Bean
         public JsonNode hotelFilterNode() {
             JsonNode node = getJsonFromFile("json/hotel_filter.json");
             return node.path("hotels");
@@ -93,17 +81,17 @@ public class TestJsonConfig {
             return node.path("hotel_facilities");
         }
 
-        private JsonNode getJsonFromFile(String path) {
-            JsonNode result = null;
-            File file = new File(getClass().getResource(path).getFile());
-            ObjectMapper mapper = new ObjectMapper();
-            try {
-                result = mapper.readTree(file);
-            } catch (IOException ex) {
-                Logger.getLogger(TestJsonConfig.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            return result;
-        }
+    }
 
+    public JsonNode getJsonFromFile(String path) {
+        JsonNode result = null;
+        File file = new File(getClass().getResource(path).getFile());
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            result = mapper.readTree(file);
+        } catch (IOException ex) {
+            Logger.getLogger(TestJsonConfig.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
     }
 }

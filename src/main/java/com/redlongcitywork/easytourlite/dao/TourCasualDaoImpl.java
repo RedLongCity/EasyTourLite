@@ -26,7 +26,6 @@ public class TourCasualDaoImpl extends AbstractDao<String, TourCasual>
                 Hibernate.initialize(tour.getCurrency());
                 Hibernate.initialize(tour.getMealType());
                 Hibernate.initialize(tour.getPrices());
-                Hibernate.initialize(tour.getType());
             }
         }
         return list;
@@ -40,7 +39,6 @@ public class TourCasualDaoImpl extends AbstractDao<String, TourCasual>
             Hibernate.initialize(tour.getCurrency());
             Hibernate.initialize(tour.getMealType());
             Hibernate.initialize(tour.getPrices());
-            Hibernate.initialize(tour.getType());
         }
         return tour;
     }

@@ -32,7 +32,6 @@ public class TourCasualServiceImpl implements TourCasualService {
     public void updateTourCasual(TourCasual tour) {
         TourCasual entity = dao.findById(tour.getKey());
         if (entity != null) {
-            entity.setType(tour.getType());
             entity.setMealType(tour.getMealType());
             entity.setRoomType(tour.getRoomType());
             entity.setDuration(tour.getDuration());

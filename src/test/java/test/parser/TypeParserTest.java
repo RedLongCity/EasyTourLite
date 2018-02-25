@@ -6,6 +6,7 @@ import com.redlongcitywork.easytourlite.parsers.TypeArrayNodeParser;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class TypeParserTest extends TestJsonConfig {
 
     @Autowired
+    private TypeArrayNodeParser parser;
+
     private JsonNode typeJsonNode;
 
-    @Autowired
-    private TypeArrayNodeParser parser;
+    @Before
+    public void populate() {
+        typeJsonNode = getJsonFromFile("json/type.json").path("types");
+    }
 
     @Test
     public void parsingTest() {
