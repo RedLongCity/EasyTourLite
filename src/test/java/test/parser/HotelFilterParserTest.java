@@ -10,13 +10,13 @@ import com.redlongcitywork.easytourlite.service.RegionService;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.stub;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -24,9 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class HotelFilterParserTest extends TestJsonConfig {
-
-    @Autowired
-    private JsonNode hotelFilterNode;
 
     @Mock
     private RegionService regionService;
@@ -37,6 +34,13 @@ public class HotelFilterParserTest extends TestJsonConfig {
     @InjectMocks
     private HotelFilterArrayNodeParser parser
             = new HotelFilterArrayNodeParser();
+
+    private JsonNode hotelFilterNode;
+
+    @Before
+    public void populate() {
+        hotelFilterNode = getJsonFromFile("json/hotel_filter.json").path("hotels");
+    }
 
     @Test
     public void parsingTest() {

@@ -1,12 +1,10 @@
 package com.redlongcitywork.easytourlite.parsers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.redlongcitywork.easytourlite.model.TourCasual;
 import com.redlongcitywork.easytourlite.service.CurrencyService;
 import com.redlongcitywork.easytourlite.service.From_CitiesService;
 import com.redlongcitywork.easytourlite.service.Meal_TypeService;
-import com.redlongcitywork.easytourlite.service.TypeService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;

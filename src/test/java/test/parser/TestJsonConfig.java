@@ -50,11 +50,6 @@ public class TestJsonConfig {
         }
 
         @Bean
-        public HotelFilterArrayNodeParser hotelFilterArrayNodeParser() {
-            return new HotelFilterArrayNodeParser();
-        }
-
-        @Bean
         public FacilityNodeParser facilityNodeParser() {
             return new FacilityNodeParser();
         }
@@ -64,28 +59,11 @@ public class TestJsonConfig {
             return new FacilityArrayNodeParser();
         }
 
-        @Bean
-        public JsonNode mainJsonNode() {
-            return getJsonFromFile("json/api.json");
-        }
-
-        @Bean
-        public JsonNode hotelFilterNode() {
-            JsonNode node = getJsonFromFile("json/hotel_filter.json");
-            return node.path("hotels");
-        }
-
-        @Bean
-        public JsonNode facilityNode() {
-            JsonNode node = getJsonFromFile("json/facility.json");
-            return node.path("hotel_facilities");
-        }
-
     }
 
     public JsonNode getJsonFromFile(String path) {
         JsonNode result = null;
-        File file = new File(getClass().getResource(path).getFile());
+        File file = new File(getClass().getClassLoader().getResource(path).getFile());
         ObjectMapper mapper = new ObjectMapper();
         try {
             result = mapper.readTree(file);

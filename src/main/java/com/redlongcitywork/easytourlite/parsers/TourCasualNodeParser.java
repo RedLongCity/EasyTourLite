@@ -6,10 +6,8 @@ import com.redlongcitywork.easytourlite.model.From_Cities;
 import com.redlongcitywork.easytourlite.model.Meal_Type;
 import com.redlongcitywork.easytourlite.model.Price;
 import com.redlongcitywork.easytourlite.model.TourCasual;
-import com.redlongcitywork.easytourlite.model.Type;
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -63,14 +61,9 @@ public class TourCasualNodeParser implements NodeParser<TourCasual> {
         }
 
         if (jsonNode.has("date_from")) {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            try {
-                tour.setDateFrom((Date) formatter.parse(
-                        jsonNode.path("date_from").asText()
-                ));
-            } catch (ParseException ex) {
-                Logger.getLogger(TourCasualNodeParser.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            Date date = Date.valueOf(
+                    LocalDate.parse(jsonNode.path("date_from").asText()));
+            tour.setDateFrom(date);
         }
 
         if (jsonNode.has("is_combined")) {

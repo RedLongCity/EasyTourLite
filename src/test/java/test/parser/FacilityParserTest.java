@@ -6,6 +6,7 @@ import com.redlongcitywork.easytourlite.parsers.FacilityArrayNodeParser;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,12 @@ public class FacilityParserTest extends TestJsonConfig {
     @Autowired
     private FacilityArrayNodeParser parser;
 
-    @Autowired
     private JsonNode facilityNode;
+
+    @Before
+    public void populate() {
+        facilityNode = getJsonFromFile("json/facility.json").path("hotel_facilities");
+    }
 
     @Test
     public void parsingTest() {

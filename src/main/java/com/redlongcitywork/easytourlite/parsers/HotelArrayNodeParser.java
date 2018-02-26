@@ -3,7 +3,6 @@ package com.redlongcitywork.easytourlite.parsers;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.redlongcitywork.easytourlite.model.Hotel;
 import com.redlongcitywork.easytourlite.service.CountryService;
-import com.redlongcitywork.easytourlite.service.HotelService;
 import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
 import com.redlongcitywork.easytourlite.service.RegionService;
 import java.util.ArrayList;
@@ -27,13 +26,24 @@ public class HotelArrayNodeParser implements NodeParser<List<Hotel>> {
 
     private final Hotel_RatingService ratingService;
 
-    public HotelArrayNodeParser(
-            RegionService regionService,
+    private final FacilityArrayNodeParser facilityParser;
+
+    private final HotelImageArrayNodeParser imageParser;
+
+    private final TourCasualArrayNodeParser tourParser;
+
+    public HotelArrayNodeParser(RegionService regionService,
             CountryService countryService,
-            Hotel_RatingService ratingService) {
+            Hotel_RatingService ratingService,
+            FacilityArrayNodeParser facilityParser,
+            HotelImageArrayNodeParser imageParser,
+            TourCasualArrayNodeParser tourParser) {
         this.regionService = regionService;
         this.countryService = countryService;
         this.ratingService = ratingService;
+        this.facilityParser = facilityParser;
+        this.imageParser = imageParser;
+        this.tourParser = tourParser;
     }
 
     @Override
@@ -45,6 +55,9 @@ public class HotelArrayNodeParser implements NodeParser<List<Hotel>> {
 
         List<Hotel> list = new ArrayList<Hotel>();
         HotelNodeParser parser = new HotelNodeParser(
+                facilityParser,
+                imageParser,
+                tourParser,
                 regionService.findAll(),
                 ratingService.findAll(),
                 countryService.findAll()

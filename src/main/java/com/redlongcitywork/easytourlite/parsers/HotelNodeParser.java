@@ -8,26 +8,20 @@ import com.redlongcitywork.easytourlite.model.Region;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  *
  * @author redlongcity 23/02/2018
  */
-@Service
 public class HotelNodeParser implements NodeParser<Hotel> {
 
     private static final Logger LOG = Logger.getLogger(HotelNodeParser.class.getName());
 
-    @Autowired
-    private FacilityArrayNodeParser facilityParser;
+    private final FacilityArrayNodeParser facilityParser;
 
-    @Autowired
-    private HotelImageArrayNodeParser imageParser;
+    private final HotelImageArrayNodeParser imageParser;
 
-    @Autowired
-    private TourCasualArrayNodeParser tourParser;
+    private final TourCasualArrayNodeParser tourParser;
 
     private final List<Region> regionList;
 
@@ -35,9 +29,10 @@ public class HotelNodeParser implements NodeParser<Hotel> {
 
     private final List<Country> countryList;
 
-    public HotelNodeParser(List<Region> regionList,
-            List<Hotel_Rating> ratingList,
-            List<Country> countryList) {
+    public HotelNodeParser(FacilityArrayNodeParser facilityParser, HotelImageArrayNodeParser imageParser, TourCasualArrayNodeParser tourParser, List<Region> regionList, List<Hotel_Rating> ratingList, List<Country> countryList) {
+        this.facilityParser = facilityParser;
+        this.imageParser = imageParser;
+        this.tourParser = tourParser;
         this.regionList = regionList;
         this.ratingList = ratingList;
         this.countryList = countryList;
@@ -127,9 +122,9 @@ public class HotelNodeParser implements NodeParser<Hotel> {
         return null;
     }
 
-    private Country findCountry(String id) {
+    private Country findCountry(String name) {
         for (Country country : countryList) {
-            if (country.getId().equals(id)) {
+            if (country.getName().equals(name)) {
                 return country;
             }
         }

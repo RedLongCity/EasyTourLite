@@ -1,12 +1,9 @@
 package com.redlongcitywork.easytourlite.parsers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.redlongcitywork.easytourlite.model.From_Cities;
-import com.redlongcitywork.easytourlite.service.From_CitiesService;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
