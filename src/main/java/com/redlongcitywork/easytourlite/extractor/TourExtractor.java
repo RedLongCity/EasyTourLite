@@ -1,7 +1,6 @@
 package com.redlongcitywork.easytourlite.extractor;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.redlongcitywork.easytourlite.model.Tour;
 import com.redlongcitywork.easytourlite.utils.HttpUtils;
 import com.redlongcitywork.easytourlite.utils.ItToursUrls;
 import java.io.IOException;
@@ -20,26 +19,24 @@ public class TourExtractor implements ItToursUrls {
 
     private static final Logger LOG = Logger.getLogger(TourExtractor.class.getName());
 
-    public void extract(String key, HttpUtils.GetCallBack callback) {
-        try{
-        HttpUtils.getJsonNodeFromUrl(api_base_url
-                + api_tour_info
-                + key,
-                new HttpUtils.GetCallBack() {
-            @Override
-            public void onDataReceived(final JsonNode node) {
-                callback.onDataReceived(node);
-                return;
-            }
+    public void extract(String key, HttpUtils.GetCallBack<JsonNode> callback) {
+        try {
+            HttpUtils.getJsonNodeFromUrl(api_base_url
+                    + api_tour_info
+                    + key,
+                    new HttpUtils.GetCallBack<JsonNode>() {
+                @Override
+                public void onDataReceived(final JsonNode node) {
+                    callback.onDataReceived(node);
+                }
 
-            @Override
-            public void onDataNotAwailable() {
-                callback.onDataNotAwailable();
-                return;
-            }
-        });
-        }catch (IOException ex) {
-            Logger.getLogger(HotFiltersExtractor.class.getName()).log(Level.SEVERE, null, ex);
+                @Override
+                public void onDataNotAwailable() {
+                    callback.onDataNotAwailable();
+                }
+            });
+        } catch (IOException ex) {
+            Logger.getLogger(TourExtractor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

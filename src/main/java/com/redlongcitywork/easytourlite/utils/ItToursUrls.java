@@ -32,5 +32,6 @@ public interface ItToursUrls {
     String api_tour_validate_url = "tour/validate/";
     String api_tour_flights_urs = "tour/flights/";
     String api_tour_info = "/tour/info/";
+    String api_country_params = "?entity=hotel:meal_type:from_city";
 
 }

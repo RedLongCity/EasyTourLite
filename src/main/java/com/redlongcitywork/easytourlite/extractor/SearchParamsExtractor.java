@@ -71,7 +71,7 @@ public class SearchParamsExtractor implements Extractor, ItToursUrls {
     public void extract(HttpUtils.GetCallBack callBack) {
         try {
             HttpUtils.getJsonNodeFromUrl(api_base_url + api_params_url,
-                    new HttpUtils.GetCallBack() {
+                    new HttpUtils.GetCallBack<JsonNode>() {
                 @Override
                 public void onDataReceived(JsonNode node) {
                     ArrayNode typeNode = (ArrayNode) node.path("types");

@@ -6,7 +6,7 @@ import com.redlongcitywork.easytourlite.utils.HttpUtils;
  *
  * @author redlongcity
  * 14/12/2017
- * interaface for extracting data from outside resources
+ * interface for extracting data from outside resources
  */
 public interface Extractor {
     

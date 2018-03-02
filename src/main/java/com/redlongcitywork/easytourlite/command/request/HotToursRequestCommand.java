@@ -45,7 +45,7 @@ public class HotToursRequestCommand implements RequestCommand<HotToursRequest> {
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
         try {
             HttpUtils.getJsonNodeFromUrl(converter.getURLByRequest(request),
-                    new HttpUtils.GetCallBack() {
+                    new HttpUtils.GetCallBack<JsonNode>() {
                 @Override
                 public void onDataReceived(JsonNode node) {
                     callBack.onDataReceived(node);

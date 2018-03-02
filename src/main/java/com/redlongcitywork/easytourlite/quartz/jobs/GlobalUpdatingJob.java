@@ -42,7 +42,7 @@ public class GlobalUpdatingJob extends QuartzJobBean {
         LOG.log(Level.INFO, "Global Job Doing");
         constants.setGlobalSuspended(false);
         
-        extractor.extract(new HttpUtils.GetCallBack() {
+        extractor.extract(new HttpUtils.GetCallBack<JsonNode>() {
             @Override
             public void onDataReceived(JsonNode node) {
                 LOG.log(Level.INFO, "Hot Tours Filters were extracting successfully");

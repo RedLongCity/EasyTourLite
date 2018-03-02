@@ -79,7 +79,7 @@ public class EmailContentConverter {
                 callback.onDataReceived(convertUserData(data));
             }
         } else {
-            extractor.extract(tourKey, new HttpUtils.GetCallBack() {
+            extractor.extract(tourKey, new HttpUtils.GetCallBack<JsonNode>() {
                 @Override
                 public void onDataReceived(JsonNode node) {
                     TourNodeParser parser = new TourNodeParser(

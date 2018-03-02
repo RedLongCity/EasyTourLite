@@ -76,7 +76,7 @@ public class HttpUtils implements ItToursUrls {
     }
 
     public static void getJsonNodeFromUrl(String url,
-            GetCallBack callBack) throws IOException {
+            GetCallBack<JsonNode> callBack) throws IOException {
         JsonNode node = null;
         try {
             node = Request.Get(url)
@@ -124,9 +124,9 @@ public class HttpUtils implements ItToursUrls {
         }
     }
 
-    public interface GetCallBack {
+    public interface GetCallBack<T> {
 
-        void onDataReceived(JsonNode node);
+        void onDataReceived(T node);
 
         void onDataNotAwailable();
     }

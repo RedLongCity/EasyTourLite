@@ -76,7 +76,7 @@ public class HotFiltersExtractor implements Extractor, ItToursUrls {
             HttpUtils.getJsonNodeFromUrl(api_base_url
                     + api_showcases
                     + api_showcases_filters,
-                    new HttpUtils.GetCallBack() {
+                    new HttpUtils.GetCallBack<JsonNode>() {
                 @Override
                 public void onDataReceived(JsonNode node) {
                     ArrayNode countriesNode = (ArrayNode) node.path("countries");

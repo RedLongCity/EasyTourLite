@@ -71,7 +71,7 @@ public class ShortUpdatingJob extends QuartzJobBean {
                     command.getRequest());
             if (item != null) {
                 time = System.currentTimeMillis();
-                command.execute(new HttpUtils.GetCallBack() {
+                command.execute(new HttpUtils.GetCallBack<JsonNode>() {
                     @Override
                     public void onDataReceived(JsonNode node) {
                         requestPull.deleteCommand(command);
