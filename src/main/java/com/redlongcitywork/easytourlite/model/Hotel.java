@@ -49,7 +49,8 @@ public class Hotel {
     @Column(name = "hotel_review_count")
     private String hotelReviewCount;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "hotel")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "hotel_id")
     private Set<Facility> facilities = new HashSet<>();
 
     @Column(name = "lat")

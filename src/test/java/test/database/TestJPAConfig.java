@@ -68,9 +68,13 @@ import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.redlongcitywork.easytourlite.dao.HotelFilterDao;
+import com.redlongcitywork.easytourlite.dao.TourAdvancedDao;
+import com.redlongcitywork.easytourlite.dao.TourAdvancedDaoImpl;
 import com.redlongcitywork.easytourlite.service.HotelFilterService;
 import com.redlongcitywork.easytourlite.service.HotelService;
 import com.redlongcitywork.easytourlite.service.HotelServiceImpl;
+import com.redlongcitywork.easytourlite.service.TourAdvancedService;
+import com.redlongcitywork.easytourlite.service.TourAdvancedServiceImpl;
 
 /**
  *
@@ -266,6 +270,16 @@ public class TestJPAConfig {
         @Bean
         public HotelService hotelService(){
             return new HotelServiceImpl();
+        }
+        
+        @Bean
+        public TourAdvancedDao tourAdvance(){
+            return new TourAdvancedDaoImpl();
+        }
+        
+        @Bean
+        public TourAdvancedService touAdvanceService(){
+            return new TourAdvancedServiceImpl();
         }
 
     }

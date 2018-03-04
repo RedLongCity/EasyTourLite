@@ -51,6 +51,7 @@ public class TourAdvancedServiceImpl implements TourAdvancedService {
             entity.setRate(tour.getRate());
             entity.setReviewCount(tour.getReviewCount());
             entity.setFacilities(tour.getFacilities());
+            dao.mergeTourAdvanced(entity);
         }
     }
     

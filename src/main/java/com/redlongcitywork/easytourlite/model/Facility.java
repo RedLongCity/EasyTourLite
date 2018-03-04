@@ -3,10 +3,7 @@ package com.redlongcitywork.easytourlite.model;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -42,10 +39,6 @@ public class Facility {
     @NotNull
     @Column(name = "paid")
     private Boolean paid;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hotel_id")
-    private Hotel hotel;
 
     public String getId() {
         return id;
@@ -95,14 +88,6 @@ public class Facility {
         this.paid = paid;
     }
 
-    public Hotel getHotel() {
-        return hotel;
-    }
-
-    public void setHotel(Hotel hotel) {
-        this.hotel = hotel;
-    }
-
     @Override
     public int hashCode() {
         int hash = 5;
@@ -130,7 +115,7 @@ public class Facility {
 
     @Override
     public String toString() {
-        return "Facility{" + "id=" + id + ", name=" + name + ", categoryId=" + categoryId + ", category=" + category + ", main=" + main + ", paid=" + paid + ", hotel=" + hotel + '}';
+        return "Facility{" + "id=" + id + ", name=" + name + ", categoryId=" + categoryId + ", category=" + category + ", main=" + main + ", paid=" + paid + '}';
     }
 
 }
