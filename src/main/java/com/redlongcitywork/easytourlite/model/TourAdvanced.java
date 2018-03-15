@@ -53,6 +53,11 @@ public class TourAdvanced {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rating_id")
+    private Hotel_Rating rating;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "meal_type_id")
     private Meal_Type mealType;
 
@@ -118,13 +123,15 @@ public class TourAdvanced {
     public String getKey() {
         return key;
     }
-    
+
     public void setKey(String key) {
         this.key = key;
     }
+
     public Country getCountry() {
         return country;
     }
+
     public void setCountry(Country country) {
         this.country = country;
     }
@@ -139,6 +146,14 @@ public class TourAdvanced {
 
     public Region getRegion() {
         return region;
+    }
+
+    public Hotel_Rating getRating() {
+        return rating;
+    }
+
+    public void setRating(Hotel_Rating rating) {
+        this.rating = rating;
     }
 
     public void setRegion(Region region) {
@@ -316,6 +331,6 @@ public class TourAdvanced {
 
     @Override
     public String toString() {
-        return "TourAdvanced{" + "key=" + key + ", country=" + country + ", type=" + type + ", region=" + region + ", hotelId=" + hotelId + ", hotelName=" + hotelName + ", mealType=" + mealType + ", adultAmount=" + adultAmount + ", childAmount=" + childAmount + ", accomodation=" + accomodation + ", roomType=" + roomType + ", duration=" + duration + ", dateFrom=" + dateFrom + ", combined=" + combined + ", currency=" + currency + ", prices=" + prices + ", city=" + city + ", transportType=" + transportType + ", images=" + images + ", rate=" + rate + ", reviewCount=" + reviewCount + ", facilities=" + facilities + '}';
+        return "TourAdvanced{" + "key=" + key + ", country=" + country + ", type=" + type + ", region=" + region + ", hotelId=" + hotelId + ", hotelName=" + hotelName + ", rating=" + rating + ", mealType=" + mealType + ", adultAmount=" + adultAmount + ", childAmount=" + childAmount + ", accomodation=" + accomodation + ", roomType=" + roomType + ", duration=" + duration + ", dateFrom=" + dateFrom + ", combined=" + combined + ", currency=" + currency + ", prices=" + prices + ", city=" + city + ", transportType=" + transportType + ", images=" + images + ", rate=" + rate + ", reviewCount=" + reviewCount + ", facilities=" + facilities + '}';
     }
 }

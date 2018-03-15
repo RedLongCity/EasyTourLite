@@ -2,39 +2,38 @@ package com.redlongcitywork.easytourlite.extractor;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.redlongcitywork.easytourlite.converter.SearchConverter;
-import com.redlongcitywork.easytourlite.model.Hotel;
 import com.redlongcitywork.easytourlite.model.SearchingRequest;
-import com.redlongcitywork.easytourlite.parsers.HotelArrayNodeParser;
+import com.redlongcitywork.easytourlite.model.TourAdvanced;
+import com.redlongcitywork.easytourlite.parsers.TourAdvancedArrayNodeParser;
 import com.redlongcitywork.easytourlite.utils.HttpUtils;
 import com.redlongcitywork.easytourlite.utils.ItToursUrls;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
  *
- * @author redlongcity 02/03/2018
+ * @author redlongcity 04/03/2018
  */
 @Service
-public class HotelExtractor implements ItToursUrls {
+public class TourAdvancedExtractor implements ItToursUrls {
 
-    private static final Logger LOG = Logger.getLogger(HotelExtractor.class.getName());
+    private static final Logger LOG = Logger.getLogger(TourAdvancedExtractor.class.getName());
 
-    @Autowired
-    private SearchConverter converter;
+    private final SearchConverter converter;
 
-    @Autowired
-    private HotelArrayNodeParser parser;
+    private final TourAdvancedArrayNodeParser parser;
 
-    public void extract(SearchingRequest request, HttpUtils.GetCallBack<List<Hotel>> callBack) {
+    public TourAdvancedExtractor(SearchConverter converter, TourAdvancedArrayNodeParser parser) {
+        this.converter = converter;
+        this.parser = parser;
+    }
+
+    public void extract(SearchingRequest request, HttpUtils.GetCallBack<List<TourAdvanced>> callBack) {
         try {
-            HttpUtils.getJsonNodeFromUrl(
-                    api_base_url
-                    + api_search_url
-                    + converter.getURLByRequest(request),
+            HttpUtils.getJsonNodeFromUrl(converter.getURLByRequest(request),
                     new HttpUtils.GetCallBack<JsonNode>() {
                 @Override
                 public void onDataReceived(JsonNode node) {

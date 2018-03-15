@@ -1,9 +1,12 @@
 package com.redlongcitywork.easytourlite.dao;
 
+import com.redlongcitywork.easytourlite.converter.SearchConverter;
+import com.redlongcitywork.easytourlite.model.Currency;
 import com.redlongcitywork.easytourlite.model.TourAdvanced;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Repository;
 
@@ -31,6 +34,7 @@ public class TourAdvancedDaoImpl extends AbstractDao<String, TourAdvanced>
                 Hibernate.initialize(tour.getCity());
                 Hibernate.initialize(tour.getImages());
                 Hibernate.initialize(tour.getFacilities());
+                Hibernate.initialize(tour.getRating());
             }
         }
         return list;
@@ -49,6 +53,7 @@ public class TourAdvancedDaoImpl extends AbstractDao<String, TourAdvanced>
             Hibernate.initialize(tour.getCity());
             Hibernate.initialize(tour.getImages());
             Hibernate.initialize(tour.getFacilities());
+            Hibernate.initialize(tour.getRating());
         }
         return tour;
     }
@@ -71,6 +76,92 @@ public class TourAdvancedDaoImpl extends AbstractDao<String, TourAdvanced>
     @Override
     public void saveOrUpdateTourAdvanced(TourAdvanced tour) {
         saveOrUpdate(tour);
+    }
+
+    @Override
+    public List<TourAdvanced> findByCriteries(List<Criterion> criteries) {
+        Criteria crit = createCriteria();
+        if (criteries != null) {
+            for (Criterion criterion : criteries) {
+                crit.add(criterion);
+            }
+        }
+        crit.setMaxResults(100);
+        List<TourAdvanced> list = crit.list();
+        if (list != null) {
+            for (TourAdvanced tour : list) {
+                Hibernate.initialize(tour.getCountry());
+                Hibernate.initialize(tour.getType());
+                Hibernate.initialize(tour.getRegion());
+                Hibernate.initialize(tour.getMealType());
+                Hibernate.initialize(tour.getCurrency());
+                Hibernate.initialize(tour.getPrices());
+                Hibernate.initialize(tour.getCity());
+                Hibernate.initialize(tour.getImages());
+                Hibernate.initialize(tour.getFacilities());
+                Hibernate.initialize(tour.getRating());
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public List<TourAdvanced> findByPrices(Integer priceFrom, Integer priceTill, Currency currency) {
+        Criteria crit = createCriteria();
+        List<TourAdvanced> list = null;
+        if (currency != null && (priceFrom != null || priceTill != null)) {
+            SearchConverter.addPriceCriteria(crit, priceFrom, priceTill, currency);
+            list = crit.list();
+            if (list != null) {
+                for (TourAdvanced tour : list) {
+                    Hibernate.initialize(tour.getCountry());
+                    Hibernate.initialize(tour.getType());
+                    Hibernate.initialize(tour.getRegion());
+                    Hibernate.initialize(tour.getMealType());
+                    Hibernate.initialize(tour.getCurrency());
+                    Hibernate.initialize(tour.getPrices());
+                    Hibernate.initialize(tour.getCity());
+                    Hibernate.initialize(tour.getImages());
+                    Hibernate.initialize(tour.getFacilities());
+                    Hibernate.initialize(tour.getRating());
+                }
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public List<TourAdvanced> findByPricesAndCriterions(
+            Integer priceFrom,
+            Integer priceTill,
+            Currency currency,
+            List<Criterion> criterions) {
+        Criteria crit = createCriteria();
+        List<TourAdvanced> list = null;
+        if (currency != null && (priceFrom != null || priceTill != null)) {
+            SearchConverter.addPriceCriteria(crit, priceFrom, priceTill, currency);
+            if (criterions != null) {
+                for (Criterion criterion : criterions) {
+                    crit.add(criterion);
+                }
+            }
+            list = crit.list();
+            if (list != null) {
+                for (TourAdvanced tour : list) {
+                    Hibernate.initialize(tour.getCountry());
+                    Hibernate.initialize(tour.getType());
+                    Hibernate.initialize(tour.getRegion());
+                    Hibernate.initialize(tour.getMealType());
+                    Hibernate.initialize(tour.getCurrency());
+                    Hibernate.initialize(tour.getPrices());
+                    Hibernate.initialize(tour.getCity());
+                    Hibernate.initialize(tour.getImages());
+                    Hibernate.initialize(tour.getFacilities());
+                    Hibernate.initialize(tour.getRating());
+                }
+            }
+        }
+        return list;
     }
 
 }

@@ -1,8 +1,10 @@
 package com.redlongcitywork.easytourlite.service;
 
 import com.redlongcitywork.easytourlite.dao.TourAdvancedDao;
+import com.redlongcitywork.easytourlite.model.Currency;
 import com.redlongcitywork.easytourlite.model.TourAdvanced;
 import java.util.List;
+import org.hibernate.criterion.Criterion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,20 +14,20 @@ import org.springframework.stereotype.Service;
  */
 @Service("tourAdvancedService")
 public class TourAdvancedServiceImpl implements TourAdvancedService {
-    
+
     @Autowired
     private TourAdvancedDao dao;
-    
+
     @Override
     public TourAdvanced findByKey(String key) {
         return dao.findByKey(key);
     }
-    
+
     @Override
     public void saveTourAdvanced(TourAdvanced tour) {
         dao.save(tour);
     }
-    
+
     @Override
     public void updateTourAdvanced(TourAdvanced tour) {
         TourAdvanced entity = dao.findByKey(tour.getKey());
@@ -51,20 +53,21 @@ public class TourAdvancedServiceImpl implements TourAdvancedService {
             entity.setRate(tour.getRate());
             entity.setReviewCount(tour.getReviewCount());
             entity.setFacilities(tour.getFacilities());
+            entity.setRating(tour.getRating());
             dao.mergeTourAdvanced(entity);
         }
     }
-    
+
     @Override
     public void deleteTourAdvanced(TourAdvanced tour) {
         dao.deleteTourAdvanced(tour);
     }
-    
+
     @Override
     public List<TourAdvanced> findAll() {
         return dao.findAll();
     }
-    
+
     @Override
     public void deleteAllTours() {
         List<TourAdvanced> list = dao.findAll();
@@ -74,10 +77,25 @@ public class TourAdvancedServiceImpl implements TourAdvancedService {
             }
         }
     }
-    
+
     @Override
     public void saveOrUpdateTourAdvanced(TourAdvanced tour) {
         dao.saveOrUpdateTourAdvanced(tour);
     }
-    
+
+    @Override
+    public List<TourAdvanced> findByCriterions(List<Criterion> criterions) {
+        return dao.findByCriteries(criterions);
+    }
+
+    @Override
+    public List<TourAdvanced> findByPrices(Integer priceFrom, Integer priceTill, Currency currency) {
+        return dao.findByPrices(priceFrom, priceTill, currency);
+    }
+
+    @Override
+    public List<TourAdvanced> findByPricesAndCriterions(Integer priceFrom, Integer priceTill, Currency currency, List<Criterion> criterions) {
+        return dao.findByPricesAndCriterions(priceFrom, priceTill, currency, criterions);
+    }
+
 }

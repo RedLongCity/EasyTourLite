@@ -109,7 +109,7 @@ public class TestJPAConfig {
         public Properties hibernateProperties() {
             Properties properties = new Properties();
             properties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
-            properties.put("hibernate.show_sql", "false");
+            properties.put("hibernate.show_sql", "true");
             properties.put("hibernate.format_sql", "true");
             return properties;
         }
@@ -251,34 +251,34 @@ public class TestJPAConfig {
         public HotelFilterService hotelFilterService() {
             return new HotelFilterServiceImpl();
         }
-        
+
         @Bean
-        public TourCasualDao tourCasualDao(){
+        public TourCasualDao tourCasualDao() {
             return new TourCasualDaoImpl();
         }
-        
+
         @Bean
-        public TourCasualService tourCasualService(){
+        public TourCasualService tourCasualService() {
             return new TourCasualServiceImpl();
         }
-        
-        @Bean 
-        public HotelDao hotelDao(){
+
+        @Bean
+        public HotelDao hotelDao() {
             return new HotelDaoImpl();
         }
-        
+
         @Bean
-        public HotelService hotelService(){
+        public HotelService hotelService() {
             return new HotelServiceImpl();
         }
-        
+
         @Bean
-        public TourAdvancedDao tourAdvance(){
+        public TourAdvancedDao tourAdvance() {
             return new TourAdvancedDaoImpl();
         }
-        
+
         @Bean
-        public TourAdvancedService touAdvanceService(){
+        public TourAdvancedService touAdvanceService() {
             return new TourAdvancedServiceImpl();
         }
 

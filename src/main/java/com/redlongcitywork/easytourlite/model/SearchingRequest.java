@@ -31,8 +31,9 @@ public class SearchingRequest {
     @Column(name = "request_id", unique = true)
     private Integer id;
 
-    @Column(name = "type", unique = false, nullable = true)
-    private Integer type;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "type_id")
+    private Type type;
 
     @Column(name = "kind", unique = false, nullable = true)
     private Integer kind;
@@ -112,11 +113,11 @@ public class SearchingRequest {
         this.id = id;
     }
 
-    public Integer getType() {
+    public Type getType() {
         return type;
     }
 
-    public void setType(Integer type) {
+    public void setType(Type type) {
         this.type = type;
     }
 
@@ -293,5 +294,4 @@ public class SearchingRequest {
     public String toString() {
         return "SearchingRequest{" + "id=" + id + ", type=" + type + ", kind=" + kind + ", country=" + country + ", city=" + city + ", region=" + region + ", hotel=" + hotel + ", ratingSet=" + ratingSet + ", adultAmount=" + adultAmount + ", childAmount=" + childAmount + ", childAge=" + childAge + ", nightFrom=" + nightFrom + ", nightTill=" + nightTill + ", dateFrom=" + dateFrom + ", dateTill=" + dateTill + ", mealType=" + mealType + ", priceFrom=" + priceFrom + ", priceTill=" + priceTill + ", currency=" + currency + ", onlyStandart=" + onlyStandart + '}';
     }
-
 }

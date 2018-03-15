@@ -1,7 +1,9 @@
 package com.redlongcitywork.easytourlite.service;
 
+import com.redlongcitywork.easytourlite.model.Currency;
 import com.redlongcitywork.easytourlite.model.TourAdvanced;
 import java.util.List;
+import org.hibernate.criterion.Criterion;
 
 /**
  *
@@ -22,5 +24,15 @@ public interface TourAdvancedService {
     void deleteAllTours();
 
     void saveOrUpdateTourAdvanced(TourAdvanced tour);
+
+    List<TourAdvanced> findByCriterions(List<Criterion> criterions);
+
+    List<TourAdvanced> findByPrices(Integer priceFrom, Integer priceTill, Currency currency);
+
+    List<TourAdvanced> findByPricesAndCriterions(
+            Integer priceFrom,
+            Integer priceTill,
+            Currency currency,
+            List<Criterion> criterions);
 
 }

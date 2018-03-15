@@ -97,7 +97,6 @@ public class SearchingRequestServiceTest extends TestJPAConfig {
         ratingService.saveHotel_Rating(rating_2);
 
         request = new SearchingRequest();
-        request.setType(1);
         request.setKind(1);
         request.setCountry(country);
         request.setCity(city);

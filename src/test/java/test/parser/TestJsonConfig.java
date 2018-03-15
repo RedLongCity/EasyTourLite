@@ -4,9 +4,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.redlongcitywork.easytourlite.parsers.FacilityArrayNodeParser;
 import com.redlongcitywork.easytourlite.parsers.FacilityNodeParser;
-import com.redlongcitywork.easytourlite.parsers.HotelFilterArrayNodeParser;
 import com.redlongcitywork.easytourlite.parsers.RegionArrayNodeParser;
 import com.redlongcitywork.easytourlite.parsers.RegionNodeParser;
+import com.redlongcitywork.easytourlite.parsers.TourAdvancedArrayNodeParser;
 import com.redlongcitywork.easytourlite.parsers.TypeArrayNodeParser;
 import com.redlongcitywork.easytourlite.parsers.TypeNodeParser;
 import java.io.File;
@@ -58,7 +58,7 @@ public class TestJsonConfig {
         public FacilityArrayNodeParser facilityArrayNodeParser() {
             return new FacilityArrayNodeParser();
         }
-
+        
     }
 
     public JsonNode getJsonFromFile(String path) {

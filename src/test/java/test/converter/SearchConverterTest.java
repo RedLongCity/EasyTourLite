@@ -1,6 +1,6 @@
-package test.dao;
+package test.converter;
 
-import com.redlongcitywork.easytourlite.dao.TourAdvancedDao;
+import com.redlongcitywork.easytourlite.converter.SearchConverter;
 import com.redlongcitywork.easytourlite.model.Country;
 import com.redlongcitywork.easytourlite.model.Currency;
 import com.redlongcitywork.easytourlite.model.Facility;
@@ -10,6 +10,7 @@ import com.redlongcitywork.easytourlite.model.Hotel_Rating;
 import com.redlongcitywork.easytourlite.model.Meal_Type;
 import com.redlongcitywork.easytourlite.model.Price;
 import com.redlongcitywork.easytourlite.model.Region;
+import com.redlongcitywork.easytourlite.model.SearchingRequest;
 import com.redlongcitywork.easytourlite.model.TourAdvanced;
 import com.redlongcitywork.easytourlite.model.Type;
 import com.redlongcitywork.easytourlite.service.CountryService;
@@ -18,11 +19,11 @@ import com.redlongcitywork.easytourlite.service.From_CitiesService;
 import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
 import com.redlongcitywork.easytourlite.service.Meal_TypeService;
 import com.redlongcitywork.easytourlite.service.RegionService;
+import com.redlongcitywork.easytourlite.service.TourAdvancedService;
 import com.redlongcitywork.easytourlite.service.TypeService;
 import java.sql.Date;
-import java.util.HashSet;
-import javax.validation.ConstraintViolationException;
-import org.hibernate.HibernateException;
+import java.time.LocalDate;
+import java.util.List;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -35,14 +36,16 @@ import test.database.TestJPAConfig;
 
 /**
  *
- * @author redlongcity 04/03/2018
+ * @author redlongcity 05/03/2018
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-public class TourAdvanceDaoTest extends TestJPAConfig {
+public class SearchConverterTest extends TestJPAConfig {
+
+    SearchConverter convertor = new SearchConverter();
 
     @Autowired
-    private TourAdvancedDao dao;
+    private TourAdvancedService service;
 
     @Autowired
     private CountryService countryService;
@@ -77,7 +80,11 @@ public class TourAdvanceDaoTest extends TestJPAConfig {
 
     private Currency currency;
 
+    private Currency currency2;
+
     private Price price;
+
+    private Price price2;
 
     private Hotel_Image image;
 
@@ -86,6 +93,10 @@ public class TourAdvanceDaoTest extends TestJPAConfig {
     private From_Cities city;
 
     private Hotel_Rating rating;
+
+    private TourAdvanced tourTwo;
+
+    private SearchingRequest request;
 
     @Before
     public void populate() {
@@ -107,7 +118,7 @@ public class TourAdvanceDaoTest extends TestJPAConfig {
         currency.setId("id");
         currency.setName("name");
         price = new Price();
-        price.setCost(1);
+        price.setCost(500);
         price.setCurrency(currency);
         image = new Hotel_Image();
         image.setThumb("thumb");
@@ -146,170 +157,93 @@ public class TourAdvanceDaoTest extends TestJPAConfig {
         tour.setAccomodation("accomodation");
         tour.setRoomType("type");
         tour.setDuration(1);
-        tour.setDateFrom(new Date(System.currentTimeMillis()));
+        tour.setDateFrom(Date.valueOf(LocalDate.parse("2000-01-03")));
         tour.setCombined(true);
         tour.setCurrency(currency);
         tour.getPrices().add(price);
         tour.setCity(city);
-        tour.setTransportType("type");
+        tour.setTransportType("flight");
         tour.getImages().add(image);
         tour.setRate("rate");
         tour.setReviewCount("count");
         tour.getFacilities().add(facility);
         tour.setRating(rating);
+
+        currency2 = new Currency();
+        currency2.setId("2");
+        currency2.setName("Currency");
+        price2 = new Price();
+        price2.setCurrency(currency2);
+        price2.setCost(900);
+        currencyService.saveCurrency(currency2);
+
+        tourTwo = new TourAdvanced();
+        tourTwo.setKey("keyTwo");
+        tourTwo.setCountry(country);
+        tourTwo.setType(type);
+        tourTwo.setRegion(region);
+        tourTwo.setHotelId(1);
+        tourTwo.setHotelName("name");
+        tourTwo.setMealType(mealType);
+        tourTwo.setAdultAmount(1);
+        tourTwo.setChildAmount(2);
+        tourTwo.setAccomodation("accomodation");
+        tourTwo.setRoomType("type");
+        tourTwo.setDuration(3);
+        tourTwo.setDateFrom(Date.valueOf(LocalDate.parse("2000-01-01")));
+        tourTwo.setCombined(true);
+        tourTwo.setCurrency(currency);
+        tourTwo.getPrices().add(price2);
+        tourTwo.setCity(city);
+        tourTwo.setTransportType("bus");
+        tourTwo.getImages().add(image);
+        tourTwo.setRate("rate");
+        tourTwo.setReviewCount("count");
+        tourTwo.getFacilities().add(facility);
+        tourTwo.setRating(rating);
+
+        request = new SearchingRequest();
+        request.setType(type);
+        request.setKind(1);
+        request.setCountry(country);
+        request.setCity(city);
+        request.setRegion(region);
+        request.getRatingSet().add(rating);
+        request.setAdultAmount(1);
+        request.setChildAmount(2);
+        request.setNightFrom(0);
+        request.setNightTill(3);
+        request.setDateFrom(Date.valueOf(LocalDate.parse("2000-01-01")));
+        request.setDateTill(Date.valueOf(LocalDate.parse("2000-01-04")));
+        request.setMealType(mealType);
+        request.setCurrency(currency);
     }
 
     @Test
-    public void crudTest() {
-        dao.save(tour);
-        assertTrue(dao.findAll().contains(tour));
-        tour.setRate("anotherRate");
-        dao.mergeTourAdvanced(tour);
-        assertTrue(dao.findAll().contains(tour));
-        dao.deleteTourAdvanced(tour);
-        assertFalse(dao.findAll().contains(tour));
+    public void convertTest() {
+        service.saveTourAdvanced(tour);
+        service.saveTourAdvanced(tourTwo);
+        assertTrue(service.findByPrices(100, 1000, currency).contains(tour));
+        assertFalse(service.findByPrices(100, 1000, currency).contains(tourTwo));
+        assertTrue(service.findByPrices(100, 1000, currency2).contains(tourTwo));
+        assertFalse(service.findByPrices(100, 1000, currency2).contains(tour));
+
+        price2.setCurrency(currency);
+        service.updateTourAdvanced(tourTwo);
+        List<TourAdvanced> list = service.findByPrices(100, 1000, currency);
+        assertTrue(list.contains(tour) && list.contains(tourTwo));
+        list = service.findByCriterions(convertor.getCriterionsByRequest(request));
+        assertTrue(list.contains(tour) && !list.contains(tourTwo));
+        tourTwo.setTransportType("flight");
+        service.updateTourAdvanced(tourTwo);
+        list = service.findByCriterions(convertor.getCriterionsByRequest(request));
+        assertTrue(list.contains(tour) && list.contains(tourTwo));
+        tour.setDuration(2);
+        service.updateTourAdvanced(tour);
+        tourTwo.setDuration(2);
+        service.updateTourAdvanced(tourTwo);
+        list = service.findByCriterions(convertor.getCriterionsByRequest(request));
+        assertFalse(list.contains(tour) && list.contains(tourTwo));
     }
 
-    @Test(expected = HibernateException.class)
-    public void exceptionTest() {
-        tour.setKey(null);
-        dao.save(tour);
-        dao.findAll();
-    }
-
-    @Test(expected = ConstraintViolationException.class)
-    public void exceptionTest_2() {
-        tour.setKey("key");
-        tour.setCountry(null);
-        dao.save(tour);
-        dao.findAll();
-    }
-
-    @Test(expected = ConstraintViolationException.class)
-    public void exceptionTest_3() {
-        tour.setCountry(country);
-        tour.setType(null);
-        dao.save(tour);
-        dao.findAll();
-    }
-
-    @Test(expected = ConstraintViolationException.class)
-    public void exceptionTest_4() {
-        tour.setType(type);
-        tour.setRegion(null);
-        dao.save(tour);
-        dao.findAll();
-    }
-
-    @Test(expected = ConstraintViolationException.class)
-    public void exceptionTest_5() {
-        tour.setRegion(region);
-        tour.setHotelId(null);
-        dao.save(tour);
-        dao.findAll();
-    }
-
-    @Test(expected = ConstraintViolationException.class)
-    public void exceptionTest_6() {
-        tour.setHotelId(1);
-        tour.setHotelName(null);
-        dao.save(tour);
-        dao.findAll();
-    }
-
-    @Test(expected = ConstraintViolationException.class)
-    public void exceptionTest_7() {
-        tour.setHotelName("name");
-        tour.setMealType(null);
-        dao.save(tour);
-        dao.findAll();
-    }
-
-    @Test(expected = ConstraintViolationException.class)
-    public void exceptionTest_8() {
-        tour.setMealType(mealType);
-        tour.setAdultAmount(null);
-        dao.save(tour);
-        dao.findAll();
-    }
-
-    @Test(expected = ConstraintViolationException.class)
-    public void exceptionTest_9() {
-        tour.setAdultAmount(1);
-        tour.setChildAmount(null);
-        dao.save(tour);
-        dao.findAll();
-    }
-
-    @Test(expected = ConstraintViolationException.class)
-    public void exceptionTest_10() {
-        tour.setChildAmount(2);
-        tour.setRoomType(null);
-        dao.save(tour);
-        dao.findAll();
-    }
-
-    @Test(expected = ConstraintViolationException.class)
-    public void exceptionTest_11() {
-        tour.setRoomType("type");
-        tour.setDuration(null);
-        dao.save(tour);
-        dao.findAll();
-    }
-
-    @Test(expected = ConstraintViolationException.class)
-    public void exceptionTest_12() {
-        tour.setDuration(1);
-        tour.setDateFrom(null);
-        dao.save(tour);
-        dao.findAll();
-    }
-
-    @Test(expected = ConstraintViolationException.class)
-    public void exceptionTest_13() {
-        tour.setDateFrom(new Date(System.currentTimeMillis()));
-        tour.setCombined(null);
-        dao.save(tour);
-        dao.findAll();
-    }
-
-    @Test(expected = ConstraintViolationException.class)
-    public void exceptionTest_14() {
-        tour.setCombined(true);
-        tour.setCurrency(null);
-        dao.save(tour);
-        dao.findAll();
-    }
-
-    @Test
-    public void nullSave() {
-        tour.setCurrency(currency);
-        tour.setTransportType(null);
-        dao.mergeTourAdvanced(tour);
-        assertTrue(dao.findAll().contains(tour));
-    }
-
-    @Test(expected = ConstraintViolationException.class)
-    public void exceptionTest_16() {
-        tour.setPrices(null);
-        dao.save(tour);
-        dao.findAll();
-    }
-
-    @Test(expected = ConstraintViolationException.class)
-    public void exceptionTest_17() {
-        tour.setPrices(new HashSet<>());
-        tour.getPrices().add(price);
-        tour.setRating(null);
-        dao.save(tour);
-        dao.findAll();
-    }
-
-    @Test
-    public void nullSave_2() {
-        tour.setRating(rating);
-        tour.setCity(null);
-        dao.mergeTourAdvanced(tour);
-        assertTrue(dao.findAll().contains(tour));
-    }
 }

@@ -5,6 +5,7 @@ import com.redlongcitywork.easytourlite.model.Currency;
 import com.redlongcitywork.easytourlite.model.Facility;
 import com.redlongcitywork.easytourlite.model.From_Cities;
 import com.redlongcitywork.easytourlite.model.Hotel_Image;
+import com.redlongcitywork.easytourlite.model.Hotel_Rating;
 import com.redlongcitywork.easytourlite.model.Meal_Type;
 import com.redlongcitywork.easytourlite.model.Price;
 import com.redlongcitywork.easytourlite.model.Region;
@@ -13,6 +14,7 @@ import com.redlongcitywork.easytourlite.model.Type;
 import com.redlongcitywork.easytourlite.service.CountryService;
 import com.redlongcitywork.easytourlite.service.CurrencyService;
 import com.redlongcitywork.easytourlite.service.From_CitiesService;
+import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
 import com.redlongcitywork.easytourlite.service.Meal_TypeService;
 import com.redlongcitywork.easytourlite.service.RegionService;
 import com.redlongcitywork.easytourlite.service.TourAdvancedService;
@@ -60,6 +62,9 @@ public class TourAdvancedServiceTest extends TestJPAConfig {
     @Autowired
     private From_CitiesService cityService;
 
+    @Autowired
+    private Hotel_RatingService ratingService;
+
     private TourAdvanced tour;
 
     private Country country;
@@ -79,6 +84,8 @@ public class TourAdvancedServiceTest extends TestJPAConfig {
     private Facility facility;
 
     private From_Cities city;
+
+    private Hotel_Rating rating;
 
     @Before
     public void populate() {
@@ -115,6 +122,9 @@ public class TourAdvancedServiceTest extends TestJPAConfig {
         city = new From_Cities();
         city.setId("id");
         city.setName("name");
+        rating = new Hotel_Rating();
+        rating.setId("id");
+        rating.setName("name");
 
         countryService.saveCountry(country);
         typeService.saveType(type);
@@ -122,6 +132,7 @@ public class TourAdvancedServiceTest extends TestJPAConfig {
         mealTypeService.saveMeal_Type(mealType);
         currencyService.saveCurrency(currency);
         cityService.saveFrom_Cities(city);
+        ratingService.saveHotel_Rating(rating);
 
         tour.setKey("key");
         tour.setCountry(country);
@@ -145,11 +156,12 @@ public class TourAdvancedServiceTest extends TestJPAConfig {
         tour.setRate("rate");
         tour.setReviewCount("count");
         tour.getFacilities().add(facility);
+        tour.setRating(rating);
     }
 
     @Test
     public void crudTest() {
-        service.saveTourAdvanced(tour);
+        service.saveOrUpdateTourAdvanced(tour);
         assertTrue(service.findAll().contains(tour));
         tour.setRate("anotherRate");
         service.updateTourAdvanced(tour);
@@ -161,7 +173,7 @@ public class TourAdvancedServiceTest extends TestJPAConfig {
     @Test(expected = HibernateException.class)
     public void exceptionTest() {
         tour.setKey(null);
-        service.saveTourAdvanced(tour);
+        service.saveOrUpdateTourAdvanced(tour);
         service.findAll();
     }
 
@@ -169,7 +181,7 @@ public class TourAdvancedServiceTest extends TestJPAConfig {
     public void exceptionTest_2() {
         tour.setKey("key");
         tour.setCountry(null);
-        service.saveTourAdvanced(tour);
+        service.saveOrUpdateTourAdvanced(tour);
         service.findAll();
     }
 
@@ -177,7 +189,7 @@ public class TourAdvancedServiceTest extends TestJPAConfig {
     public void exceptionTest_3() {
         tour.setCountry(country);
         tour.setType(null);
-        service.saveTourAdvanced(tour);
+        service.saveOrUpdateTourAdvanced(tour);
         service.findAll();
     }
 
@@ -185,7 +197,7 @@ public class TourAdvancedServiceTest extends TestJPAConfig {
     public void exceptionTest_4() {
         tour.setType(type);
         tour.setRegion(null);
-        service.saveTourAdvanced(tour);
+        service.saveOrUpdateTourAdvanced(tour);
         service.findAll();
     }
 
@@ -193,7 +205,7 @@ public class TourAdvancedServiceTest extends TestJPAConfig {
     public void exceptionTest_5() {
         tour.setRegion(region);
         tour.setHotelId(null);
-        service.saveTourAdvanced(tour);
+        service.saveOrUpdateTourAdvanced(tour);
         service.findAll();
     }
 
@@ -201,7 +213,7 @@ public class TourAdvancedServiceTest extends TestJPAConfig {
     public void exceptionTest_6() {
         tour.setHotelId(1);
         tour.setHotelName(null);
-        service.saveTourAdvanced(tour);
+        service.saveOrUpdateTourAdvanced(tour);
         service.findAll();
     }
 
@@ -209,7 +221,7 @@ public class TourAdvancedServiceTest extends TestJPAConfig {
     public void exceptionTest_7() {
         tour.setHotelName("name");
         tour.setMealType(null);
-        service.saveTourAdvanced(tour);
+        service.saveOrUpdateTourAdvanced(tour);
         service.findAll();
     }
 
@@ -217,7 +229,7 @@ public class TourAdvancedServiceTest extends TestJPAConfig {
     public void exceptionTest_8() {
         tour.setMealType(mealType);
         tour.setAdultAmount(null);
-        service.saveTourAdvanced(tour);
+        service.saveOrUpdateTourAdvanced(tour);
         service.findAll();
     }
 
@@ -225,7 +237,7 @@ public class TourAdvancedServiceTest extends TestJPAConfig {
     public void exceptionTest_9() {
         tour.setAdultAmount(1);
         tour.setChildAmount(null);
-        service.saveTourAdvanced(tour);
+        service.saveOrUpdateTourAdvanced(tour);
         service.findAll();
     }
 
@@ -233,7 +245,7 @@ public class TourAdvancedServiceTest extends TestJPAConfig {
     public void exceptionTest_10() {
         tour.setChildAmount(2);
         tour.setRoomType(null);
-        service.saveTourAdvanced(tour);
+        service.saveOrUpdateTourAdvanced(tour);
         service.findAll();
     }
 
@@ -241,7 +253,7 @@ public class TourAdvancedServiceTest extends TestJPAConfig {
     public void exceptionTest_11() {
         tour.setRoomType("type");
         tour.setDuration(null);
-        service.saveTourAdvanced(tour);
+        service.saveOrUpdateTourAdvanced(tour);
         service.findAll();
     }
 
@@ -249,7 +261,7 @@ public class TourAdvancedServiceTest extends TestJPAConfig {
     public void exceptionTest_12() {
         tour.setDuration(1);
         tour.setDateFrom(null);
-        service.saveTourAdvanced(tour);
+        service.saveOrUpdateTourAdvanced(tour);
         service.findAll();
     }
 
@@ -257,7 +269,7 @@ public class TourAdvancedServiceTest extends TestJPAConfig {
     public void exceptionTest_13() {
         tour.setDateFrom(new Date(System.currentTimeMillis()));
         tour.setCombined(null);
-        service.saveTourAdvanced(tour);
+        service.saveOrUpdateTourAdvanced(tour);
         service.findAll();
     }
 
@@ -265,13 +277,30 @@ public class TourAdvancedServiceTest extends TestJPAConfig {
     public void exceptionTest_14() {
         tour.setCombined(true);
         tour.setCurrency(null);
-        service.saveTourAdvanced(tour);
+        service.saveOrUpdateTourAdvanced(tour);
+        service.findAll();
+    }
+
+    @Test(expected = ConstraintViolationException.class)
+    public void exceptionTest_16() {
+        tour.setCurrency(currency);
+        tour.setPrices(null);
+        service.saveOrUpdateTourAdvanced(tour);
+        service.findAll();
+    }
+
+    @Test(expected = ConstraintViolationException.class)
+    public void exceptionTest_17() {
+        tour.setPrices(new HashSet<>());
+        tour.getPrices().add(price);
+        tour.setRating(null);
+        service.saveOrUpdateTourAdvanced(tour);
         service.findAll();
     }
 
     @Test
     public void nullSave() {
-        tour.setCurrency(currency);
+        tour.setRating(rating);
         service.saveTourAdvanced(tour);
         assertTrue(service.findAll().contains(tour));
         tour.setTransportType(null);
@@ -279,17 +308,8 @@ public class TourAdvancedServiceTest extends TestJPAConfig {
         assertTrue(service.findAll().contains(tour));
     }
 
-    @Test(expected = ConstraintViolationException.class)
-    public void exceptionTest_16() {
-        tour.setPrices(null);
-        service.saveTourAdvanced(tour);
-        service.findAll();
-    }
-
     @Test
     public void nullSave_2() {
-        tour.setPrices(new HashSet<>());
-        tour.getPrices().add(price);
         service.saveTourAdvanced(tour);
         assertTrue(service.findAll().contains(tour));
         tour.setCity(null);

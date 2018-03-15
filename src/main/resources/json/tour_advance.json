@@ -1,0 +1,51 @@
+{
+    "offers": [
+        {
+            "key": "01-03-1e3fb3891a40c9025d145e58014b80d4",
+            "type": 1,
+            "country": "\u0415\u0433\u0438\u043f\u0435\u0442",
+            "region_id": 5996,
+            "region": "\u0428\u0430\u0440\u043c \u042d\u043b\u044c \u0428\u0435\u0439\u0445",
+            "hotel_id": 68,
+            "hotel": "Luna Sharm",
+            "hotel_rating": "4",
+            "meal_type": "BB",
+            "meal_type_full": "\u0417\u0430\u0432\u0442\u0440\u0430\u043a",
+            "adult_amount": 2,
+            "child_amount": 0,
+            "accomodation": "DBL",
+            "room_type": "Standart",
+            "duration": 6,
+            "date_from": "2017-01-26",
+            "is_combined": 0,
+            "currency_id": 1,
+            "prices": {
+                "1": 483,
+                "2": 12509,
+                "10": 434
+            },
+            "from_city": "\u041a\u0438\u0435\u0432",
+            "transport_type": "flight",
+            "(__is_operator_show)operator": "Tez Tour",
+            "hotel_images": [
+                {
+                    "full": "http://ittour.com.ua/images/hotel_image/2/1/6/6/6/file_name/21666.jpg",
+                    "thumb": "http://ittour.com.ua/images/hotel_image_thumb/2/1/6/6/6/file_name/21666.jpg",
+                    "is_main": 0
+                }
+            ],
+            "hotel_review_rate": "2.3",
+            "hotel_review_count": 12,
+            "hotel_facilities": [
+                {
+                    "id": "1",
+                    "name": "Wi-fi",
+                    "category_id": "1",
+                    "category": "Интернет",
+                    "is_main": 0,
+                    "is_paid": 0
+                }
+            ]
+        }
+    ]
+}
