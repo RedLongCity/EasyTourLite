@@ -13,7 +13,6 @@ import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
 import com.redlongcitywork.easytourlite.service.Meal_TypeService;
 import com.redlongcitywork.easytourlite.service.SearchingRequestService;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import javax.validation.ConstraintViolationException;

@@ -48,7 +48,6 @@ public class SearchingRequest {
     @JoinColumn(name = "from_city_id")
     private From_Cities city;
 
-    @NotNull
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "searching_request_region",
             joinColumns = @JoinColumn(name = "request_id"),
@@ -91,7 +90,6 @@ public class SearchingRequest {
     @Column(name = "date_till", unique = false)
     private Date dateTill;
 
-    @NotNull
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "meal_type_request",
             joinColumns = @JoinColumn(name = "request_id"),

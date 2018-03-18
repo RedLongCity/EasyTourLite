@@ -1,6 +1,6 @@
 package test.converter;
 
-import com.redlongcitywork.easytourlite.converter.SearchConverter;
+import com.redlongcitywork.easytourlite.converter.SearchConvertor;
 import com.redlongcitywork.easytourlite.model.Country;
 import com.redlongcitywork.easytourlite.model.Currency;
 import com.redlongcitywork.easytourlite.model.Facility;
@@ -24,6 +24,7 @@ import com.redlongcitywork.easytourlite.service.TypeService;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -42,7 +43,8 @@ import test.database.TestJPAConfig;
 @Transactional
 public class SearchConverterTest extends TestJPAConfig {
 
-    SearchConverter convertor = new SearchConverter();
+    @Autowired
+    private SearchConvertor convertor;
 
     @Autowired
     private TourAdvancedService service;
@@ -300,18 +302,13 @@ public class SearchConverterTest extends TestJPAConfig {
                 + "&kind=" + request.getKind()
                 + "&country=" + request.getCountry().getId()
                 + "&from_city=" + request.getCity().getId()
-                + "&hotel=" + request.getHotel()
                 + "&adult_amount=" + request.getAdultAmount()
                 + "&child_amount=" + request.getChildAmount()
-                + "&child_age=" + request.getChildAge()
                 + "&night_from=" + request.getNightFrom()
                 + "&night_till=" + request.getNightTill()
                 + "&date_from=" + "01.01.00"
-                + "&date_till=" + "04.04.00"
-                + "&price_from=" + request.getPriceFrom()
-                + "&price_till=" + request.getPriceTill()
-                + "&currency=" + request.getCurrency()
-                + "&only_standart_price=" + request.getOnlyStandart();
+                + "&date_till=" + "04.01.00"
+                + "&currency=" + request.getCurrency().getId();
 
         if (regions != null) {
             url = url.concat("&region=" + regions);
@@ -324,6 +321,9 @@ public class SearchConverterTest extends TestJPAConfig {
         if (types != null) {
             url = url.concat("&meal_type=" + types);
         }
+        
+        String result = convertor.getURLByRequest(request);
+        assertEquals(url,convertor.getURLByRequest(request));
     }
 
 }

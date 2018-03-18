@@ -1,14 +1,12 @@
 package com.redlongcitywork.easytourlite.extractor;
 
-import com.redlongcitywork.easytourlite.utils.HttpUtils;
-
 /**
  *
  * @author redlongcity
  * 14/12/2017
  * interface for extracting data from outside resources
  */
-public interface Extractor {
+public interface Extractor<T,Request> {
     
-    void extract(HttpUtils.GetCallBack callBack);
+    T extract(Request request);
 }

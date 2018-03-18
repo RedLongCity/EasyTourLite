@@ -1,6 +1,5 @@
 package com.redlongcitywork.easytourlite.javamail.core;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.redlongcitywork.easytourlite.extractor.TourExtractor;
 import com.redlongcitywork.easytourlite.model.Country;
 import com.redlongcitywork.easytourlite.model.Currency;
@@ -13,20 +12,12 @@ import com.redlongcitywork.easytourlite.model.Order;
 import com.redlongcitywork.easytourlite.model.Price;
 import com.redlongcitywork.easytourlite.model.Tour;
 import com.redlongcitywork.easytourlite.model.UserData;
-import com.redlongcitywork.easytourlite.parsers.TourNodeParser;
-import com.redlongcitywork.easytourlite.service.CountryService;
-import com.redlongcitywork.easytourlite.service.CurrencyService;
-import com.redlongcitywork.easytourlite.service.From_CitiesService;
-import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
 import com.redlongcitywork.easytourlite.service.MailAddressService;
-import com.redlongcitywork.easytourlite.service.Meal_TypeService;
-import com.redlongcitywork.easytourlite.utils.HttpUtils;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -38,75 +29,23 @@ public class EmailContentConverter {
 
     private static final Logger LOG = Logger.getLogger(EmailContentConverter.class.getName());
 
-    @Autowired
-    MailAddressService mailService;
+    private final MailAddressService mailService;
 
-    @Autowired
-    private CountryService countryService;
+    private final TourExtractor extractor;
 
-    @Autowired
-    private From_CitiesService cityService;
-
-    @Autowired
-    private Meal_TypeService typeService;
-
-    @Autowired
-    private CurrencyService currencyService;
-
-    @Autowired
-    private Hotel_RatingService ratingService;
-
-    @Autowired
-    private TourExtractor extractor;
-
-    public EmailContentConverter() {
+    public EmailContentConverter(MailAddressService mailService, TourExtractor extractor) {
+        this.mailService = mailService;
+        this.extractor = extractor;
     }
 
-    public void getMessage(Order order, GetMessageCallBack callback) {
-
-        if (order == null) {
-            callback.onDataNotAwailable();
-            return;
+    public String getMessage(Order order) {
+        String result = null;
+        if (order != null && !order.isEmpty()) {
+            result = new String();
+            result = result.concat(convertUserData(order.getData()));
+            result = result.concat(convertTour(extractor.extract(order.getKey())));
         }
-
-        String tourKey = order.getKey();
-
-        if (tourKey == null || tourKey.length() == 0) {
-            UserData data = order.getData();
-            if (data == null) {
-                callback.onDataNotAwailable();
-            } else {
-                callback.onDataReceived(convertUserData(data));
-            }
-        } else {
-            extractor.extract(tourKey, new HttpUtils.GetCallBack<JsonNode>() {
-                @Override
-                public void onDataReceived(JsonNode node) {
-                    TourNodeParser parser = new TourNodeParser(
-                            countryService.findAll(),
-                            cityService.findAll(),
-                            typeService.findAll(),
-                            ratingService.findAll(),
-                            currencyService.findAll());
-
-                    if (parser != null) {
-                        Tour tour = parser.parseNode(node);
-                        UserData data = order.getData();
-
-                        String message = "";
-                        message = message.concat(convertUserData(data));
-                        message = message.concat(convertTour(tour));
-
-                        callback.onDataReceived(message);
-                    }
-                }
-
-                @Override
-                public void onDataNotAwailable() {
-                    callback.onDataNotAwailable();
-                }
-            });
-        }
+        return result;
     }
 
     public String getAddresses() {
@@ -205,12 +144,5 @@ public class EmailContentConverter {
         }
 
         return message;
-    }
-
-    public interface GetMessageCallBack {
-
-        void onDataReceived(String message);
-
-        void onDataNotAwailable();
     }
 }

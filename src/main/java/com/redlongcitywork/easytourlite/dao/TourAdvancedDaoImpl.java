@@ -1,6 +1,6 @@
 package com.redlongcitywork.easytourlite.dao;
 
-import com.redlongcitywork.easytourlite.converter.SearchConverter;
+import com.redlongcitywork.easytourlite.converter.SearchConvertor;
 import com.redlongcitywork.easytourlite.model.Currency;
 import com.redlongcitywork.easytourlite.model.TourAdvanced;
 import java.util.List;
@@ -110,7 +110,7 @@ public class TourAdvancedDaoImpl extends AbstractDao<String, TourAdvanced>
         Criteria crit = createCriteria();
         List<TourAdvanced> list = null;
         if (currency != null && (priceFrom != null || priceTill != null)) {
-            SearchConverter.addPriceCriteria(crit, priceFrom, priceTill, currency);
+            SearchConvertor.addPriceCriteria(crit, priceFrom, priceTill, currency);
             list = crit.list();
             if (list != null) {
                 for (TourAdvanced tour : list) {
@@ -139,7 +139,7 @@ public class TourAdvancedDaoImpl extends AbstractDao<String, TourAdvanced>
         Criteria crit = createCriteria();
         List<TourAdvanced> list = null;
         if (currency != null && (priceFrom != null || priceTill != null)) {
-            SearchConverter.addPriceCriteria(crit, priceFrom, priceTill, currency);
+            SearchConvertor.addPriceCriteria(crit, priceFrom, priceTill, currency);
             if (criterions != null) {
                 for (Criterion criterion : criterions) {
                     crit.add(criterion);

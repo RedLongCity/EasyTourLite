@@ -19,22 +19,22 @@ import org.springframework.stereotype.Service;
 public class TourCasualArrayNodeParser implements NodeParser<List<TourCasual>> {
 
     private static final Logger LOG = Logger.getLogger(TourCasualArrayNodeParser.class.getName());
-
+    
     private final Meal_TypeService mealTypeService;
 
     private final CurrencyService currencyService;
 
     private final From_CitiesService cityService;
+    
+    private final TourCasualNodeParser parser;
 
-    public TourCasualArrayNodeParser(
-            Meal_TypeService mealTypeService,
-            CurrencyService currencyService,
-            From_CitiesService cityService) {
+    public TourCasualArrayNodeParser(Meal_TypeService mealTypeService, CurrencyService currencyService, From_CitiesService cityService, TourCasualNodeParser parser) {
         this.mealTypeService = mealTypeService;
         this.currencyService = currencyService;
         this.cityService = cityService;
+        this.parser = parser;
     }
-
+    
     @Override
     public List<TourCasual> parseNode(JsonNode arrayNode) {
         if (arrayNode.isMissingNode()) {

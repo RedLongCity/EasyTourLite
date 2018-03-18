@@ -3,10 +3,8 @@ package com.redlongcitywork.easytourlite.model;
 import java.util.Objects;
 
 /**
- * Created by redlongcity on 14.10.2017.
- * class for storing data about order
+ * Created by redlongcity on 14.10.2017. class for storing data about order
  */
-
 public class Order {
 
     private UserData data;
@@ -15,7 +13,7 @@ public class Order {
 
     public Order() {
     }
-    
+
     public UserData getData() {
         return data;
     }
@@ -32,10 +30,9 @@ public class Order {
         this.key = key;
     }
 
-    
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         if (data != null) {
-            return data.isEmpty();
+            return data.isEmpty() && key == null;
         }
         return false;
     }
@@ -73,6 +70,5 @@ public class Order {
     public String toString() {
         return "Order{" + "data=" + data + ", key=" + key + '}';
     }
-
 
 }

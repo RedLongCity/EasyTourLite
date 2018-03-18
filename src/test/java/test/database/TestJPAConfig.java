@@ -1,5 +1,6 @@
 package test.database;
 
+import com.redlongcitywork.easytourlite.converter.SearchConvertor;
 import com.redlongcitywork.easytourlite.dao.CountryDao;
 import com.redlongcitywork.easytourlite.dao.CountryDaoImpl;
 import com.redlongcitywork.easytourlite.dao.CurrencyDao;
@@ -280,6 +281,11 @@ public class TestJPAConfig {
         @Bean
         public TourAdvancedService touAdvanceService() {
             return new TourAdvancedServiceImpl();
+        }
+
+        @Bean
+        public SearchConvertor searchConverter() {
+            return new SearchConvertor();
         }
 
     }

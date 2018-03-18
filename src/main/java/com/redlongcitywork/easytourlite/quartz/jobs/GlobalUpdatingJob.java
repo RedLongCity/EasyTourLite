@@ -1,7 +1,7 @@
 package com.redlongcitywork.easytourlite.quartz.jobs;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.redlongcitywork.easytourlite.extractor.HotFiltersExtractor;
+import com.redlongcitywork.easytourlite.extractor.HotFiltersMiner;
 import com.redlongcitywork.easytourlite.quartz.services.QuartzService;
 import com.redlongcitywork.easytourlite.constants.AppConstants;
 import com.redlongcitywork.easytourlite.utils.HttpUtils;
@@ -34,7 +34,7 @@ public class GlobalUpdatingJob extends QuartzJobBean {
     QuartzService quartzService;
     
     @Autowired
-    HotFiltersExtractor extractor;
+    HotFiltersMiner extractor;
     
     @Override
     protected void executeInternal(JobExecutionContext jec) throws JobExecutionException {

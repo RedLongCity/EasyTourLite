@@ -26,13 +26,13 @@ import org.springframework.stereotype.Service;
  * @author redlongcity 02/03/2018
  */
 @Service
-public class SearchConverter implements ItToursUrls {
+public class SearchConvertor implements ItToursUrls {
 
-    private static final Logger LOG = Logger.getLogger(SearchConverter.class.getName());
+    private static final Logger LOG = Logger.getLogger(SearchConvertor.class.getName());
 
-    private Calendar calendar = Calendar.getInstance();
+    private static Calendar calendar = Calendar.getInstance();
 
-    public List<Criterion> getCriterionsByRequest(SearchingRequest request) {
+    public static List<Criterion> getCriterionsByRequest(SearchingRequest request) {
         List<Criterion> result = new ArrayList<>();
 
         Country country = request.getCountry();
@@ -334,7 +334,7 @@ public class SearchConverter implements ItToursUrls {
         }
     }
 
-    private Criterion[] getCriterionsForDateTill(Date dateTill) {
+    private static Criterion[] getCriterionsForDateTill(Date dateTill) {
         List<Criterion> list = new ArrayList<>();
         for (int i = 1; i < 22; i++) {
             list.add(getDateTill(dateTill, i));
@@ -342,7 +342,7 @@ public class SearchConverter implements ItToursUrls {
         return list.toArray(new Criterion[list.size()]);
     }
 
-    private Criterion getDateTill(Date dateTill, int daysBefore) {
+    private static Criterion getDateTill(Date dateTill, int daysBefore) {
         calendar.setTime(dateTill);
         calendar.add(Calendar.DAY_OF_YEAR, -daysBefore);
         return Restrictions.and(Restrictions.eq("dateFrom", calendar.getTime()),

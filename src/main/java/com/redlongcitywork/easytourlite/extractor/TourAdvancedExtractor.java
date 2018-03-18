@@ -1,7 +1,7 @@
 package com.redlongcitywork.easytourlite.extractor;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.redlongcitywork.easytourlite.converter.SearchConverter;
+import com.redlongcitywork.easytourlite.converter.SearchConvertor;
 import com.redlongcitywork.easytourlite.model.SearchingRequest;
 import com.redlongcitywork.easytourlite.model.TourAdvanced;
 import com.redlongcitywork.easytourlite.parsers.TourAdvancedArrayNodeParser;
@@ -18,37 +18,32 @@ import org.springframework.stereotype.Service;
  * @author redlongcity 04/03/2018
  */
 @Service
-public class TourAdvancedExtractor implements ItToursUrls {
+public class TourAdvancedExtractor implements Extractor<List<TourAdvanced>, SearchingRequest>, ItToursUrls {
 
     private static final Logger LOG = Logger.getLogger(TourAdvancedExtractor.class.getName());
 
-    private final SearchConverter converter;
+    private final SearchConvertor converter;
 
     private final TourAdvancedArrayNodeParser parser;
 
-    public TourAdvancedExtractor(SearchConverter converter, TourAdvancedArrayNodeParser parser) {
+    public TourAdvancedExtractor(SearchConvertor converter, TourAdvancedArrayNodeParser parser) {
         this.converter = converter;
         this.parser = parser;
     }
 
-    public void extract(SearchingRequest request, HttpUtils.GetCallBack<List<TourAdvanced>> callBack) {
+    @Override
+    public List<TourAdvanced> extract(SearchingRequest request) {
+        List<TourAdvanced> result = null;
         try {
-            HttpUtils.getJsonNodeFromUrl(converter.getURLByRequest(request),
-                    new HttpUtils.GetCallBack<JsonNode>() {
-                @Override
-                public void onDataReceived(JsonNode node) {
-                    callBack.onDataReceived(parser.parseNode(node));
-                }
-
-                @Override
-                public void onDataNotAwailable() {
-                    callBack.onDataNotAwailable();
-                }
-            });
+            JsonNode node = HttpUtils.getJsonNodeFromUrl(converter.getURLByRequest(request));
+            if (node != null) {
+                result = parser.parseNode(node);
+            }
         } catch (IOException ex) {
             Logger.getLogger(HotelExtractor.class.getName()).log(Level.SEVERE, null, ex);
 
         }
+        return result;
     }
 
 }

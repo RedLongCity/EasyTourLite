@@ -10,13 +10,18 @@ import com.redlongcitywork.easytourlite.model.Hotel_Rating;
 import com.redlongcitywork.easytourlite.model.Meal_Type;
 import com.redlongcitywork.easytourlite.model.Price;
 import com.redlongcitywork.easytourlite.model.Tour;
+import com.redlongcitywork.easytourlite.service.CountryService;
+import com.redlongcitywork.easytourlite.service.CurrencyService;
+import com.redlongcitywork.easytourlite.service.From_CitiesService;
+import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
+import com.redlongcitywork.easytourlite.service.Meal_TypeService;
 import com.redlongcitywork.easytourlite.service.TourService;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 /**
@@ -24,6 +29,7 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
  * @author redlongcity 22/12/2017 class for deserialization Tour object from
  * JsonNode
  */
+@Service
 public class TourNodeParser implements NodeParser<Tour> {
 
     private List<Country> countryList;
@@ -36,19 +42,40 @@ public class TourNodeParser implements NodeParser<Tour> {
 
     private List<Currency> currencyList;
 
-    @Autowired
-    private TourService tourService;
+    private final TourService tourService;
 
-    public TourNodeParser(List<Country> countryList,
-            List<From_Cities> cityList,
-            List<Meal_Type> typeList,
-            List<Hotel_Rating> ratingList,
-            List<Currency> currencyList) {
-        this.countryList = countryList;
-        this.cityList = cityList;
-        this.typeList = typeList;
-        this.ratingList = ratingList;
-        this.currencyList = currencyList;
+    private final CountryService countryService;
+
+    private final From_CitiesService cityService;
+
+    private final Meal_TypeService typeService;
+
+    private final Hotel_RatingService ratingService;
+
+    private final CurrencyService currencyService;
+
+    public TourNodeParser(
+            TourService tourService,
+            CountryService countryService,
+            From_CitiesService cityService,
+            Meal_TypeService typeService,
+            Hotel_RatingService service,
+            CurrencyService currencyService) {
+        this.tourService = tourService;
+        this.countryService = countryService;
+        this.cityService = cityService;
+        this.typeService = typeService;
+        this.ratingService = service;
+        this.currencyService = currencyService;
+        init();
+    }
+
+    private void init() {
+        countryList = countryService.findAll();
+        cityList = cityService.findAll();
+        typeList = typeService.findAll();
+        ratingList = ratingService.findAll();
+        currencyList = currencyService.findAll();
     }
 
     private static final Logger LOG = Logger.getLogger(TourNodeParser.class.getName());

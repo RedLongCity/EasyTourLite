@@ -75,11 +75,9 @@ public class HttpUtils implements ItToursUrls {
         return response.returnContent();
     }
 
-    public static void getJsonNodeFromUrl(String url,
-            GetCallBack<JsonNode> callBack) throws IOException {
-        JsonNode node = null;
+    public static JsonNode getJsonNodeFromUrl(String url) throws IOException {
         try {
-            node = Request.Get(url)
+            return Request.Get(url)
                     .connectTimeout(CONNECT_TIMEOUT)
                     .socketTimeout(SOCKET_TIMEOUT)
                     .addHeader(authorization, authorization_token)
@@ -87,10 +85,9 @@ public class HttpUtils implements ItToursUrls {
                     .execute()
                     .handleResponse(JSONNODE_CONTENT_HANDLER);
 
-            callBack.onDataReceived(node);
         } catch (IOException e) {
             LOG.log(Level.WARNING, e.toString());
-            callBack.onDataNotAwailable();
+            return null;
         }
     }
 
@@ -123,12 +120,4 @@ public class HttpUtils implements ItToursUrls {
             throw e;
         }
     }
-
-    public interface GetCallBack<T> {
-
-        void onDataReceived(T node);
-
-        void onDataNotAwailable();
-    }
-
 }

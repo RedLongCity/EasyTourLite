@@ -83,6 +83,17 @@ public class TourAdvancedNodeParser implements NodeParser<TourAdvanced> {
         this.ratingService = ratingService;
         this.imageParser = imageParser;
         this.facilityParser = facilityParser;
+        init();
+    }
+
+    private void init() {
+        countryList = countryService.findAll();
+        typeList = typeService.findAll();
+        regionList = regionService.findAll();
+        mealTypeList = mealTypeService.findAll();
+        currencyList = currencyService.findAll();
+        cityList = cityService.findAll();
+        ratingList = ratingService.findAll();
     }
 
     @Override
@@ -91,14 +102,6 @@ public class TourAdvancedNodeParser implements NodeParser<TourAdvanced> {
             LOG.log(Level.WARNING, "TourAdvancedNode: node is missing");
             return null;
         }
-
-        countryList = countryService.findAll();
-        typeList = typeService.findAll();
-        regionList = regionService.findAll();
-        mealTypeList = mealTypeService.findAll();
-        currencyList = currencyService.findAll();
-        cityList = cityService.findAll();
-        ratingList = ratingService.findAll();
 
         TourAdvanced tour = new TourAdvanced();
 
