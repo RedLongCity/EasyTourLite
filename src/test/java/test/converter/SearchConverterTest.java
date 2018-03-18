@@ -207,7 +207,7 @@ public class SearchConverterTest extends TestJPAConfig {
         request.setKind(1);
         request.setCountry(country);
         request.setCity(city);
-        request.setRegion(region);
+        request.getRegions().add(region);
         request.getRatingSet().add(rating);
         request.setAdultAmount(1);
         request.setChildAmount(2);
@@ -215,7 +215,7 @@ public class SearchConverterTest extends TestJPAConfig {
         request.setNightTill(3);
         request.setDateFrom(Date.valueOf(LocalDate.parse("2000-01-01")));
         request.setDateTill(Date.valueOf(LocalDate.parse("2000-01-04")));
-        request.setMealType(mealType);
+        request.getMealTypes().add(mealType);
         request.setCurrency(currency);
     }
 
@@ -244,6 +244,86 @@ public class SearchConverterTest extends TestJPAConfig {
         service.updateTourAdvanced(tourTwo);
         list = service.findByCriterions(convertor.getCriterionsByRequest(request));
         assertFalse(list.contains(tour) && list.contains(tourTwo));
+    }
+
+    @Test
+    public void urlConvertTest() {
+        String regions = null;
+        if (request.getRegions() != null) {
+            regions = new String("");
+            boolean flag = true;
+            for (Region entity : request.getRegions()) {
+                if (flag) {
+                    regions = regions.concat(entity.getId());
+                    flag = false;
+                } else {
+                    regions = regions.concat(
+                            ":" + entity.getId()
+                    );
+                }
+            }
+        }
+
+        String ratings = null;
+        if (request.getRatingSet() != null) {
+            ratings = new String("");
+            boolean flag = true;
+            for (Hotel_Rating entity : request.getRatingSet()) {
+                if (flag) {
+                    ratings = ratings.concat(entity.getId());
+                    flag = false;
+                } else {
+                    ratings = ratings.concat(
+                            ":" + entity.getId()
+                    );
+                }
+            }
+        }
+
+        String types = null;
+        if (request.getMealTypes() != null) {
+            types = new String("");
+            boolean flag = true;
+            for (Meal_Type entity : request.getMealTypes()) {
+                if (flag) {
+                    types = types.concat(entity.getId());
+                    flag = false;
+                } else {
+                    types = types.concat(
+                            ":" + entity.getId()
+                    );
+                }
+            }
+        }
+
+        String url = "?type=" + request.getType().getId()
+                + "&kind=" + request.getKind()
+                + "&country=" + request.getCountry().getId()
+                + "&from_city=" + request.getCity().getId()
+                + "&hotel=" + request.getHotel()
+                + "&adult_amount=" + request.getAdultAmount()
+                + "&child_amount=" + request.getChildAmount()
+                + "&child_age=" + request.getChildAge()
+                + "&night_from=" + request.getNightFrom()
+                + "&night_till=" + request.getNightTill()
+                + "&date_from=" + "01.01.00"
+                + "&date_till=" + "04.04.00"
+                + "&price_from=" + request.getPriceFrom()
+                + "&price_till=" + request.getPriceTill()
+                + "&currency=" + request.getCurrency()
+                + "&only_standart_price=" + request.getOnlyStandart();
+
+        if (regions != null) {
+            url = url.concat("&region=" + regions);
+        }
+
+        if (ratings != null) {
+            url = url.concat("&hotel_rating=" + ratings);
+        }
+
+        if (types != null) {
+            url = url.concat("&meal_type=" + types);
+        }
     }
 
 }

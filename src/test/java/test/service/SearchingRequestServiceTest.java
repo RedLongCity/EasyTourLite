@@ -110,7 +110,7 @@ public class SearchingRequestServiceTest extends TestJPAConfig {
         request.setNightTill(2);
         request.setDateFrom(new Date(System.currentTimeMillis()));
         request.setDateTill(new Date(System.currentTimeMillis()));
-        request.setMealType(type);
+        request.getMealTypes().add(type);
         request.setPriceFrom(1);
         request.setPriceTill(2);
         request.setCurrency(currency);

@@ -4,11 +4,13 @@ import com.redlongcitywork.easytourlite.model.Country;
 import com.redlongcitywork.easytourlite.model.Currency;
 import com.redlongcitywork.easytourlite.model.From_Cities;
 import com.redlongcitywork.easytourlite.model.Hotel_Rating;
+import com.redlongcitywork.easytourlite.model.Meal_Type;
 import com.redlongcitywork.easytourlite.model.Region;
 import com.redlongcitywork.easytourlite.model.SearchingRequest;
 import com.redlongcitywork.easytourlite.model.Type;
 import com.redlongcitywork.easytourlite.utils.ItToursUrls;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -62,9 +64,9 @@ public class SearchConverter implements ItToursUrls {
             result.add(Restrictions.eq("city", city));
         }
 
-        Region region = request.getRegion();
-        if (region != null) {
-            result.add(Restrictions.eq("region", region));
+        Set<Region> regions = request.getRegions();
+        if (regions != null) {
+            result.add(Restrictions.in("region", regions));
         }
 
         String ids = request.getHotel();
@@ -137,7 +139,199 @@ public class SearchConverter implements ItToursUrls {
 
     public static String getURLByRequest(SearchingRequest request) {
         String result = null;
+        if (request != null) {
+            result = new String("?");
+            boolean flag = true;
+
+            if (request.getType() != null) {
+                result = result.concat(
+                        addPattern("type", request.getType().getId(), flag)
+                );
+                flag = false;
+            }
+
+            if (request.getKind() != null) {
+                result = result.concat(
+                        addPattern("kind", request.getKind().toString(), flag)
+                );
+                flag = false;
+            }
+
+            if (request.getCountry() != null) {
+                result = result.concat(
+                        addPattern("country", request.getCountry().getId(), flag));
+                flag = false;
+            }
+
+            if (request.getCity() != null) {
+                result = result.concat(
+                        addPattern("from_city", request.getCity().getId(), flag)
+                );
+                flag = false;
+            }
+
+            if (request.getHotel() != null) {
+                result = result.concat(
+                        addPattern("hotel", request.getHotel(), flag)
+                );
+                flag = false;
+            }
+
+            if (request.getAdultAmount() != null) {
+                result = result.concat(
+                        addPattern("adult_amount", request.getAdultAmount().toString(), flag)
+                );
+                flag = false;
+            }
+
+            if (request.getChildAmount() != null) {
+                result = result.concat(
+                        addPattern("child_amount", request.getChildAmount().toString(), flag)
+                );
+                flag = false;
+            }
+
+            if (request.getChildAge() != null) {
+                result = result.concat(
+                        addPattern("child_age", request.getChildAge(), flag)
+                );
+                flag = false;
+            }
+
+            if (request.getNightFrom() != null) {
+                result = result.concat(
+                        addPattern("night_from", request.getNightFrom().toString(), flag)
+                );
+                flag = false;
+            }
+
+            if (request.getNightTill() != null) {
+                result = result.concat(
+                        addPattern("night_till", request.getNightTill().toString(), flag)
+                );
+                flag = false;
+            }
+            SimpleDateFormat formatter = null;
+            if (request.getDateFrom() != null || request.getDateTill() != null) {
+                formatter = new SimpleDateFormat("dd.MM.yy");
+            }
+
+            if (request.getDateFrom() != null) {
+                result = result.concat(
+                        addPattern(
+                                "date_from",
+                                formatter.format(request.getDateFrom()),
+                                flag)
+                );
+                flag = false;
+            }
+
+            if (request.getDateTill() != null) {
+                result = result.concat(
+                        addPattern(
+                                "date_till",
+                                formatter.format(request.getDateTill()),
+                                flag)
+                );
+                flag = false;
+            }
+
+            if (request.getPriceFrom() != null) {
+                result = result.concat(
+                        addPattern("price_from", request.getPriceFrom().toString(), flag)
+                );
+                flag = false;
+            }
+
+            if (request.getPriceTill() != null) {
+                result = result.concat(
+                        addPattern("price_till", request.getPriceTill().toString(), flag)
+                );
+                flag = false;
+            }
+
+            if (request.getCurrency() != null) {
+                result = result.concat(
+                        addPattern("currency", request.getCurrency().getId().toString(), flag)
+                );
+                flag = false;
+            }
+
+            if (request.getOnlyStandart() != null) {
+                result = result.concat(
+                        addPattern("only_standard_price", request.getOnlyStandart().toString(), flag)
+                );
+                flag = false;
+            }
+
+            if (request.getRegions() != null && !request.getRegions().isEmpty()) {
+                result = result.concat(
+                        addBeginning("region", flag)
+                );
+                flag = false;
+                boolean eachFlag = true;
+                for (Region region : request.getRegions()) {
+                    result = result.concat(
+                            addEndElement(region.getId(), eachFlag)
+                    );
+                    eachFlag = false;
+                }
+            }
+
+            if (request.getRatingSet() != null && !request.getRatingSet().isEmpty()) {
+                result = result.concat(
+                        addBeginning("hotel_rating", flag)
+                );
+                flag = false;
+                boolean eachFlag = true;
+                for (Hotel_Rating rating : request.getRatingSet()) {
+                    result = result.concat(
+                            addEndElement(rating.getId(), eachFlag)
+                    );
+                    eachFlag = false;
+                }
+            }
+
+            if (request.getMealTypes() != null && !request.getMealTypes().isEmpty()) {
+                result = result.concat(
+                        addBeginning("meal_type", flag)
+                );
+                flag = false;
+                boolean eachFlag = true;
+                for (Meal_Type type : request.getMealTypes()) {
+                    result = result.concat(
+                            addEndElement(type.getId(), eachFlag)
+                    );
+                    eachFlag = false;
+                }
+            }
+
+        }
         return result;
+    }
+
+    private static String addPattern(String key, String value, boolean first) {
+        if (first) {
+            return key + "=" + value;
+        } else {
+            return "&" + key + "=" + value;
+        }
+    }
+
+    private static String addBeginning(String key, boolean first) {
+        if (first) {
+            return key + "=";
+        } else {
+            return "&" + key + "=";
+        }
+    }
+
+    private static String addEndElement(String key, boolean first) {
+        if (first) {
+            return key;
+        } else {
+            return ":" + key;
+        }
     }
 
     private Criterion[] getCriterionsForDateTill(Date dateTill) {

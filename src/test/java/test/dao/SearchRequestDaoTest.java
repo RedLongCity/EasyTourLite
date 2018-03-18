@@ -13,7 +13,6 @@ import com.redlongcitywork.easytourlite.service.From_CitiesService;
 import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
 import com.redlongcitywork.easytourlite.service.Meal_TypeService;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import javax.validation.ConstraintViolationException;
@@ -110,7 +109,7 @@ public class SearchRequestDaoTest extends TestJPAConfig {
         request.setNightTill(2);
         request.setDateFrom(new Date(System.currentTimeMillis()));
         request.setDateTill(new Date(System.currentTimeMillis()));
-        request.setMealType(type);
+        request.getMealTypes().add(type);
         request.setPriceFrom(1);
         request.setPriceTill(2);
         request.setCurrency(currency);

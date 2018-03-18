@@ -37,7 +37,7 @@ public class SearchingRequestServiceImpl implements SearchingRequestService {
             entity.setKind(request.getKind());
             entity.setCountry(request.getCountry());
             entity.setCity(request.getCity());
-            entity.setRegion(request.getRegion());
+            entity.setRegions(request.getRegions());
             entity.setRatingSet(request.getRatingSet());
             entity.setAdultAmount(request.getAdultAmount());
             entity.setChildAmount(request.getChildAmount());
@@ -46,7 +46,7 @@ public class SearchingRequestServiceImpl implements SearchingRequestService {
             entity.setNightTill(request.getNightTill());
             entity.setDateFrom(request.getDateFrom());
             entity.setDateTill(request.getDateTill());
-            entity.setMealType(request.getMealType());
+            entity.setMealTypes(request.getMealTypes());
             entity.setPriceFrom(request.getPriceFrom());
             entity.setPriceTill(request.getPriceTill());
             entity.setCurrency(request.getCurrency());

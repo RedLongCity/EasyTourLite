@@ -48,9 +48,12 @@ public class SearchingRequest {
     @JoinColumn(name = "from_city_id")
     private From_Cities city;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "region_id", unique = false, nullable = true)
-    private Region region;
+    @NotNull
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "searching_request_region",
+            joinColumns = @JoinColumn(name = "request_id"),
+            inverseJoinColumns = @JoinColumn(name = "region_id"))
+    private Set<Region> regions = new HashSet<>();
 
     @Column(name = "hotel", unique = false, nullable = true)
     private String hotel;
@@ -88,9 +91,12 @@ public class SearchingRequest {
     @Column(name = "date_till", unique = false)
     private Date dateTill;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "meal_type_id", unique = false, nullable = true)
-    private Meal_Type mealType;
+    @NotNull
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "meal_type_request",
+            joinColumns = @JoinColumn(name = "request_id"),
+            inverseJoinColumns = @JoinColumn(name = "meal_type_id"))
+    private Set<Meal_Type> mealTypes = new HashSet<>();
 
     @Column(name = "price_from", unique = false, nullable = true)
     private Integer priceFrom;
@@ -145,12 +151,12 @@ public class SearchingRequest {
         this.city = city;
     }
 
-    public Region getRegion() {
-        return region;
+    public Set<Region> getRegions() {
+        return regions;
     }
 
-    public void setRegion(Region region) {
-        this.region = region;
+    public void setRegions(Set<Region> regions) {
+        this.regions = regions;
     }
 
     public String getHotel() {
@@ -225,12 +231,12 @@ public class SearchingRequest {
         this.dateTill = dateTill;
     }
 
-    public Meal_Type getMealType() {
-        return mealType;
+    public Set<Meal_Type> getMealTypes() {
+        return mealTypes;
     }
 
-    public void setMealType(Meal_Type mealType) {
-        this.mealType = mealType;
+    public void setMealTypes(Set<Meal_Type> mealTypes) {
+        this.mealTypes = mealTypes;
     }
 
     public Integer getPriceFrom() {
@@ -292,6 +298,7 @@ public class SearchingRequest {
 
     @Override
     public String toString() {
-        return "SearchingRequest{" + "id=" + id + ", type=" + type + ", kind=" + kind + ", country=" + country + ", city=" + city + ", region=" + region + ", hotel=" + hotel + ", ratingSet=" + ratingSet + ", adultAmount=" + adultAmount + ", childAmount=" + childAmount + ", childAge=" + childAge + ", nightFrom=" + nightFrom + ", nightTill=" + nightTill + ", dateFrom=" + dateFrom + ", dateTill=" + dateTill + ", mealType=" + mealType + ", priceFrom=" + priceFrom + ", priceTill=" + priceTill + ", currency=" + currency + ", onlyStandart=" + onlyStandart + '}';
+        return "SearchingRequest{" + "id=" + id + ", type=" + type + ", kind=" + kind + ", country=" + country + ", city=" + city + ", regions=" + regions + ", hotel=" + hotel + ", ratingSet=" + ratingSet + ", adultAmount=" + adultAmount + ", childAmount=" + childAmount + ", childAge=" + childAge + ", nightFrom=" + nightFrom + ", nightTill=" + nightTill + ", dateFrom=" + dateFrom + ", dateTill=" + dateTill + ", mealTypes=" + mealTypes + ", priceFrom=" + priceFrom + ", priceTill=" + priceTill + ", currency=" + currency + ", onlyStandart=" + onlyStandart + '}';
     }
+
 }
