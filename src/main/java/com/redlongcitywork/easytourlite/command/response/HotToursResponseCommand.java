@@ -2,7 +2,7 @@ package com.redlongcitywork.easytourlite.command.response;
 
 import com.redlongcitywork.easytourlite.command.request.HotToursRequestCommand;
 import com.redlongcitywork.easytourlite.command.request.RequestCommand;
-import com.redlongcitywork.easytourlite.converter.HotSearchConverter;
+import com.redlongcitywork.easytourlite.convertor.HotSearchConvertor;
 import com.redlongcitywork.easytourlite.model.HotToursRequest;
 import com.redlongcitywork.easytourlite.model.Tour;
 import com.redlongcitywork.easytourlite.model.TourResponse;
@@ -48,13 +48,11 @@ public class HotToursResponseCommand implements
     private HotToursRequestService requestService;
 
     @Autowired
-    private HotSearchConverter converter;
+    private HotSearchConvertor converter;
 
     @Autowired
     private TourService tourService;
     
-    private long time;
-
     public HotToursResponseCommand(HotToursRequest request) {
         this.request = request;
     }
@@ -88,10 +86,8 @@ public class HotToursResponseCommand implements
         if (entity != null) {
             
             if (entity.getRequestTime().after(timeUtils.getRevelanceTime())) {
-                time = System.currentTimeMillis();
                 List<Tour> list = tourService.findByCriterions(
                         converter.getCriterionsByRequest(entity));
-                LOG.log(Level.INFO,"Operation of extracting from database: "+(System.currentTimeMillis()-time));
                 return new TourResponse(0,list,request);
             }
         }

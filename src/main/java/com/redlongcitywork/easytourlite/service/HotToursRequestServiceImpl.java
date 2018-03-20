@@ -42,7 +42,7 @@ public class HotToursRequestServiceImpl implements HotToursRequestService {
         if (entity != null) {
             entity.setCountry(request.getCountry());
             entity.setFrom_Cities(request.getFrom_Cities());
-            entity.setHotel_Rating(request.getHotel_Rating());
+            entity.setRatings(request.getRatings());
             entity.setMeal_Type(request.getMeal_Type());
             entity.setNight_From(request.getNight_From());
             entity.setNight_Till(request.getNight_Till());

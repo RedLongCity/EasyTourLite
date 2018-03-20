@@ -1,6 +1,6 @@
 package com.redlongcitywork.easytourlite.dao;
 
-import com.redlongcitywork.easytourlite.converter.SearchConvertor;
+import com.redlongcitywork.easytourlite.convertor.SearchConvertor;
 import com.redlongcitywork.easytourlite.model.Currency;
 import com.redlongcitywork.easytourlite.model.TourAdvanced;
 import java.util.List;

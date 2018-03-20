@@ -1,6 +1,6 @@
 package test.database;
 
-import com.redlongcitywork.easytourlite.converter.SearchConvertor;
+import com.redlongcitywork.easytourlite.convertor.SearchConvertor;
 import com.redlongcitywork.easytourlite.dao.CountryDao;
 import com.redlongcitywork.easytourlite.dao.CountryDaoImpl;
 import com.redlongcitywork.easytourlite.dao.CurrencyDao;

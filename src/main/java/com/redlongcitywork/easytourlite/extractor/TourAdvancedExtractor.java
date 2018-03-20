@@ -1,7 +1,7 @@
 package com.redlongcitywork.easytourlite.extractor;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.redlongcitywork.easytourlite.converter.SearchConvertor;
+import com.redlongcitywork.easytourlite.convertor.SearchConvertor;
 import com.redlongcitywork.easytourlite.model.SearchingRequest;
 import com.redlongcitywork.easytourlite.model.TourAdvanced;
 import com.redlongcitywork.easytourlite.parsers.TourAdvancedArrayNodeParser;
@@ -22,12 +22,12 @@ public class TourAdvancedExtractor implements Extractor<List<TourAdvanced>, Sear
 
     private static final Logger LOG = Logger.getLogger(TourAdvancedExtractor.class.getName());
 
-    private final SearchConvertor converter;
+    private final SearchConvertor convertor;
 
     private final TourAdvancedArrayNodeParser parser;
 
     public TourAdvancedExtractor(SearchConvertor converter, TourAdvancedArrayNodeParser parser) {
-        this.converter = converter;
+        this.convertor = converter;
         this.parser = parser;
     }
 
@@ -35,12 +35,12 @@ public class TourAdvancedExtractor implements Extractor<List<TourAdvanced>, Sear
     public List<TourAdvanced> extract(SearchingRequest request) {
         List<TourAdvanced> result = null;
         try {
-            JsonNode node = HttpUtils.getJsonNodeFromUrl(converter.getURLByRequest(request));
+            JsonNode node = HttpUtils.getJsonNodeFromUrl(convertor.getURLByRequest(request));
             if (node != null) {
                 result = parser.parseNode(node);
             }
         } catch (IOException ex) {
-            Logger.getLogger(HotelExtractor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TourAdvancedExtractor.class.getName()).log(Level.SEVERE, null, ex);
 
         }
         return result;

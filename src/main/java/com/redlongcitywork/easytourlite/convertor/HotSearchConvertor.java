@@ -1,40 +1,32 @@
-package com.redlongcitywork.easytourlite.converter;
+package com.redlongcitywork.easytourlite.convertor;
 
 import com.redlongcitywork.easytourlite.model.Country;
 import com.redlongcitywork.easytourlite.model.From_Cities;
 import com.redlongcitywork.easytourlite.model.HotToursRequest;
+import com.redlongcitywork.easytourlite.model.Hotel_Rating;
 import com.redlongcitywork.easytourlite.model.Meal_Type;
-import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
 import com.redlongcitywork.easytourlite.utils.ItToursUrls;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
  *
- * @author redlongcity
- * 09.09.2017
- * class for handling operations with ItTours Hot Search Request
+ * @author redlongcity 09.09.2017 
+ * class for handling operations with ItTours Hot
+ * Search Request
  */
 @Service
-public class HotSearchConverter implements RequestConverter<HotToursRequest>, 
-        ItToursUrls {
+public class HotSearchConvertor implements ItToursUrls {
 
-    private static final Logger LOG = Logger.getLogger(HotSearchConverter.class.getName());
+    private static final Logger LOG = Logger.getLogger(HotSearchConvertor.class.getName());
 
-    public HotSearchConverter() {
-    }
-
-    @Autowired
-    Hotel_RatingService service;
-
-    @Override
     public List<Criterion> getCriterionsByRequest(HotToursRequest request) {
         List<Criterion> criterionsList = new ArrayList<Criterion>();
 
@@ -48,25 +40,12 @@ public class HotSearchConverter implements RequestConverter<HotToursRequest>,
             criterionsList.add(Restrictions.eq("from_Cities", from_Cities));
         }
 
-        String hotel_Rating = request.getHotel_Rating();
-        if (hotel_Rating == null) {
+        Set<Hotel_Rating> ratings = request.getRatings();
+        if (ratings == null) {
             LOG.log(Level.WARNING, "RequestHandlerService: Hotel rating is null");
             return criterionsList;
         }
-        String[] hotel_RatingsArray = hotel_Rating.split(":", -1);
-        if (hotel_RatingsArray.length == 0) {
-            LOG.log(Level.WARNING, "RequestHandlerService: hotel_RatingsArray too short");
-            return criterionsList;
-        } else {
-            if (hotel_RatingsArray.length == 1) {
-                criterionsList.add(Restrictions.eq("hotel_Rating",
-                        service.findById(hotel_RatingsArray[0])));
-            } else {
-                criterionsList.add(Restrictions.between("hotel_Rating",
-                        service.findById(hotel_RatingsArray[0]),
-                        service.findById(hotel_RatingsArray[1])));
-            }
-        }
+        criterionsList.add(Restrictions.eq("ratings", ratings));
         Integer night_From = request.getNight_From();
         if (night_From == null) {
             LOG.log(Level.WARNING, "RequestHandlerService: night_From is null");
@@ -85,63 +64,70 @@ public class HotSearchConverter implements RequestConverter<HotToursRequest>,
         if (meal_Type != null) {
             criterionsList.add(Restrictions.eq("meal_Type", meal_Type));
         }
-        
+
         Timestamp requestTime = request.getRequestTime();
-        if(requestTime != null){
+        if (requestTime != null) {
             criterionsList.add(Restrictions.ge("date_From", requestTime));
-        }else{
-            LOG.log(Level.WARNING,"RequestHandlerService: requestTime is null");
+        } else {
+            LOG.log(Level.WARNING, "RequestHandlerService: requestTime is null");
         }
 
         return criterionsList;
     }
 
-    @Override
     public String getURLByRequest(HotToursRequest request) {
-        String URL = api_base_url//http://api.ittour.com.ua/
+        String result = api_base_url//http://api.ittour.com.ua/
                 + api_showcases//showcase/hot-offers
                 + api_showcases_search;// /search?
 
         Country country = request.getCountry();
         if (country != null) {
             String country_Id = country.getId();
-            URL = URL.concat("country=" + country_Id + "&");
+            result = result.concat("country=" + country_Id + "&");
         }
 
         From_Cities from_Cities = request.getFrom_Cities();
         if (from_Cities != null) {
             String from_Cities_Id = from_Cities.getId();
-            URL = URL.concat("from_city=" + from_Cities_Id + "&");
+            result = result.concat("from_city=" + from_Cities_Id + "&");
         }
 
-        String hotel_Rating = request.getHotel_Rating();
-        if (hotel_Rating == null) {
+        Set<Hotel_Rating> ratings = request.getRatings();
+        if (ratings == null) {
             LOG.log(Level.WARNING, "RequestHandlerService_URL: Hotel rating is null");
-            return URL;
+            return result;
         }
-        URL = URL.concat("hotel_rating=" + hotel_Rating + "&");
+        boolean first = true;
+        for (Hotel_Rating rating : ratings) {
+            if (first) {
+                result = result.concat("hotel_rating=" + rating.getId());
+                first = false;
+            } else {
+                result = result.concat(":" + rating.getId());
+            }
+        }
 
         Integer night_From = request.getNight_From();
         if (night_From == null) {
             LOG.log(Level.WARNING, "RequestHandlerService: night_From is null");
-            return URL;
+            return result;
         }
-        URL = URL.concat("night_from=" + night_From + "&");
+        result = result.concat("night_from=" + night_From + "&");
 
         Integer night_Till = request.getNight_Till();
         if (night_Till == null) {
             LOG.log(Level.WARNING, "RequestHandlerService: night_Till is null");
-            return URL;
+            return result;
         }
-        URL = URL.concat("night_till=" + night_Till + "&");
+        result = result.concat("night_till=" + night_Till + "&");
 
         Meal_Type meal_Type = request.getMeal_Type();
         if (meal_Type != null) {
             String meal_Type_Id = meal_Type.getId();
-            URL = URL.concat("meal_type=" + meal_Type_Id + "&");
+            result = result.concat("meal_type=" + meal_Type_Id + "&");
         }
-        URL = URL.concat("items_per_page=100&hotel_image=1");
-        return URL;
+        result = result.concat("items_per_page=100&hotel_image=1");
+        return result;
     }
 
 }

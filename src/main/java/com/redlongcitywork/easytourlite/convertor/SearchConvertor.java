@@ -1,4 +1,4 @@
-package com.redlongcitywork.easytourlite.converter;
+package com.redlongcitywork.easytourlite.convertor;
 
 import com.redlongcitywork.easytourlite.model.Country;
 import com.redlongcitywork.easytourlite.model.Currency;
@@ -307,6 +307,146 @@ public class SearchConvertor implements ItToursUrls {
             }
 
         }
+        return result;
+    }
+
+    public static List<Criterion> getRequestCriterions(SearchingRequest request) {
+        List<Criterion> result = null;
+        if (request != null) {
+            Type type = request.getType();
+            if (type != null) {
+                result.add(Restrictions.eq("type", type));
+            } else {
+                result.add(Restrictions.isNull("type"));
+            }
+
+            Integer kind = request.getKind();
+            if (kind != null) {
+                result.add(Restrictions.eq("kind", kind));
+            } else {
+                result.add(Restrictions.isNull("kind"));
+            }
+
+            Country country = request.getCountry();
+            if (country != null) {
+                result.add(Restrictions.eq("country", country));
+            } else {
+                result.add(Restrictions.isNull("country"));
+            }
+
+            From_Cities city = request.getCity();
+            if (city != null) {
+                result.add(Restrictions.eq("city", city));
+            } else {
+                result.add(Restrictions.isNull("city"));
+            }
+
+            Set<Region> regions = request.getRegions();
+            if (regions != null && !regions.isEmpty()) {
+                result.add(Restrictions.eq("regions", regions));
+            } else {
+                result.add(Restrictions.isEmpty("regions"));//Проверить
+            }
+
+            String hotel = request.getHotel();
+            if (hotel != null) {
+                result.add(Restrictions.eq("hotel", hotel));
+            } else {
+                result.add(Restrictions.isNull("hotel"));
+            }
+
+            Set<Hotel_Rating> ratings = request.getRatingSet();
+            if (ratings != null) {
+                result.add(Restrictions.eq("ratingSet", ratings));
+            } else {
+                result.add(Restrictions.isNull("ratingSet"));
+            }
+
+            Integer adultAmount = request.getAdultAmount();
+            if (adultAmount != null) {
+                result.add(Restrictions.eq("adultAmount", adultAmount));
+            } else {
+                result.add(Restrictions.isNull("adultAmount"));
+            }
+
+            Integer childAmount = request.getChildAmount();
+            if (childAmount != null) {
+                result.add(Restrictions.eq("childAmount", childAmount));
+            } else {
+                result.add(Restrictions.isNull("childAmount"));
+            }
+
+            Integer childAge = request.getChildAmount();
+            if (childAge != null) {
+                result.add(Restrictions.eq("childAge", childAge));
+            } else {
+                result.add(Restrictions.isNull("childAge"));
+            }
+
+            Integer nightFrom = request.getChildAmount();
+            if (nightFrom != null) {
+                result.add(Restrictions.eq("nightFrom", nightFrom));
+            } else {
+                result.add(Restrictions.isNull("nightFrom"));
+            }
+
+            Integer nightTill = request.getChildAmount();
+            if (nightTill != null) {
+                result.add(Restrictions.eq("nightTill", nightTill));
+            } else {
+                result.add(Restrictions.isNull("nightTill"));
+            }
+
+            Date dateFrom = request.getDateFrom();
+            if (dateFrom != null) {
+                result.add(Restrictions.eq("dateFrom", dateFrom));
+            } else {
+                result.add(Restrictions.isNull("dateFrom"));
+            }
+
+            Date dateTill = request.getDateTill();
+            if (dateTill != null) {
+                result.add(Restrictions.eq("dateTill", dateTill));
+            } else {
+                result.add(Restrictions.isNull("dateTill"));
+            }
+
+            Set<Meal_Type> mealTypes = request.getMealTypes();
+            if (ratings != null) {
+                result.add(Restrictions.eq("mealTypes", mealTypes));
+            } else {
+                result.add(Restrictions.isNull("mealTypes"));
+            }
+
+            Integer priceFrom = request.getChildAmount();
+            if (priceFrom != null) {
+                result.add(Restrictions.eq("priceFrom", priceFrom));
+            } else {
+                result.add(Restrictions.isNull("priceFrom"));
+            }
+
+            Integer priceTill = request.getChildAmount();
+            if (priceTill != null) {
+                result.add(Restrictions.eq("priceTill", priceTill));
+            } else {
+                result.add(Restrictions.isNull("priceTill"));
+            }
+
+            Currency currency = request.getCurrency();
+            if (currency != null) {
+                result.add(Restrictions.eq("currency", currency));
+            } else {
+                result.add(Restrictions.isNull("currency"));
+            }
+
+            Integer onlyStandart = request.getChildAmount();
+            if (onlyStandart != null) {
+                result.add(Restrictions.eq("onlyStandart", onlyStandart));
+            } else {
+                result.add(Restrictions.isNull("onlyStandart"));
+            }
+        }
+
         return result;
     }
 

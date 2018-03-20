@@ -19,8 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author redlongcity 
- * controller for manipulations with mail resources
+ * @author redlongcity controller for manipulations with mail resources
  */
 @RestController
 @RequestMapping("/json")
@@ -29,34 +28,27 @@ public class MailController {
     private static final Logger LOG = Logger.getLogger(MailController.class.getName());
 
     @Autowired
-    EmailContentConverter converter;
+    EmailContentConverter convertor;
 
     @RequestMapping(value = "/order", method = RequestMethod.POST)
     public ResponseEntity<Void> send(@RequestBody Order order) {
 
         String from = "HotToursUkraine@gmail.com";
-        String to = converter.getAddresses();
+        String to = convertor.getAddresses();
         String subject = "Order";
-        
-        converter.getMessage(order, new EmailContentConverter.GetMessageCallBack() {
-            @Override
-            public void onDataReceived(String message) {
-                Email email = new SimpleEmail(from, to, subject, message);
-                EmailSender sender = new SimpleEmailSender(new EmailConfiguration());
+        String message = convertor.getMessage(order);
 
-                try {
-                    sender.send(email);
-                    LOG.log(Level.INFO, "Sent message succesfully!");
-                } catch (MessagingException e) {
-                    LOG.log(Level.INFO, "Sending message was failed! " + e.getMessage());
-                }
-            }
+        if (message != null) {
+            Email email = new SimpleEmail(from, to, subject, message);
+            EmailSender sender = new SimpleEmailSender(new EmailConfiguration());
 
-            @Override
-            public void onDataNotAwailable() {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            try {
+                sender.send(email);
+                LOG.log(Level.INFO, "Sent message succesfully!");
+            } catch (MessagingException e) {
+                LOG.log(Level.INFO, "Sending message was failed! " + e.getMessage());
             }
-        });
+        }
 
         return new ResponseEntity<Void>(HttpStatus.OK);
     }

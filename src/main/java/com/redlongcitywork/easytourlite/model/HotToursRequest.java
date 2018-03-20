@@ -3,8 +3,11 @@ package com.redlongcitywork.easytourlite.model;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.redlongcitywork.easytourlite.json.view.TourView;
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import java.util.logging.Logger;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +15,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -45,8 +50,11 @@ public class HotToursRequest {
 
     @JsonView(TourView.class)
     @NotEmpty
-    @Column(name = "hotel_rating", unique = false, nullable = false)
-    private String hotel_Rating;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "hot_request_rating",
+            joinColumns = @JoinColumn(name = "request_id"),
+            inverseJoinColumns = @JoinColumn(name = "rating_id"))
+    private Set<Hotel_Rating> ratings = new HashSet<>();
 
     @JsonView(TourView.class)
     @NotNull
@@ -92,12 +100,12 @@ public class HotToursRequest {
         this.from_Cities = from_Cities;
     }
 
-    public String getHotel_Rating() {
-        return hotel_Rating;
+    public Set<Hotel_Rating> getRatings() {
+        return ratings;
     }
 
-    public void setHotel_Rating(String hotel_Rating) {
-        this.hotel_Rating = hotel_Rating;
+    public void setRatings(Set<Hotel_Rating> ratings) {
+        this.ratings = ratings;
     }
 
     public Integer getNight_From() {
@@ -134,13 +142,14 @@ public class HotToursRequest {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 41 * hash + Objects.hashCode(this.country);
-        hash = 41 * hash + Objects.hashCode(this.from_Cities);
-        hash = 41 * hash + Objects.hashCode(this.hotel_Rating);
-        hash = 41 * hash + Objects.hashCode(this.night_From);
-        hash = 41 * hash + Objects.hashCode(this.night_Till);
-        hash = 41 * hash + Objects.hashCode(this.meal_Type);
+        int hash = 7;
+        hash = 43 * hash + Objects.hashCode(this.country);
+        hash = 43 * hash + Objects.hashCode(this.from_Cities);
+        hash = 43 * hash + Objects.hashCode(this.ratings);
+        hash = 43 * hash + Objects.hashCode(this.night_From);
+        hash = 43 * hash + Objects.hashCode(this.night_Till);
+        hash = 43 * hash + Objects.hashCode(this.meal_Type);
+        hash = 43 * hash + Objects.hashCode(this.requestTime);
         return hash;
     }
 
@@ -156,13 +165,13 @@ public class HotToursRequest {
             return false;
         }
         final HotToursRequest other = (HotToursRequest) obj;
-        if (!Objects.equals(this.hotel_Rating, other.hotel_Rating)) {
-            return false;
-        }
         if (!Objects.equals(this.country, other.country)) {
             return false;
         }
         if (!Objects.equals(this.from_Cities, other.from_Cities)) {
+            return false;
+        }
+        if (!Objects.equals(this.ratings, other.ratings)) {
             return false;
         }
         if (!Objects.equals(this.night_From, other.night_From)) {
@@ -174,12 +183,14 @@ public class HotToursRequest {
         if (!Objects.equals(this.meal_Type, other.meal_Type)) {
             return false;
         }
+        if (!Objects.equals(this.requestTime, other.requestTime)) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "HotToursRequest{" + "id=" + id + ", country=" + country + ", from_Cities=" + from_Cities + ", hotel_Rating=" + hotel_Rating + ", night_From=" + night_From + ", night_Till=" + night_Till + ", meal_Type=" + meal_Type + '}';
+        return "HotToursRequest{" + "id=" + id + ", country=" + country + ", from_Cities=" + from_Cities + ", ratings=" + ratings + ", night_From=" + night_From + ", night_Till=" + night_Till + ", meal_Type=" + meal_Type + ", requestTime=" + requestTime + '}';
     }
-
 }

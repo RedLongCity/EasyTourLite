@@ -1,72 +1,78 @@
 package com.redlongcitywork.easytourlite.command.request;
 
+import com.redlongcitywork.easytourlite.extractor.TourAdvancedExtractor;
 import com.redlongcitywork.easytourlite.model.SearchingRequest;
-import com.redlongcitywork.easytourlite.utils.HttpUtils;
+import com.redlongcitywork.easytourlite.model.TourAdvanced;
+import com.redlongcitywork.easytourlite.utils.TimeUtils;
 import java.sql.Timestamp;
+import java.util.List;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author redlongcity 18/03/2018
  */
+@Component
 public class TourAdvancedRequestCommand implements RequestCommand<SearchingRequest> {
-    
-    private SearchingRequest request;
-    
+
+    private final SearchingRequest request;
+
     private int priority;
-    
+
     private boolean processed;
-    
+
     private Timestamp creationTime;
 
-    public TourAdvancedRequestCommand(SearchingRequest request, Timestamp creationTime) {
+    public TourAdvancedRequestCommand(SearchingRequest request, TourAdvancedExtractor extractor, TimeUtils utils) {
         this.request = request;
-        this.creationTime = creationTime;
+        this.extractor = extractor;
+        this.utils = utils;
         this.priority = 0;
+        this.creationTime = utils.getCurrentTime();
     }
 
     @Override
-    public void execute(HttpUtils.GetCallBack callBack) {
-        
+    public List<TourAdvanced> execute() {
+        List<TourAdvanced> result = null;
+        if (request != null) {
+            result = extractor.extract(request);
+        }
+        return result;
     }
 
     @Override
     public int getPriority() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return priority;
     }
 
     @Override
     public void setPriority(int priority) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public SearchingRequest getRequest() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setRequest(SearchingRequest request) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.priority = priority;
     }
 
     @Override
     public boolean isProcessed() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return processed;
     }
 
     @Override
     public void setProcessed(boolean processed) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.processed = processed;
     }
 
     @Override
     public Timestamp getCreationTime() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return creationTime;
     }
 
     @Override
     public void setCreationTime(Timestamp creationTime) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.creationTime = creationTime;
+    }
+
+    @Override
+    public SearchingRequest getRequest() {
+        return request;
     }
 
 }

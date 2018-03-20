@@ -1,6 +1,6 @@
 package test.converter;
 
-import com.redlongcitywork.easytourlite.converter.SearchConvertor;
+import com.redlongcitywork.easytourlite.convertor.SearchConvertor;
 import com.redlongcitywork.easytourlite.model.Country;
 import com.redlongcitywork.easytourlite.model.Currency;
 import com.redlongcitywork.easytourlite.model.Facility;

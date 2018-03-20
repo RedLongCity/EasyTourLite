@@ -1,16 +1,8 @@
 package com.redlongcitywork.easytourlite.command.request;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.redlongcitywork.easytourlite.converter.HotSearchConverter;
 import com.redlongcitywork.easytourlite.model.HotToursRequest;
-import com.redlongcitywork.easytourlite.utils.HttpUtils;
-import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 /**
  *
@@ -20,7 +12,7 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
  */
 public class HotToursRequestCommand implements RequestCommand<HotToursRequest> {
 
-    private HotToursRequest request;
+    private final HotToursRequest request;
 
     private int priority;
 
@@ -28,47 +20,14 @@ public class HotToursRequestCommand implements RequestCommand<HotToursRequest> {
 
     private Timestamp creationTime;
 
-    @Autowired
-    private HotSearchConverter converter;
-
     public HotToursRequestCommand(HotToursRequest request, Timestamp creationTime) {
         this.request = request;
         this.creationTime = creationTime;
-        this.priority = 0;
-    }
-
-    @Override
-    public void execute(HttpUtils.GetCallBack callBack) {
-        if (request == null) {
-            return;
-        }
-        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
-        try {
-            HttpUtils.getJsonNodeFromUrl(converter.getURLByRequest(request),
-                    new HttpUtils.GetCallBack<JsonNode>() {
-                @Override
-                public void onDataReceived(JsonNode node) {
-                    callBack.onDataReceived(node);
-                }
-
-                @Override
-                public void onDataNotAwailable() {
-                    callBack.onDataNotAwailable();
-                }
-            });
-        } catch (IOException ex) {
-            Logger.getLogger(HotToursRequestCommand.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     @Override
     public HotToursRequest getRequest() {
         return request;
-    }
-
-    @Override
-    public void setRequest(HotToursRequest request) {
-        this.request = request;
     }
 
     @Override

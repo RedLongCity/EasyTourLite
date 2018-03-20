@@ -26,7 +26,7 @@ public class HotToursRequestDaoImpl extends AbstractDao<Integer, HotToursRequest
             for (HotToursRequest request : list) {
                 Hibernate.initialize(request.getCountry());
                 Hibernate.initialize(request.getFrom_Cities());
-                Hibernate.initialize(request.getHotel_Rating());
+                Hibernate.initialize(request.getRatings());
                 Hibernate.initialize(request.getMeal_Type());
             }
         }
@@ -39,7 +39,7 @@ public class HotToursRequestDaoImpl extends AbstractDao<Integer, HotToursRequest
         if (request != null) {
             Hibernate.initialize(request.getCountry());
             Hibernate.initialize(request.getFrom_Cities());
-            Hibernate.initialize(request.getHotel_Rating());
+            Hibernate.initialize(request.getRatings());
             Hibernate.initialize(request.getMeal_Type());
         }
         return request;
@@ -60,8 +60,8 @@ public class HotToursRequestDaoImpl extends AbstractDao<Integer, HotToursRequest
         }else{
             crit.add(Restrictions.isNull("from_Cities"));
         }
-        crit.add(Restrictions.eq("hotel_Rating",
-                request.getHotel_Rating()));
+        crit.add(Restrictions.eq("ratings",
+                request.getRatings()));
         crit.add(Restrictions.eq("night_From", 
                 request.getNight_From()));
         crit.add(Restrictions.eq("night_Till", 
@@ -76,7 +76,7 @@ public class HotToursRequestDaoImpl extends AbstractDao<Integer, HotToursRequest
         if(entity!=null){
               Hibernate.initialize(entity.getCountry());
               Hibernate.initialize(entity.getFrom_Cities());
-              Hibernate.initialize(entity.getHotel_Rating());
+              Hibernate.initialize(entity.getRatings());
               Hibernate.initialize(entity.getMeal_Type());
         }
         return entity;
