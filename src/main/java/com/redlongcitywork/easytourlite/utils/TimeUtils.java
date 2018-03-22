@@ -9,9 +9,7 @@ import org.springframework.stereotype.Service;
 
 /**
  *
- * @author redlongcity
- * 10.09.2017
- * class for getting data about current time
+ * @author redlongcity 10.09.2017 class for getting data about current time
  */
 @Service
 public class TimeUtils {
@@ -31,6 +29,18 @@ public class TimeUtils {
     public Timestamp getRevelanceTime() {
         return new Timestamp(System.currentTimeMillis()
                 - constants.getRevelance() * 3600000);
+    }
+
+    public Timestamp getFreezeeTime() {
+        return new Timestamp(System.currentTimeMillis()
+                + constants.getFreezzeeTimeDelay());
+    }
+
+    public Timestamp getActualTime() {
+        return new Timestamp(
+                System.currentTimeMillis()
+                + constants.getRevelance() * 3600000
+        );
     }
 
 }

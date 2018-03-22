@@ -1,11 +1,7 @@
 package com.redlongcitywork.easytourlite.command.request;
 
-import com.redlongcitywork.easytourlite.extractor.TourAdvancedExtractor;
 import com.redlongcitywork.easytourlite.model.SearchingRequest;
-import com.redlongcitywork.easytourlite.model.TourAdvanced;
-import com.redlongcitywork.easytourlite.utils.TimeUtils;
 import java.sql.Timestamp;
-import java.util.List;
 import org.springframework.stereotype.Component;
 
 /**
@@ -23,21 +19,9 @@ public class TourAdvancedRequestCommand implements RequestCommand<SearchingReque
 
     private Timestamp creationTime;
 
-    public TourAdvancedRequestCommand(SearchingRequest request, TourAdvancedExtractor extractor, TimeUtils utils) {
+    public TourAdvancedRequestCommand(SearchingRequest request, Timestamp creationTime) {
         this.request = request;
-        this.extractor = extractor;
-        this.utils = utils;
-        this.priority = 0;
-        this.creationTime = utils.getCurrentTime();
-    }
-
-    @Override
-    public List<TourAdvanced> execute() {
-        List<TourAdvanced> result = null;
-        if (request != null) {
-            result = extractor.extract(request);
-        }
-        return result;
+        this.creationTime = creationTime;
     }
 
     @Override

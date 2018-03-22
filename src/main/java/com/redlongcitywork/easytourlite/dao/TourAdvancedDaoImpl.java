@@ -146,21 +146,24 @@ public class TourAdvancedDaoImpl extends AbstractDao<String, TourAdvanced>
                 }
             }
             list = crit.list();
-            if (list != null) {
-                for (TourAdvanced tour : list) {
-                    Hibernate.initialize(tour.getCountry());
-                    Hibernate.initialize(tour.getType());
-                    Hibernate.initialize(tour.getRegion());
-                    Hibernate.initialize(tour.getMealType());
-                    Hibernate.initialize(tour.getCurrency());
-                    Hibernate.initialize(tour.getPrices());
-                    Hibernate.initialize(tour.getCity());
-                    Hibernate.initialize(tour.getImages());
-                    Hibernate.initialize(tour.getFacilities());
-                    Hibernate.initialize(tour.getRating());
-                }
+        } else {
+            list = findByCriteries(criterions);
+        }
+        if (list != null) {
+            for (TourAdvanced tour : list) {
+                Hibernate.initialize(tour.getCountry());
+                Hibernate.initialize(tour.getType());
+                Hibernate.initialize(tour.getRegion());
+                Hibernate.initialize(tour.getMealType());
+                Hibernate.initialize(tour.getCurrency());
+                Hibernate.initialize(tour.getPrices());
+                Hibernate.initialize(tour.getCity());
+                Hibernate.initialize(tour.getImages());
+                Hibernate.initialize(tour.getFacilities());
+                Hibernate.initialize(tour.getRating());
             }
         }
+
         return list;
     }
 

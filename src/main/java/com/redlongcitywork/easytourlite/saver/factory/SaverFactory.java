@@ -1,7 +1,7 @@
 package com.redlongcitywork.easytourlite.saver.factory;
 
 import com.redlongcitywork.easytourlite.model.HotToursRequest;
-import com.redlongcitywork.easytourlite.responseitem.ResponseItem;
+import com.redlongcitywork.easytourlite.model.ResponseItem;
 import com.redlongcitywork.easytourlite.saver.HotToursSaver;
 import com.redlongcitywork.easytourlite.saver.Saver;
 import org.springframework.stereotype.Service;
@@ -21,6 +21,8 @@ public class SaverFactory {
         if (item.getRequest() instanceof HotToursRequest) {
             saver = new HotToursSaver();
         }
+        
+        
 
         return saver;
     }

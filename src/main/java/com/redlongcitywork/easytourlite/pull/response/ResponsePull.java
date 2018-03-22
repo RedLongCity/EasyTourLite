@@ -1,8 +1,7 @@
 package com.redlongcitywork.easytourlite.pull.response;
 
-import com.redlongcitywork.easytourlite.responseitem.ResponseItem;
-import com.redlongcitywork.easytourlite.responseitem.factory.ResponseItemFactory;
 import com.redlongcitywork.easytourlite.constants.AppConstants;
+import com.redlongcitywork.easytourlite.model.ResponseItem;
 import com.redlongcitywork.easytourlite.utils.TimeUtils;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -12,9 +11,7 @@ import org.springframework.stereotype.Service;
 
 /**
  *
- * @author redlongcity 
- * 14/12/2017 
- * class for storaging response elements
+ * @author redlongcity 14/12/2017 class for storaging response elements
  */
 @Service
 public class ResponsePull {
@@ -30,15 +27,13 @@ public class ResponsePull {
     private AppConstants constants;
 
     public ResponseItem getResponse(Object request) {
-        if (pull == null) {
-            return null;
-        }
-
-        Iterator<ResponseItem> it = pull.iterator();
-        while (it.hasNext()) {
-            ResponseItem item = it.next();
-            if (item.getRequest().equals(request)) {
-                return item;
+        if (pull != null) {
+            Iterator<ResponseItem> it = pull.iterator();
+            while (it.hasNext()) {
+                ResponseItem item = it.next();
+                if (item.getRequest().equals(request)) {
+                    return item;
+                }
             }
         }
         return null;
@@ -52,21 +47,13 @@ public class ResponsePull {
         ResponseItem item = null;
 
         if (pull.size() < constants.getResponsePullSize()) {
-            item = new ResponseItemFactory().getResponseItem(request);
-            item.setRequest(request);
-            item.setImmune(true);
-            pull.add(item);
-            return item;
+            item = new ResponseItem();
         } else {
             Iterator<ResponseItem> it = pull.iterator();
             while (it.hasNext()) {
                 ResponseItem inside = it.next();
 
-                if (inside.isImmune()) {//if inside command is immune to changes
-                    continue;
-                }
-
-                if (inside.getFreezeeTime().after(timeUtils.getCurrentTime())) {//if inside command is still freezzee
+                if (inside.isImmune() && inside.getFreezeTime().after(timeUtils.getCurrentTime())) {//if inside command is immune to changes
                     continue;
                 }
 
@@ -80,15 +67,12 @@ public class ResponsePull {
                     continue;
                 }
             }
-
-            if (item != null) {
-                pull.remove(item);
-                item = new ResponseItemFactory().getResponseItem(request);
-                item.setRequest(request);
-                item.setImmune(true);
-                pull.add(item);
-            }
-
+        }
+        if (item != null) {
+            pull.remove(item);
+            item.setRequest(request);
+            item.setImmune(true);
+            pull.add(item);
         }
 
         return item;

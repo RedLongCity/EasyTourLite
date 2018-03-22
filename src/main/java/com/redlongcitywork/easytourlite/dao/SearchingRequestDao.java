@@ -2,6 +2,7 @@ package com.redlongcitywork.easytourlite.dao;
 
 import com.redlongcitywork.easytourlite.model.SearchingRequest;
 import java.util.List;
+import org.hibernate.criterion.Criterion;
 
 /**
  *
@@ -20,5 +21,7 @@ public interface SearchingRequestDao {
     void deleteSearchingRequest(SearchingRequest request);
 
     void saveOrUpdateSearchingRequest(SearchingRequest request);
+
+    SearchingRequest findByCriterions(List<Criterion> criterions);
 
 }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  * 08.09.2017
  * class for synchronization dao processes and responses to clients
  */
-@Service
+    @Service
 public class AppConstants {
 
     private static final Logger LOG = Logger.getLogger(AppConstants.class.getName());

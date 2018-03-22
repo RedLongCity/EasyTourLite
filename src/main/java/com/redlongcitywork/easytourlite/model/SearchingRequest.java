@@ -1,6 +1,7 @@
 package com.redlongcitywork.easytourlite.model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -108,6 +109,10 @@ public class SearchingRequest {
 
     @Column(name = "only_standart", unique = false, nullable = true)
     private Integer onlyStandart;
+
+    @NotNull
+    @Column(name = "request_time")
+    private Timestamp requestTime;//TODO Добавить
 
     public Integer getId() {
         return id;
@@ -269,10 +274,36 @@ public class SearchingRequest {
         this.onlyStandart = onlyStandart;
     }
 
+    public Timestamp getRequestTime() {
+        return requestTime;
+    }
+
+    public void setRequestTime(Timestamp requestTime) {
+        this.requestTime = requestTime;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 67 * hash + Objects.hashCode(this.id);
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.type);
+        hash = 97 * hash + Objects.hashCode(this.kind);
+        hash = 97 * hash + Objects.hashCode(this.country);
+        hash = 97 * hash + Objects.hashCode(this.city);
+        hash = 97 * hash + Objects.hashCode(this.regions);
+        hash = 97 * hash + Objects.hashCode(this.hotel);
+        hash = 97 * hash + Objects.hashCode(this.ratingSet);
+        hash = 97 * hash + Objects.hashCode(this.adultAmount);
+        hash = 97 * hash + Objects.hashCode(this.childAmount);
+        hash = 97 * hash + Objects.hashCode(this.childAge);
+        hash = 97 * hash + Objects.hashCode(this.nightFrom);
+        hash = 97 * hash + Objects.hashCode(this.nightTill);
+        hash = 97 * hash + Objects.hashCode(this.dateFrom);
+        hash = 97 * hash + Objects.hashCode(this.dateTill);
+        hash = 97 * hash + Objects.hashCode(this.mealTypes);
+        hash = 97 * hash + Objects.hashCode(this.priceFrom);
+        hash = 97 * hash + Objects.hashCode(this.priceTill);
+        hash = 97 * hash + Objects.hashCode(this.currency);
+        hash = 97 * hash + Objects.hashCode(this.onlyStandart);
         return hash;
     }
 
@@ -288,7 +319,61 @@ public class SearchingRequest {
             return false;
         }
         final SearchingRequest other = (SearchingRequest) obj;
-        if (!Objects.equals(this.id, other.id)) {
+        if (!Objects.equals(this.hotel, other.hotel)) {
+            return false;
+        }
+        if (!Objects.equals(this.childAge, other.childAge)) {
+            return false;
+        }
+        if (!Objects.equals(this.type, other.type)) {
+            return false;
+        }
+        if (!Objects.equals(this.kind, other.kind)) {
+            return false;
+        }
+        if (!Objects.equals(this.country, other.country)) {
+            return false;
+        }
+        if (!Objects.equals(this.city, other.city)) {
+            return false;
+        }
+        if (!Objects.equals(this.regions, other.regions)) {
+            return false;
+        }
+        if (!Objects.equals(this.ratingSet, other.ratingSet)) {
+            return false;
+        }
+        if (!Objects.equals(this.adultAmount, other.adultAmount)) {
+            return false;
+        }
+        if (!Objects.equals(this.childAmount, other.childAmount)) {
+            return false;
+        }
+        if (!Objects.equals(this.nightFrom, other.nightFrom)) {
+            return false;
+        }
+        if (!Objects.equals(this.nightTill, other.nightTill)) {
+            return false;
+        }
+        if (!Objects.equals(this.dateFrom, other.dateFrom)) {
+            return false;
+        }
+        if (!Objects.equals(this.dateTill, other.dateTill)) {
+            return false;
+        }
+        if (!Objects.equals(this.mealTypes, other.mealTypes)) {
+            return false;
+        }
+        if (!Objects.equals(this.priceFrom, other.priceFrom)) {
+            return false;
+        }
+        if (!Objects.equals(this.priceTill, other.priceTill)) {
+            return false;
+        }
+        if (!Objects.equals(this.currency, other.currency)) {
+            return false;
+        }
+        if (!Objects.equals(this.onlyStandart, other.onlyStandart)) {
             return false;
         }
         return true;
@@ -296,7 +381,7 @@ public class SearchingRequest {
 
     @Override
     public String toString() {
-        return "SearchingRequest{" + "id=" + id + ", type=" + type + ", kind=" + kind + ", country=" + country + ", city=" + city + ", regions=" + regions + ", hotel=" + hotel + ", ratingSet=" + ratingSet + ", adultAmount=" + adultAmount + ", childAmount=" + childAmount + ", childAge=" + childAge + ", nightFrom=" + nightFrom + ", nightTill=" + nightTill + ", dateFrom=" + dateFrom + ", dateTill=" + dateTill + ", mealTypes=" + mealTypes + ", priceFrom=" + priceFrom + ", priceTill=" + priceTill + ", currency=" + currency + ", onlyStandart=" + onlyStandart + '}';
+        return "SearchingRequest{" + "id=" + id + ", type=" + type + ", kind=" + kind + ", country=" + country + ", city=" + city + ", regions=" + regions + ", hotel=" + hotel + ", ratingSet=" + ratingSet + ", adultAmount=" + adultAmount + ", childAmount=" + childAmount + ", childAge=" + childAge + ", nightFrom=" + nightFrom + ", nightTill=" + nightTill + ", dateFrom=" + dateFrom + ", dateTill=" + dateTill + ", mealTypes=" + mealTypes + ", priceFrom=" + priceFrom + ", priceTill=" + priceTill + ", currency=" + currency + ", onlyStandart=" + onlyStandart + ", requestTime=" + requestTime + '}';
     }
 
 }

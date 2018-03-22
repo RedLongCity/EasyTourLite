@@ -4,6 +4,7 @@ import com.redlongcitywork.easytourlite.model.SearchingRequest;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Repository;
 
@@ -65,6 +66,27 @@ public class SearchingRequestDaoImpl extends AbstractDao<Integer, SearchingReque
     @Override
     public void saveOrUpdateSearchingRequest(SearchingRequest request) {
         saveOrUpdate(request);
+    }
+
+    @Override
+    public SearchingRequest findByCriterions(List<Criterion> criterions) {
+        SearchingRequest result = null;
+        Criteria crit = createCriteria();
+        if (criterions != null) {
+            for (Criterion criterion : criterions) {
+                crit.add(criterion);
+            }
+            result = (SearchingRequest) crit.uniqueResult();
+            if (result != null) {
+                Hibernate.initialize(result.getCity());
+                Hibernate.initialize(result.getCountry());
+                Hibernate.initialize(result.getCurrency());
+                Hibernate.initialize(result.getMealTypes());
+                Hibernate.initialize(result.getRatingSet());
+                Hibernate.initialize(result.getRegions());
+            }
+        }
+        return result;
     }
 
 }

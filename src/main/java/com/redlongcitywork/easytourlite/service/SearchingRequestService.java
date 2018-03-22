@@ -2,6 +2,7 @@ package com.redlongcitywork.easytourlite.service;
 
 import com.redlongcitywork.easytourlite.model.SearchingRequest;
 import java.util.List;
+import org.hibernate.criterion.Criterion;
 
 /**
  *
@@ -22,5 +23,7 @@ public interface SearchingRequestService {
     void deleteAllSearchingRequests();
 
     void saveOrUpdateSearchingRequest(SearchingRequest request);
+
+    SearchingRequest findByCriterions(List<Criterion> criterions);
 
 }

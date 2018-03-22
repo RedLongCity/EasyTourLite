@@ -1,8 +1,8 @@
 package com.redlongcitywork.easytourlite.handler.save;
 
 import com.redlongcitywork.easytourlite.constants.AppConstants;
+import com.redlongcitywork.easytourlite.model.ResponseItem;
 import com.redlongcitywork.easytourlite.pull.response.ResponsePull;
-import com.redlongcitywork.easytourlite.responseitem.ResponseItem;
 import com.redlongcitywork.easytourlite.saver.Saver;
 import com.redlongcitywork.easytourlite.saver.factory.SaverFactory;
 import java.util.logging.Level;
@@ -35,6 +35,12 @@ public class SaveHandler {
             return;
         }
         ResponseItem item = pull.getItemForSave();
+        
+        if(item != null){
+                    constants.setSaving(true);
+        Saver saver = factory.getSaver(item);
+
+        }
 
         if (item == null) {
             return;

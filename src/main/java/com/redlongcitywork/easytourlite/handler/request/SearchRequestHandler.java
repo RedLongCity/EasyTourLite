@@ -1,5 +1,6 @@
 package com.redlongcitywork.easytourlite.handler.request;
 
+import com.redlongcitywork.easytourlite.command.request.TourAdvancedRequestCommand;
 import com.redlongcitywork.easytourlite.convertor.SearchConvertor;
 import com.redlongcitywork.easytourlite.extractor.TourAdvancedExtractor;
 import com.redlongcitywork.easytourlite.model.SearchingRequest;
@@ -36,9 +37,14 @@ public class SearchRequestHandler implements RequestHandler<TourAdvancedResponse
 
     private final TourAdvancedService tourService;
 
-    private final SearchConvertor convertor;
-
-    public SearchRequestHandler(TourAdvancedExtractor extractor, TimeUtils utils, ResponsePull responsePull, RequestPull requestPull, ComeBackUtils comeBackUtils, SearchingRequestService requestService, TourAdvancedService tourService, SearchConvertor convertor) {
+    public SearchRequestHandler(
+            TourAdvancedExtractor extractor,
+            TimeUtils utils,
+            ResponsePull responsePull,
+            RequestPull requestPull,
+            ComeBackUtils comeBackUtils,
+            SearchingRequestService requestService,
+            TourAdvancedService tourService) {
         this.extractor = extractor;
         this.utils = utils;
         this.responsePull = responsePull;
@@ -46,7 +52,6 @@ public class SearchRequestHandler implements RequestHandler<TourAdvancedResponse
         this.comeBackUtils = comeBackUtils;
         this.requestService = requestService;
         this.tourService = tourService;
-        this.convertor = convertor;
     }
 
     @Override
@@ -55,7 +60,18 @@ public class SearchRequestHandler implements RequestHandler<TourAdvancedResponse
         if (item != null && item.isImmune()) {
             return new TourAdvancedResponse(0, (List<TourAdvanced>) item.getAnswer(), request);
         }
-        SearchingRequest entity = requestService.findByCriterions(convertor.getRequestCriterions());
+        SearchingRequest entity = (SearchingRequest) requestService.findByCriterions(SearchConvertor.getRequestCriterions(request));
+        if (entity != null) {
+            if (entity.getRequestTime().after(utils.getRevelanceTime())) {
+                List<TourAdvanced> list = tourService.findByCriterions(
+                        SearchConvertor.getCriterionsByRequest(request)
+                );
+                return new TourAdvancedResponse(0, list, request);
+            }
+        }
+        TourAdvancedRequestCommand command = new TourAdvancedRequestCommand(request, utils.getCurrentTime());
+        requestPull.handleCommand(command);
+        return new TourAdvancedResponse(comeBackUtils.calculate(command), null, null);
     }
 
 }

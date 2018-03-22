@@ -3,6 +3,7 @@ package com.redlongcitywork.easytourlite.service;
 import com.redlongcitywork.easytourlite.dao.SearchingRequestDao;
 import com.redlongcitywork.easytourlite.model.SearchingRequest;
 import java.util.List;
+import org.hibernate.criterion.Criterion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,20 +15,20 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("searchingRequestService")
 @Transactional
 public class SearchingRequestServiceImpl implements SearchingRequestService {
-    
+
     @Autowired
     private SearchingRequestDao dao;
-    
+
     @Override
     public SearchingRequest findById(Integer id) {
         return dao.findById(id);
     }
-    
+
     @Override
     public void saveSearchingRequest(SearchingRequest request) {
         dao.saveSearchingRequest(request);
     }
-    
+
     @Override
     public void updateSearchingRequest(SearchingRequest request) {
         SearchingRequest entity = dao.findById(request.getId());
@@ -51,20 +52,21 @@ public class SearchingRequestServiceImpl implements SearchingRequestService {
             entity.setPriceTill(request.getPriceTill());
             entity.setCurrency(request.getCurrency());
             entity.setOnlyStandart(request.getOnlyStandart());
+            entity.setRequestTime(request.getRequestTime());
             dao.mergeSearchingRequest(entity);
         }
     }
-    
+
     @Override
     public void deleteSearchingRequest(SearchingRequest request) {
         dao.deleteSearchingRequest(request);
     }
-    
+
     @Override
     public List<SearchingRequest> findAll() {
         return dao.findAll();
     }
-    
+
     @Override
     public void deleteAllSearchingRequests() {
         List<SearchingRequest> list = dao.findAll();
@@ -74,10 +76,15 @@ public class SearchingRequestServiceImpl implements SearchingRequestService {
             }
         }
     }
-    
+
     @Override
     public void saveOrUpdateSearchingRequest(SearchingRequest request) {
         dao.saveOrUpdateSearchingRequest(request);
     }
-    
+
+    @Override
+    public SearchingRequest findByCriterions(List<Criterion> criterions) {
+        return dao.findByCriterions(criterions);
+    }
+
 }
