@@ -1,10 +1,5 @@
-package com.redlongcitywork.easytourlite.model.session;
+package com.redlongcitywork.easytourlite.model;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.redlongcitywork.easytourlite.json.view.HotToursSessionView;
-import com.redlongcitywork.easytourlite.json.view.TourView;
-import com.redlongcitywork.easytourlite.model.HotToursRequest;
-import com.redlongcitywork.easytourlite.model.Tour;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -20,36 +15,33 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author redlongcity 
- * 24/12/2017 
- * model for keeping info about unit of request
- * from client
+ * @author redlongcity 23/03/2018
  */
 @Entity
-@Table(name = "hot_tours_sessions")
-public class HotToursSession {
+@Table(name = "advanced_tours_sessions")
+public class TourAdvancedSession {
 
-    @JsonView(TourView.class)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "session_id", unique = true, nullable = false)
+    @Column(name = "session_id")
     private Integer id;
 
-    @JsonView(HotToursSessionView.class)
+    @NotNull
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "request_id", nullable = false)
-    private HotToursRequest request;
+    @JoinColumn(name = "request_id")
+    private SearchingRequest request;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "hot_tours_sessions_has_tours",
+    @JoinTable(name = "sessions_tours",
             joinColumns = {
-                @JoinColumn(name = "hot_tours_sessions_session_id")},
+                @JoinColumn(name = "session_id")},
             inverseJoinColumns = {
-                @JoinColumn(name = "tours_tour_key")})
-    private Set<Tour> toursSet = new HashSet<Tour>();
+                @JoinColumn(name = "tour_key")})
+    private Set<TourAdvanced> tours = new HashSet<>();
 
     public Integer getId() {
         return id;
@@ -59,26 +51,26 @@ public class HotToursSession {
         this.id = id;
     }
 
-    public HotToursRequest getRequest() {
+    public SearchingRequest getRequest() {
         return request;
     }
 
-    public void setRequest(HotToursRequest request) {
+    public void setRequest(SearchingRequest request) {
         this.request = request;
     }
 
-    public Set<Tour> getToursSet() {
-        return toursSet;
+    public Set<TourAdvanced> getTours() {
+        return tours;
     }
 
-    public void setToursSet(Set<Tour> toursSet) {
-        this.toursSet = toursSet;
+    public void setTours(Set<TourAdvanced> tours) {
+        this.tours = tours;
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 89 * hash + Objects.hashCode(this.id);
+        int hash = 3;
+        hash = 59 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -93,7 +85,7 @@ public class HotToursSession {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final HotToursSession other = (HotToursSession) obj;
+        final TourAdvancedSession other = (TourAdvancedSession) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
@@ -102,7 +94,7 @@ public class HotToursSession {
 
     @Override
     public String toString() {
-        return "HotToursSession{" + "id=" + id + ", request=" + request + ", toursSet=" + toursSet + '}';
+        return "TourAdvancedSession{" + "id=" + id + ", request=" + request + ", tours=" + tours + '}';
     }
 
 }
