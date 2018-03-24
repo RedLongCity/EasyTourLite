@@ -6,8 +6,9 @@ import com.redlongcitywork.easytourlite.pull.request.RequestPull;
 import com.redlongcitywork.easytourlite.pull.response.ResponsePull;
 import com.redlongcitywork.easytourlite.constants.AppConstants;
 import com.redlongcitywork.easytourlite.handler.request.CommonRequestHandler;
-import com.redlongcitywork.easytourlite.handler.save.SaveHandler;
 import com.redlongcitywork.easytourlite.model.ResponseItem;
+import com.redlongcitywork.easytourlite.saver.CommonSaver;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.quartz.DisallowConcurrentExecution;
@@ -37,21 +38,15 @@ public class ShortUpdatingJob extends QuartzJobBean {
 
     private final QuartzService quartzService;
 
-    private final SaveHandler saveHandler;
+    private final CommonSaver saver;
 
-    public ShortUpdatingJob(
-            CommonRequestHandler handler,
-            AppConstants constants,
-            RequestPull requestPull,
-            ResponsePull responsePull,
-            QuartzService quartzService,
-            SaveHandler saveHandler) {
+    public ShortUpdatingJob(CommonRequestHandler handler, AppConstants constants, RequestPull requestPull, ResponsePull responsePull, QuartzService quartzService, CommonSaver saver) {
         this.handler = handler;
         this.constants = constants;
         this.requestPull = requestPull;
         this.responsePull = responsePull;
         this.quartzService = quartzService;
-        this.saveHandler = saveHandler;
+        this.saver = saver;
     }
 
     @Override
@@ -88,13 +83,27 @@ public class ShortUpdatingJob extends QuartzJobBean {
         } else {
             constants.setGlobalDelay(false);
             constants.setShortSuspended(true);
-            pauseItSelf(jec);
+            pauseItSelf();
         }
     }
 
-    private void pauseItSelf(JobExecutionContext jec) {
+    private void pauseItSelf() {
         constants.setShortSuspended(true);
-        saveHandler.saveData();
+        saveData();
         quartzService.pauseShortJob();
+    }
+
+    private void saveData() {
+        List<ResponseItem> list = responsePull.getItemsForSave();
+        if (list != null) {
+            for (ResponseItem item : list) {
+                if (constants.isSaving() || !constants.isShortSuspended()) {
+                    return;
+                }
+                saver.save(item);
+            }
+            constants.setSaving(false);
+        }
+
     }
 }

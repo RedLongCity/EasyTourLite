@@ -20,16 +20,15 @@ public class HotToursSaver implements Saver {
 
     private static final Logger LOG = Logger.getLogger(HotToursSaver.class.getName());
 
-    private final HotToursSessionService service;
-
     private final HotToursRequestService requestService;
 
     private final HotToursSessionService sessionService;
 
     private final TimeUtils utils;
 
-    public HotToursSaver(HotToursSessionService service, HotToursRequestService requestService, HotToursSessionService sessionService, TimeUtils utils) {
-        this.service = service;
+    public HotToursSaver(HotToursRequestService requestService,
+            HotToursSessionService sessionService,
+            TimeUtils utils) {
         this.requestService = requestService;
         this.sessionService = sessionService;
         this.utils = utils;
@@ -38,22 +37,24 @@ public class HotToursSaver implements Saver {
     @Override
     public void save(ResponseItem item) {
         if (item != null) {
-            HotToursRequest request = (HotToursRequest) item.getRequest();
+            HotToursRequest request = ((HotToursRequest) item.getRequest());
+            HotToursRequest entity = requestService.findByFields(request);
             HotToursSession session = null;
-            if (request == null) {
+            if (entity == null) {
                 request.setRequestTime(utils.getCurrentTime());
                 requestService.saveHotToursRequest(request);
                 session = new HotToursSession();
                 session.setRequest(request);
                 session.getToursSet().addAll((List<Tour>) item.getAnswer());
-                service.saveOrUpdateHotToursSession(session);
+                sessionService.saveHotToursSession(session);
             } else {
-                session = sessionService.findByRequest(request);
+                session = sessionService.findByRequest(entity);
                 if (session != null) {
                     session.getToursSet().clear();
                     session.getToursSet().addAll((List<Tour>) item.getAnswer());
-                    request.setRequestTime(utils.getCurrentTime());
-                    requestService.updateHotToursRequest(request);
+                    sessionService.updateHotToursSession(session);
+                    entity.setRequestTime(utils.getCurrentTime());
+                    requestService.updateHotToursRequest(entity);
 
                 }
             }

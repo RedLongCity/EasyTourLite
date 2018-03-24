@@ -3,7 +3,11 @@ package com.redlongcitywork.easytourlite.pull.response;
 import com.redlongcitywork.easytourlite.constants.AppConstants;
 import com.redlongcitywork.easytourlite.model.ResponseItem;
 import com.redlongcitywork.easytourlite.utils.TimeUtils;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,6 +100,27 @@ public class ResponsePull {
             }
         }
         return item;
+    }
+
+    public List<ResponseItem> getItemsForSave() {
+        List<ResponseItem> result = null;
+        if (pull != null && !pull.isEmpty()) {
+            result = new LinkedList<>(pull);
+            Collections.sort(result, new Comparator<ResponseItem>() {
+                @Override
+                public int compare(ResponseItem o1, ResponseItem o2) {
+                    if (o1.getPriority() > o2.getPriority()) {
+                        return -1;
+                    }
+                    if (o1.getPriority() == o2.getPriority()) {
+                        return 0;
+                    } else {
+                        return 1;
+                    }
+                }
+            });
+        }
+        return result;
     }
 
     public void deleteResponseItem(ResponseItem item) {

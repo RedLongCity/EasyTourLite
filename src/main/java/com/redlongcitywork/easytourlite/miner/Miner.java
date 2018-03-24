@@ -1,4 +1,4 @@
-package com.redlongcitywork.easytourlite.extractor;
+package com.redlongcitywork.easytourlite.miner;
 
 /**
  *

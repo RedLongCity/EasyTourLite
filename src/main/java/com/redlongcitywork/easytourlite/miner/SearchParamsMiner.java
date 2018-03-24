@@ -1,4 +1,4 @@
-package com.redlongcitywork.easytourlite.extractor;
+package com.redlongcitywork.easytourlite.miner;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
