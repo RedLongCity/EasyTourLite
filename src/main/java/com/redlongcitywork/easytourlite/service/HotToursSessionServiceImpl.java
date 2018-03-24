@@ -2,7 +2,7 @@ package com.redlongcitywork.easytourlite.service;
 
 import com.redlongcitywork.easytourlite.dao.HotToursSessionDao;
 import com.redlongcitywork.easytourlite.model.HotToursRequest;
-import com.redlongcitywork.easytourlite.model.session.HotToursSession;
+import com.redlongcitywork.easytourlite.model.HotToursSession;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

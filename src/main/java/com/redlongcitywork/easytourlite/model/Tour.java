@@ -2,7 +2,6 @@ package com.redlongcitywork.easytourlite.model;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.redlongcitywork.easytourlite.json.view.TourView;
-import com.redlongcitywork.easytourlite.model.session.HotToursSession;
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.Objects;

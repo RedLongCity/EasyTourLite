@@ -1,4 +1,4 @@
-package com.redlongcitywork.easytourlite.model.session;
+package com.redlongcitywork.easytourlite.model;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.redlongcitywork.easytourlite.json.view.HotToursSessionView;

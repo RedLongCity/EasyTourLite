@@ -1,7 +1,7 @@
 package com.redlongcitywork.easytourlite.service;
 
 import com.redlongcitywork.easytourlite.model.HotToursRequest;
-import com.redlongcitywork.easytourlite.model.session.HotToursSession;
+import com.redlongcitywork.easytourlite.model.HotToursSession;
 import java.util.List;
 
 /**

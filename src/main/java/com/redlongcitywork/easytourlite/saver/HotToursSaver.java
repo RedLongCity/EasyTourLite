@@ -3,7 +3,7 @@ package com.redlongcitywork.easytourlite.saver;
 import com.redlongcitywork.easytourlite.model.HotToursRequest;
 import com.redlongcitywork.easytourlite.model.ResponseItem;
 import com.redlongcitywork.easytourlite.model.Tour;
-import com.redlongcitywork.easytourlite.model.session.HotToursSession;
+import com.redlongcitywork.easytourlite.model.HotToursSession;
 import com.redlongcitywork.easytourlite.service.HotToursRequestService;
 import com.redlongcitywork.easytourlite.service.HotToursSessionService;
 import com.redlongcitywork.easytourlite.utils.TimeUtils;
