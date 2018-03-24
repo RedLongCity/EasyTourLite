@@ -30,9 +30,9 @@ public class CountryController {
     public ResponseEntity<List<Country>> getCountries() {
         List<Country> countryList = service.findAll();
         if (countryList == null) {
-            return new ResponseEntity<List<Country>>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<List<Country>>(countryList, HttpStatus.OK);
+        return new ResponseEntity<>(countryList, HttpStatus.OK);
     }
 
     @JsonView(CountryView.class)
@@ -40,15 +40,15 @@ public class CountryController {
     public ResponseEntity<Country> getCountry(@PathVariable("id") String id) {
         Country country = service.findById(id);
         if (country == null) {
-            return new ResponseEntity<Country>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<Country>(country, HttpStatus.OK);
+        return new ResponseEntity<>(country, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/country", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteAllCountry() {
         service.deleteAllCountries();
-        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @RequestMapping(value = "/country/{id}", method = RequestMethod.DELETE)
@@ -56,10 +56,10 @@ public class CountryController {
             @PathVariable("id") String id) {
         Country country = service.findById(id);
         if (country == null) {
-            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         service.deleteCountry(country);
-        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

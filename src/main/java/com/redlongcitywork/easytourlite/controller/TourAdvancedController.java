@@ -1,13 +1,11 @@
 package com.redlongcitywork.easytourlite.controller;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.redlongcitywork.easytourlite.handler.request.HotToursRequestHandler;
-import com.redlongcitywork.easytourlite.json.view.TourView;
-import com.redlongcitywork.easytourlite.model.HotToursRequest;
+import com.redlongcitywork.easytourlite.handler.request.SearchRequestHandler;
 import com.redlongcitywork.easytourlite.model.Hotel_Rating;
-import com.redlongcitywork.easytourlite.model.Tour;
-import com.redlongcitywork.easytourlite.model.TourResponse;
-import com.redlongcitywork.easytourlite.service.TourService;
+import com.redlongcitywork.easytourlite.model.SearchingRequest;
+import com.redlongcitywork.easytourlite.model.TourAdvanced;
+import com.redlongcitywork.easytourlite.model.TourAdvancedResponse;
+import com.redlongcitywork.easytourlite.service.TourAdvancedService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,35 +17,35 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author redlongcity 21/11/2017
+ * @author redlongcity
+ * 24/03/2018
  */
 @RestController
-@RequestMapping("/json")
-public class TourController {
-
+@RequestMapping("/json/advanced")
+public class TourAdvancedController {
+    
     @Autowired
-    private HotToursRequestHandler handler;
-
+    private SearchRequestHandler handler;
+    
     @Autowired
-    private TourService tourService;
-
-    @JsonView(TourView.class)
+    private TourAdvancedService service;
+    
     @RequestMapping(value = "/tour", method = RequestMethod.GET)
-    public ResponseEntity<List<Tour>> getAllTours() {
-        List<Tour> tourList = tourService.findAll();
+    public ResponseEntity<List<TourAdvanced>> getAllTourAdvanceds() {
+        List<TourAdvanced> tourList = service.findAll();
         if (tourList == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(tourList, HttpStatus.OK);
     }
 
-    @JsonView(TourView.class)
     @RequestMapping(value = "/gettoursbyrequest", method = RequestMethod.POST)
-    public ResponseEntity<TourResponse> getToursByRequest(
-            @RequestBody HotToursRequest request) {
+    public ResponseEntity<TourAdvancedResponse> getTourAdvancedsByRequest(
+            @RequestBody SearchingRequest request) {
         if (request == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        
         if (request.getRatings() == null || request.getRatings().isEmpty()) {
             Hotel_Rating first = new Hotel_Rating();
             first.setId("3");
@@ -63,10 +61,11 @@ public class TourController {
             request.setNight_Till(7);
         }
 
-        TourResponse answer = handler.execute(request);
+        TourAdvancedResponse answer = handler.execute(request);
         if (answer == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(answer, HttpStatus.OK);
     }
+    
 }
