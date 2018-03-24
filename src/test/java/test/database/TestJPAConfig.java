@@ -71,11 +71,15 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.redlongcitywork.easytourlite.dao.HotelFilterDao;
 import com.redlongcitywork.easytourlite.dao.TourAdvancedDao;
 import com.redlongcitywork.easytourlite.dao.TourAdvancedDaoImpl;
+import com.redlongcitywork.easytourlite.dao.TourAdvancedSessionDao;
+import com.redlongcitywork.easytourlite.dao.TourAdvancedSessionDaoImpl;
 import com.redlongcitywork.easytourlite.service.HotelFilterService;
 import com.redlongcitywork.easytourlite.service.HotelService;
 import com.redlongcitywork.easytourlite.service.HotelServiceImpl;
 import com.redlongcitywork.easytourlite.service.TourAdvancedService;
 import com.redlongcitywork.easytourlite.service.TourAdvancedServiceImpl;
+import com.redlongcitywork.easytourlite.service.TourAdvancedSessionService;
+import com.redlongcitywork.easytourlite.service.TourAdvancedSessionServiceImpl;
 
 /**
  *
@@ -286,6 +290,16 @@ public class TestJPAConfig {
         @Bean
         public SearchConvertor searchConverter() {
             return new SearchConvertor();
+        }
+
+        @Bean
+        public TourAdvancedSessionDao tourAdvancedSessionDao() {
+            return new TourAdvancedSessionDaoImpl();
+        }
+
+        @Bean
+        public TourAdvancedSessionService tourAdvancedSessionService() {
+            return new TourAdvancedSessionServiceImpl();
         }
 
     }
