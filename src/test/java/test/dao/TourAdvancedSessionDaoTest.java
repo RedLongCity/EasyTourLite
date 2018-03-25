@@ -26,6 +26,9 @@ public class TourAdvancedSessionDaoTest extends TestJPAConfig {
     @Autowired
     private TourAdvancedSessionDao dao;
 
+    @Autowired
+    private Instances instances;
+
     private SearchingRequest request;
 
     private TourAdvanced tour;
@@ -35,8 +38,8 @@ public class TourAdvancedSessionDaoTest extends TestJPAConfig {
     @Before
     public void populate() {
         session = new TourAdvancedSession();
-        request = Instances.getSearchingRequest();
-        tour = Instances.getTourAdvanced();
+        request = instances.getSearchingRequest();
+        tour = instances.getTourAdvanced();
         session.setRequest(request);
         session.getTours().add(tour);
     }
@@ -45,7 +48,7 @@ public class TourAdvancedSessionDaoTest extends TestJPAConfig {
     public void crudTest() {
         dao.save(session);
         assertTrue(dao.findAll().contains(session));
-        session.getTours().add(Instances.getTourAdvanced());
+        session.getTours().add(instances.getTourAdvanced());
         dao.mergeTourAdvancedSession(session);
         assertTrue(dao.findAll().contains(session));
         dao.deleteTourAdvancedSession(session);

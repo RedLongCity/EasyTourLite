@@ -25,12 +25,15 @@ public class HotToursRequestDaoTest extends TestJPAConfig {
     @Autowired
     private HotToursRequestDao dao;
 
-    HotToursRequest request;
+    @Autowired
+    private Instances instances;
+
+    private HotToursRequest request;
 
     @Before
     public void populate() {
         request = new HotToursRequest();
-        request.setHotel_Rating("3");
+        request.getRatings().add(instances.getRating());
         request.setNight_From(1);
         request.setNight_Till(2);
         request.setRequestTime(new Timestamp(System.currentTimeMillis()));
@@ -40,7 +43,7 @@ public class HotToursRequestDaoTest extends TestJPAConfig {
     public void crudTest() {
         dao.save(request);
         assertTrue(dao.findAll().contains(request));
-        request.setHotel_Rating("4");
+        request.setNight_From(3);
         dao.mergeHotToursRequest(request);
         assertTrue(dao.findAll().contains(request));
         dao.deleteHotToursRequest(request);
@@ -49,14 +52,14 @@ public class HotToursRequestDaoTest extends TestJPAConfig {
 
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest() {
-        request.setHotel_Rating(null);
+        request.setRatings(null);
         dao.save(request);
         dao.findAll();
     }
 
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest_2() {
-        request.setHotel_Rating("2");
+        request.getRatings().add(instances.getRating());
         request.setNight_From(null);
         dao.save(request);
         dao.findAll();

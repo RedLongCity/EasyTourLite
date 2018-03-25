@@ -1,18 +1,19 @@
 package com.redlongcitywork.easytourlite.configuration;
 
 import javax.servlet.Filter;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
  *
  * @author redlongcity
  */
-
 public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[] {AppConfig.class};
+        return new Class[]{AppConfig.class};
     }
 
     @Override
@@ -22,13 +23,22 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
     @Override
     protected String[] getServletMappings() {
-        return new String[] {"/"};
+        return new String[]{"/"};
     }
-    
-        @Override
+
+    @Override
     protected Filter[] getServletFilters() {
-        Filter [] singleton = { new CORSFilter() };
+        Filter[] singleton = {new CORSFilter()};
         return singleton;
     }
+
+    @Override
+    public void onStartup(ServletContext servletContext) throws ServletException {
+        super.onStartup(servletContext); 
+        servletContext.setInitParameter("spring.profiles.active","test");
+        
+    }
     
+    
+
 }

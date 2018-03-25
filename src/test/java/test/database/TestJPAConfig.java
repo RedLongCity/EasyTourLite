@@ -80,6 +80,7 @@ import com.redlongcitywork.easytourlite.service.TourAdvancedService;
 import com.redlongcitywork.easytourlite.service.TourAdvancedServiceImpl;
 import com.redlongcitywork.easytourlite.service.TourAdvancedSessionService;
 import com.redlongcitywork.easytourlite.service.TourAdvancedSessionServiceImpl;
+import test.dao.Instances;
 
 /**
  *
@@ -125,6 +126,11 @@ public class TestJPAConfig {
             HibernateTransactionManager txManager = new HibernateTransactionManager();
             txManager.setSessionFactory(s);
             return txManager;
+        }
+
+        @Bean
+        public Instances instances() {
+            return new Instances();
         }
 
         @Bean

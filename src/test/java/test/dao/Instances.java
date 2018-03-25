@@ -12,125 +12,198 @@ import com.redlongcitywork.easytourlite.model.Region;
 import com.redlongcitywork.easytourlite.model.SearchingRequest;
 import com.redlongcitywork.easytourlite.model.TourAdvanced;
 import com.redlongcitywork.easytourlite.model.Type;
+import com.redlongcitywork.easytourlite.service.CountryService;
+import com.redlongcitywork.easytourlite.service.CurrencyService;
+import com.redlongcitywork.easytourlite.service.From_CitiesService;
+import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
+import com.redlongcitywork.easytourlite.service.Meal_TypeService;
+import com.redlongcitywork.easytourlite.service.RegionService;
+import com.redlongcitywork.easytourlite.service.SearchingRequestService;
+import com.redlongcitywork.easytourlite.service.TypeService;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import org.springframework.beans.factory.annotation.Autowired;
+import test.database.TestJPAConfig;
 
 /**
  *
  * @author redlongcity 24/03/2018
  */
-public class Instances {
+public class Instances extends TestJPAConfig {
 
     public static final String STR = "STR";
     public static final int INT = 1;
 
-    public static Country getCountry() {
-        Country result = new Country();
-        result.setId(STR);
-        result.setName(STR);
-        return result;
+    @Autowired
+    private From_CitiesService cityService;
+
+    @Autowired
+    private CountryService countryService;
+
+    @Autowired
+    private TypeService typeService;
+
+    @Autowired
+    private RegionService regionService;
+
+    @Autowired
+    private Hotel_RatingService ratingService;
+
+    @Autowired
+    private Meal_TypeService mealTypeService;
+
+    @Autowired
+    private CurrencyService currencyService;
+
+    @Autowired
+    private SearchingRequestService searchingRequestService;
+
+    private From_Cities city;
+
+    private Country country;
+
+    private Type type;
+
+    private Region region;
+
+    private Hotel_Rating rating;
+
+    private Meal_Type mealType;
+
+    private Currency currency;
+
+    private SearchingRequest searchingRequest;
+
+    public Country getCountry() {
+        if (country == null) {
+            country = new Country();
+            country.setId(STR);
+            country.setName(STR);
+            countryService.saveCountry(country);
+        }
+        return country;
     }
 
-    public static From_Cities getCity() {
-        From_Cities result = new From_Cities();
-        result.setId(STR);
-        result.setName(STR);
-        return result;
+    public From_Cities getCity() {
+        if (city == null) {
+            city = new From_Cities();
+            city.setId(STR);
+            city.setName(STR);
+            cityService.saveFrom_Cities(city);
+        }
+        return city;
     }
 
-    public static Type getType() {
-        Type result = new Type();
-        result.setId(STR);
-        result.setName(STR);
-        return result;
+    public Type getType() {
+        if (type == null) {
+            type = new Type();
+            type.setId(STR);
+            type.setName(STR);
+            typeService.saveType(type);
+        }
+        return type;
     }
 
-    public static Region getRegion() {
-        Region result = new Region();
-        result.setId(STR);
-        result.setName(STR);
-        return result;
+    public Region getRegion() {
+        if (region == null) {
+            region = new Region();
+            region.setId(STR);
+            region.setName(STR);
+            regionService.saveRegion(region);
+        }
+        return region;
     }
 
-    public static Hotel_Rating getRating() {
-        Hotel_Rating result = new Hotel_Rating();
-        result.setId(STR);
-        result.setName(STR);
-        return result;
+    public Hotel_Rating getRating() {
+        if (rating == null) {
+            rating = new Hotel_Rating();
+            rating.setId(STR);
+            rating.setName(STR);
+            ratingService.saveHotel_Rating(rating);
+        }
+        return rating;
     }
 
-    public static Meal_Type getMealType() {
-        Meal_Type result = new Meal_Type();
-        result.setName(STR);
-        result.setId(STR);
-        result.setName_Full(STR);
-        return result;
+    public Meal_Type getMealType() {
+        if (mealType == null) {
+            mealType = new Meal_Type();
+            mealType.setName(STR);
+            mealType.setId(STR);
+            mealType.setName_Full(STR);
+            mealTypeService.saveMeal_Type(mealType);
+        }
+        return mealType;
     }
 
-    public static Currency getCurrency() {
-        Currency result = new Currency();
-        result.setId(STR);
-        result.setName(STR);
-        return result;
+    public Currency getCurrency() {
+        if (currency == null) {
+            currency = new Currency();
+            currency.setId(STR);
+            currency.setName(STR);
+            currencyService.saveCurrency(currency);
+        }
+        return currency;
     }
 
-    public static Price getPrice() {
+    public Price getPrice() {
         Price result = new Price();
-        result.setId(INT);
         result.setCost(INT);
         result.setCurrency(getCurrency());
         return result;
     }
 
-    public static Hotel_Image getHotelImage() {
+    public Hotel_Image getHotelImage() {
         Hotel_Image result = new Hotel_Image();
-        result.setId(INT);
         result.setThumb(STR);
         result.setFull(STR);
         return result;
     }
 
-    public static Facility getFacility() {
+    public Facility getFacility() {
         Facility result = new Facility();
         result.setId(STR);
         result.setName(STR);
         result.setCategoryId(STR);
+        result.setCategory(STR);
         result.setMain(true);
         result.setPaid(true);
         return result;
     }
 
-    public static SearchingRequest getSearchingRequest() {
-        SearchingRequest result = new SearchingRequest();
-        result.setId(INT);
-        result.setType(getType());
-        result.setKind(INT);
-        result.setCountry(getCountry());
-        result.setCity(getCity());
-        result.getRegions().add(getRegion());
-        result.setHotel(STR);
-        result.getRatingSet().add(getRating());
-        result.setAdultAmount(INT);
-        result.setChildAmount(INT);
-        result.setChildAge(STR);
-        result.setNightFrom(INT);
-        result.setNightTill(INT);
-        result.setDateFrom(getDate());
-        result.setDateTill(getDate());
-        result.getMealTypes().add(getMealType());
-        result.setPriceFrom(INT);
-        result.setPriceTill(INT);
-        result.setCurrency(getCurrency());
-        result.setRequestTime(getTimeStamp());
-        return result;
+    public SearchingRequest getSearchingRequest() {
+        if (searchingRequest == null) {
+            searchingRequest = new SearchingRequest();
+            searchingRequest.setType(getType());
+            searchingRequest.setKind(INT);
+            searchingRequest.setCountry(getCountry());
+            searchingRequest.setCity(getCity());
+            searchingRequest.getRegions().add(getRegion());
+            searchingRequest.setHotel(STR);
+            searchingRequest.getRatingSet().add(getRating());
+            searchingRequest.setAdultAmount(INT);
+            searchingRequest.setChildAmount(INT);
+            searchingRequest.setChildAge(STR);
+            searchingRequest.setNightFrom(INT);
+            searchingRequest.setNightTill(INT);
+            searchingRequest.setDateFrom(getDate());
+            searchingRequest.setDateTill(getDate());
+            searchingRequest.getMealTypes().add(getMealType());
+            searchingRequest.setPriceFrom(INT);
+            searchingRequest.setPriceTill(INT);
+            searchingRequest.setCurrency(getCurrency());
+            searchingRequest.setRequestTime(getTimeStamp());
+            searchingRequestService.saveSearchingRequest(searchingRequest);
+        }
+        return searchingRequest;
     }
 
-    public static TourAdvanced getTourAdvanced() {
+    public TourAdvanced getTourAdvanced() {
         TourAdvanced result = new TourAdvanced();
         result.setKey(STR);
         result.setCountry(getCountry());
+        result.setType(getType());
         result.setRegion(getRegion());
         result.setHotelId(INT);
         result.setHotelName(STR);
@@ -154,16 +227,16 @@ public class Instances {
         return result;
     }
 
-    public static Date getDate() {
+    public Date getDate() {
         return new Date(System.currentTimeMillis());
     }
 
-    public static Date getDate(String str) throws ParseException {
+    public Date getDate(String str) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
         return (Date) formatter.parse(str);
     }
 
-    public static Timestamp getTimeStamp() {
+    public Timestamp getTimeStamp() {
         return new Timestamp(getDate().getTime());
     }
 }
