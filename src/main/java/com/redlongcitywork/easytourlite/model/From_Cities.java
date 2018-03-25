@@ -26,6 +26,13 @@ public class From_Cities {
     @NotEmpty
     @Column(name="name",unique=false,nullable=false)
     private String name;
+
+    public From_Cities() {
+    }
+
+    public From_Cities(String id) {
+        this.id = id;
+    }
     
     public String getId() {
         return id;

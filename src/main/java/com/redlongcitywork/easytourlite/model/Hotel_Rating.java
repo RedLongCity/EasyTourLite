@@ -26,6 +26,18 @@ public class Hotel_Rating {
     @NotEmpty
     @Column(name="name",unique=false,nullable=false)
     private String name;
+
+    public Hotel_Rating() {
+    }
+
+    public Hotel_Rating(String id) {
+        this.id = id;
+    }
+
+    public Hotel_Rating(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
     
     public String getId() {
         return id;

@@ -30,6 +30,13 @@ public class Country {
     @Column(name = "name", unique = false, nullable = false)
     private String name;
 
+    public Country() {
+    }
+
+    public Country(String id) {
+        this.id = id;
+    }
+    
     public String getId() {
         return id;
     }
