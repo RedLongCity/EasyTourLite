@@ -19,6 +19,7 @@ import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
 import com.redlongcitywork.easytourlite.service.Meal_TypeService;
 import com.redlongcitywork.easytourlite.service.RegionService;
 import com.redlongcitywork.easytourlite.service.SearchingRequestService;
+import com.redlongcitywork.easytourlite.service.TourAdvancedService;
 import com.redlongcitywork.easytourlite.service.TypeService;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -60,6 +61,9 @@ public class Instances extends TestJPAConfig {
     @Autowired
     private SearchingRequestService searchingRequestService;
 
+    @Autowired
+    private TourAdvancedService tourAdvancedService;
+
     private From_Cities city;
 
     private Country country;
@@ -81,7 +85,6 @@ public class Instances extends TestJPAConfig {
             country = new Country();
             country.setId(STR);
             country.setName(STR);
-            countryService.saveCountry(country);
         }
         return country;
     }
@@ -91,7 +94,6 @@ public class Instances extends TestJPAConfig {
             city = new From_Cities();
             city.setId(STR);
             city.setName(STR);
-            cityService.saveFrom_Cities(city);
         }
         return city;
     }
@@ -101,7 +103,6 @@ public class Instances extends TestJPAConfig {
             type = new Type();
             type.setId(STR);
             type.setName(STR);
-            typeService.saveType(type);
         }
         return type;
     }
@@ -111,7 +112,6 @@ public class Instances extends TestJPAConfig {
             region = new Region();
             region.setId(STR);
             region.setName(STR);
-            regionService.saveRegion(region);
         }
         return region;
     }
@@ -121,7 +121,6 @@ public class Instances extends TestJPAConfig {
             rating = new Hotel_Rating();
             rating.setId(STR);
             rating.setName(STR);
-            ratingService.saveHotel_Rating(rating);
         }
         return rating;
     }
@@ -132,7 +131,6 @@ public class Instances extends TestJPAConfig {
             mealType.setName(STR);
             mealType.setId(STR);
             mealType.setName_Full(STR);
-            mealTypeService.saveMeal_Type(mealType);
         }
         return mealType;
     }
@@ -142,7 +140,6 @@ public class Instances extends TestJPAConfig {
             currency = new Currency();
             currency.setId(STR);
             currency.setName(STR);
-            currencyService.saveCurrency(currency);
         }
         return currency;
     }
@@ -194,7 +191,6 @@ public class Instances extends TestJPAConfig {
             searchingRequest.setPriceTill(INT);
             searchingRequest.setCurrency(getCurrency());
             searchingRequest.setRequestTime(getTimeStamp());
-            searchingRequestService.saveSearchingRequest(searchingRequest);
         }
         return searchingRequest;
     }
@@ -238,5 +234,19 @@ public class Instances extends TestJPAConfig {
 
     public Timestamp getTimeStamp() {
         return new Timestamp(getDate().getTime());
+    }
+
+    public void saveInstances() {
+        countryService.saveOrUpdateCountry(getCountry());
+        cityService.saveOrUpdateFrom_Cities(getCity());
+        ratingService.saveOrUpdateHotel_Rating(getRating());
+        regionService.saveOrUpdateRegion(getRegion());
+        mealTypeService.saveOrUpdateMeal_Type(getMealType());
+        typeService.saveOrUpdateType(getType());
+        currencyService.saveOrUpdateCurrency(getCurrency());
+    }
+
+    public void saveSearchingRequest() {
+        searchingRequestService.saveOrUpdateSearchingRequest(getSearchingRequest());
     }
 }

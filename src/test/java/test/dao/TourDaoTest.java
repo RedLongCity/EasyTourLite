@@ -11,7 +11,6 @@ import com.redlongcitywork.easytourlite.service.From_CitiesService;
 import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
 import com.redlongcitywork.easytourlite.service.Meal_TypeService;
 import java.sql.Date;
-import java.util.logging.Logger;
 import javax.validation.ConstraintViolationException;
 import org.hibernate.HibernateException;
 import static org.junit.Assert.assertFalse;
@@ -31,72 +30,67 @@ import test.database.TestJPAConfig;
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 public class TourDaoTest extends TestJPAConfig {
-    
+
     @Autowired
     private TourDao dao;
-    
+
+    @Autowired
+    private Instances instances;
+
     @Autowired
     private CountryService countryService;
-    
-    @Autowired
-    private Hotel_RatingService ratingService;
-    
-    @Autowired
-    private Meal_TypeService mealService;
-    
+
     @Autowired
     private From_CitiesService cityService;
-    
+
+    @Autowired
+    private Meal_TypeService mealTypeService;
+
+    @Autowired
+    private Hotel_RatingService ratingService;
+
     private Tour tour;
-    
+
     private Country country;
-    
+
     private From_Cities city;
-    
+
     private Meal_Type type;
-    
+
     private Hotel_Rating rating;
-    
+
     @Before
     public void populate() {
+        country = instances.getCountry();
+        countryService.saveCountry(country);
+        city = instances.getCity();
+        cityService.saveFrom_Cities(city);
+        type = instances.getMealType();
+        mealTypeService.saveMeal_Type(type);
+        rating = instances.getRating();
+        ratingService.saveHotel_Rating(rating);
+
         tour = new Tour();
         tour.setKey("-1");
         tour.setType(1);
-        country = new Country();
-        country.setId("-1");
-        country.setName("CountryName");
-        countryService.saveCountry(country);
         tour.setCountry(country);
         tour.setRegion("SomeRegionName");
         tour.setHotel_id(1);
         tour.setHotel("Hotel");
-        rating = new Hotel_Rating();
-        rating.setName("HotelName");
-        rating.setId("-1");
-        ratingService.saveHotel_Rating(rating);
         tour.setHotel_Rating(rating);
-        type = new Meal_Type();
-        type.setId("-1");
-        type.setName("MealTypeName");
-        type.setName_Full("mealTypeNameFull");
-        mealService.saveMeal_Type(type);
         tour.setMeal_Type(type);
         tour.setRoom_Type("1");
         tour.setAdult_Amount(1);
         tour.setChild_Amount(0);
         tour.setAccomodation("1");
         tour.setDuration(1);
-        tour.setDate_From(new Date(System.currentTimeMillis()));
+        tour.setDate_From(instances.getDate());
         tour.setDate_From_Unix(1);
         tour.setCurrency_id(0);
         tour.setCurrency_Symbol("1");
-        city = new From_Cities();
-        city.setName("cityName");
-        city.setId("cityId");
-        cityService.saveFrom_Cities(city);
         tour.setFrom_Cities(city);
     }
-    
+
     @Test
     public void crudTest() {
         dao.save(tour);
@@ -107,14 +101,14 @@ public class TourDaoTest extends TestJPAConfig {
         dao.deleteTour(tour);
         assertFalse(dao.findAll().contains(tour));
     }
-    
+
     @Test(expected = HibernateException.class)
     public void exceptionTest() {
         tour.setKey(null);
         dao.save(tour);
         dao.findAll();
     }
-    
+
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest_2() {
         tour.setKey("-1");
@@ -122,7 +116,7 @@ public class TourDaoTest extends TestJPAConfig {
         dao.save(tour);
         dao.findAll();
     }
-    
+
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest_3() {
         tour.setType(1);
@@ -130,7 +124,7 @@ public class TourDaoTest extends TestJPAConfig {
         dao.save(tour);
         dao.findAll();
     }
-    
+
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest_4() {
         tour.setCountry(country);
@@ -138,7 +132,7 @@ public class TourDaoTest extends TestJPAConfig {
         dao.save(tour);
         dao.findAll();
     }
-    
+
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest_5() {
         tour.setRegion("region");
@@ -146,7 +140,7 @@ public class TourDaoTest extends TestJPAConfig {
         dao.save(tour);
         dao.findAll();
     }
-    
+
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest_6() {
         tour.setHotel_id(1);
@@ -154,7 +148,7 @@ public class TourDaoTest extends TestJPAConfig {
         dao.save(tour);
         dao.findAll();
     }
-    
+
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest_7() {
         tour.setHotel("Hotel");
@@ -162,7 +156,7 @@ public class TourDaoTest extends TestJPAConfig {
         dao.save(tour);
         dao.findAll();
     }
-    
+
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest_8() {
         tour.setHotel_Rating(rating);
@@ -170,7 +164,7 @@ public class TourDaoTest extends TestJPAConfig {
         dao.save(tour);
         dao.findAll();
     }
-    
+
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest_9() {
         tour.setMeal_Type(type);
@@ -178,7 +172,7 @@ public class TourDaoTest extends TestJPAConfig {
         dao.save(tour);
         dao.findAll();
     }
-    
+
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest_10() {
         tour.setRoom_Type("room type");
@@ -186,7 +180,7 @@ public class TourDaoTest extends TestJPAConfig {
         dao.save(tour);
         dao.findAll();
     }
-    
+
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest_11() {
         tour.setAdult_Amount(1);
@@ -194,7 +188,7 @@ public class TourDaoTest extends TestJPAConfig {
         dao.save(tour);
         dao.findAll();
     }
-    
+
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest_12() {
         tour.setChild_Amount(1);
@@ -202,7 +196,7 @@ public class TourDaoTest extends TestJPAConfig {
         dao.save(tour);
         dao.findAll();
     }
-    
+
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest_13() {
         tour.setAccomodation("1");
@@ -210,7 +204,7 @@ public class TourDaoTest extends TestJPAConfig {
         dao.save(tour);
         dao.findAll();
     }
-    
+
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest_14() {
         tour.setDuration(1);
@@ -218,7 +212,7 @@ public class TourDaoTest extends TestJPAConfig {
         dao.save(tour);
         dao.findAll();
     }
-    
+
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest_15() {
         tour.setDate_From(new Date(System.currentTimeMillis()));
@@ -226,7 +220,7 @@ public class TourDaoTest extends TestJPAConfig {
         dao.save(tour);
         dao.findAll();
     }
-    
+
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest_16() {
         tour.setDate_From_Unix(1);
@@ -234,7 +228,7 @@ public class TourDaoTest extends TestJPAConfig {
         dao.save(tour);
         dao.findAll();
     }
-    
+
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest_17() {
         tour.setCurrency_id(0);
@@ -242,7 +236,7 @@ public class TourDaoTest extends TestJPAConfig {
         dao.save(tour);
         dao.findAll();
     }
-    
+
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest_18() {
         tour.setCurrency_Symbol("$");
@@ -250,5 +244,5 @@ public class TourDaoTest extends TestJPAConfig {
         dao.save(tour);
         dao.findAll();
     }
-    
+
 }

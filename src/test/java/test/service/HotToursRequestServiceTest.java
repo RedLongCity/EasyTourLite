@@ -12,27 +12,29 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+import test.dao.Instances;
 import test.database.TestJPAConfig;
 
 /**
  *
- * @author redlongcity
- * 13/02/2018
+ * @author redlongcity 13/02/2018
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-public class HotToursRequestServiceTest extends TestJPAConfig{
-    
-    
+public class HotToursRequestServiceTest extends TestJPAConfig {
+
     @Autowired
     private HotToursRequestService service;
 
-    HotToursRequest request;
+    @Autowired
+    private Instances instances;
+
+    private HotToursRequest request;
 
     @Before
     public void populate() {
         request = new HotToursRequest();
-        request.setHotel_Rating("3");
+        request.getRatings().add(instances.getRating());
         request.setNight_From(1);
         request.setNight_Till(2);
         request.setRequestTime(new Timestamp(System.currentTimeMillis()));
@@ -42,7 +44,7 @@ public class HotToursRequestServiceTest extends TestJPAConfig{
     public void crudTest() {
         service.saveHotToursRequest(request);
         assertTrue(service.findAllHotRequests().contains(request));
-        request.setHotel_Rating("4");
+        request.getRatings().add(instances.getRating());
         service.updateHotToursRequest(request);
         assertTrue(service.findAllHotRequests().contains(request));
         service.deleteHotToursRequest(request);
@@ -51,14 +53,14 @@ public class HotToursRequestServiceTest extends TestJPAConfig{
 
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest() {
-        request.setHotel_Rating(null);
+        request.setRatings(null);
         service.saveHotToursRequest(request);
         service.findAllHotRequests();
     }
 
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest_2() {
-        request.setHotel_Rating("2");
+        request.getRatings().add(instances.getRating());
         request.setNight_From(null);
         service.saveHotToursRequest(request);
         service.findAllHotRequests();
@@ -80,5 +82,4 @@ public class HotToursRequestServiceTest extends TestJPAConfig{
         service.findAllHotRequests();
     }
 
-    
 }

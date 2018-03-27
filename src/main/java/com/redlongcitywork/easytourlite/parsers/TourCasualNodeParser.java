@@ -6,6 +6,9 @@ import com.redlongcitywork.easytourlite.model.From_Cities;
 import com.redlongcitywork.easytourlite.model.Meal_Type;
 import com.redlongcitywork.easytourlite.model.Price;
 import com.redlongcitywork.easytourlite.model.TourCasual;
+import com.redlongcitywork.easytourlite.service.CurrencyService;
+import com.redlongcitywork.easytourlite.service.From_CitiesService;
+import com.redlongcitywork.easytourlite.service.Meal_TypeService;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
@@ -22,19 +25,32 @@ public class TourCasualNodeParser implements NodeParser<TourCasual> {
 
     private static final Logger LOG = Logger.getLogger(TourCasualNodeParser.class.getName());
 
-    private final List<Meal_Type> mealTypeList;
+    private final Meal_TypeService mealTypeService;
 
-    private final List<Currency> currencyList;
+    private final CurrencyService currencyService;
 
-    private final List<From_Cities> cityList;
+    private final From_CitiesService cityService;
+
+    private List<Meal_Type> mealTypes;
+
+    private List<Currency> currencies;
+
+    private List<From_Cities> cities;
 
     public TourCasualNodeParser(
-            List<Meal_Type> mealTypeList,
-            List<Currency> currencyList,
-            List<From_Cities> cityList) {
-        this.mealTypeList = mealTypeList;
-        this.currencyList = currencyList;
-        this.cityList = cityList;
+            Meal_TypeService mealTypeService,
+            CurrencyService curencyService,
+            From_CitiesService cityService) {
+        this.mealTypeService = mealTypeService;
+        this.currencyService = curencyService;
+        this.cityService = cityService;
+        init();
+    }
+
+    private void init() {
+        mealTypes = mealTypeService.findAll();
+        currencies = currencyService.findAll();
+        cities = cityService.findAll();
     }
 
     @Override
@@ -106,7 +122,7 @@ public class TourCasualNodeParser implements NodeParser<TourCasual> {
     }
 
     private Meal_Type findMealType(String name) {
-        for (Meal_Type type : mealTypeList) {
+        for (Meal_Type type : mealTypes) {
             if (type.getName().equals(name)) {
                 return type;
             }
@@ -115,7 +131,7 @@ public class TourCasualNodeParser implements NodeParser<TourCasual> {
     }
 
     private Currency findCurrency(String id) {
-        for (Currency currency : currencyList) {
+        for (Currency currency : currencies) {
             if (currency.getId().equals(id)) {
                 return currency;
             }
@@ -124,7 +140,7 @@ public class TourCasualNodeParser implements NodeParser<TourCasual> {
     }
 
     private From_Cities findCity(String name) {
-        for (From_Cities city : cityList) {
+        for (From_Cities city : cities) {
             if (city.getName().equals(name)) {
                 return city;
             }

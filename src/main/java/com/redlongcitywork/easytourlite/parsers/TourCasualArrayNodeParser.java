@@ -2,9 +2,6 @@ package com.redlongcitywork.easytourlite.parsers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.redlongcitywork.easytourlite.model.TourCasual;
-import com.redlongcitywork.easytourlite.service.CurrencyService;
-import com.redlongcitywork.easytourlite.service.From_CitiesService;
-import com.redlongcitywork.easytourlite.service.Meal_TypeService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -19,22 +16,13 @@ import org.springframework.stereotype.Service;
 public class TourCasualArrayNodeParser implements NodeParser<List<TourCasual>> {
 
     private static final Logger LOG = Logger.getLogger(TourCasualArrayNodeParser.class.getName());
-    
-    private final Meal_TypeService mealTypeService;
 
-    private final CurrencyService currencyService;
-
-    private final From_CitiesService cityService;
-    
     private final TourCasualNodeParser parser;
 
-    public TourCasualArrayNodeParser(Meal_TypeService mealTypeService, CurrencyService currencyService, From_CitiesService cityService, TourCasualNodeParser parser) {
-        this.mealTypeService = mealTypeService;
-        this.currencyService = currencyService;
-        this.cityService = cityService;
+    public TourCasualArrayNodeParser(TourCasualNodeParser parser) {
         this.parser = parser;
     }
-    
+
     @Override
     public List<TourCasual> parseNode(JsonNode arrayNode) {
         if (arrayNode.isMissingNode()) {
@@ -43,10 +31,6 @@ public class TourCasualArrayNodeParser implements NodeParser<List<TourCasual>> {
         }
 
         List<TourCasual> list = new ArrayList<TourCasual>();
-        TourCasualNodeParser parser = new TourCasualNodeParser(
-                mealTypeService.findAll(),
-                currencyService.findAll(),
-                cityService.findAll());
         for (int i = 0; i < arrayNode.size(); i++) {
             list.add(parser.parseNode(arrayNode.get(i)));
         }

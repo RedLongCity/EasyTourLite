@@ -4,6 +4,7 @@ import com.redlongcitywork.easytourlite.dao.TourAdvancedSessionDao;
 import com.redlongcitywork.easytourlite.model.SearchingRequest;
 import com.redlongcitywork.easytourlite.model.TourAdvanced;
 import com.redlongcitywork.easytourlite.model.TourAdvancedSession;
+import com.redlongcitywork.easytourlite.service.SearchingRequestService;
 import javax.validation.ConstraintViolationException;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -28,6 +29,9 @@ public class TourAdvancedSessionDaoTest extends TestJPAConfig {
 
     @Autowired
     private Instances instances;
+    
+    @Autowired
+    private SearchingRequestService service;
 
     private SearchingRequest request;
 
@@ -40,6 +44,9 @@ public class TourAdvancedSessionDaoTest extends TestJPAConfig {
         session = new TourAdvancedSession();
         request = instances.getSearchingRequest();
         tour = instances.getTourAdvanced();
+        instances.saveInstances();
+        instances.saveSearchingRequest();
+        
         session.setRequest(request);
         session.getTours().add(tour);
     }

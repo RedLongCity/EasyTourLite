@@ -62,7 +62,7 @@ public class TourAdvanceParserTest extends TestJsonConfig {
 
     @Mock
     private FacilityArrayNodeParser facilityParser;
-
+    
     @InjectMocks
     private final TourAdvancedNodeParser parser = new TourAdvancedNodeParser(
             countryService,

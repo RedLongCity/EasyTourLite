@@ -5,14 +5,18 @@ import com.redlongcitywork.easytourlite.model.Country;
 import com.redlongcitywork.easytourlite.model.Hotel;
 import com.redlongcitywork.easytourlite.model.Hotel_Rating;
 import com.redlongcitywork.easytourlite.model.Region;
-import java.util.List;
+import com.redlongcitywork.easytourlite.storage.CountryStorage;
+import com.redlongcitywork.easytourlite.storage.HotelRatingStorage;
+import com.redlongcitywork.easytourlite.storage.RegionStorage;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author redlongcity 23/02/2018
  */
+@Service
 public class HotelNodeParser implements NodeParser<Hotel> {
 
     private static final Logger LOG = Logger.getLogger(HotelNodeParser.class.getName());
@@ -23,19 +27,25 @@ public class HotelNodeParser implements NodeParser<Hotel> {
 
     private final TourCasualArrayNodeParser tourParser;
 
-    private final List<Region> regionList;
+    private final RegionStorage regionStorage;
 
-    private final List<Hotel_Rating> ratingList;
+    private final HotelRatingStorage ratingStorage;
 
-    private final List<Country> countryList;
+    private final CountryStorage countryStorage;
 
-    public HotelNodeParser(FacilityArrayNodeParser facilityParser, HotelImageArrayNodeParser imageParser, TourCasualArrayNodeParser tourParser, List<Region> regionList, List<Hotel_Rating> ratingList, List<Country> countryList) {
+    public HotelNodeParser(
+            FacilityArrayNodeParser facilityParser,
+            HotelImageArrayNodeParser imageParser,
+            TourCasualArrayNodeParser tourParser,
+            RegionStorage regionStorage,
+            HotelRatingStorage ratingStorage,
+            CountryStorage countryStorage) {
         this.facilityParser = facilityParser;
         this.imageParser = imageParser;
         this.tourParser = tourParser;
-        this.regionList = regionList;
-        this.ratingList = ratingList;
-        this.countryList = countryList;
+        this.regionStorage = regionStorage;
+        this.ratingStorage = ratingStorage;
+        this.countryStorage = countryStorage;
     }
 
     @Override
@@ -114,7 +124,7 @@ public class HotelNodeParser implements NodeParser<Hotel> {
     }
 
     private Region findRegion(String id) {
-        for (Region region : regionList) {
+        for (Region region : regionStorage.getContent()) {
             if (region.getId().equals(id)) {
                 return region;
             }
@@ -123,7 +133,7 @@ public class HotelNodeParser implements NodeParser<Hotel> {
     }
 
     private Country findCountry(String name) {
-        for (Country country : countryList) {
+        for (Country country : countryStorage.getContent()) {
             if (country.getName().equals(name)) {
                 return country;
             }
@@ -132,7 +142,7 @@ public class HotelNodeParser implements NodeParser<Hotel> {
     }
 
     private Hotel_Rating findRating(String name) {
-        for (Hotel_Rating rating : ratingList) {
+        for (Hotel_Rating rating : ratingStorage.getContent()) {
             if (rating.getName().equals(name)) {
                 return rating;
             }

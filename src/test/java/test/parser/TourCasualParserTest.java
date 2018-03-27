@@ -6,8 +6,8 @@ import com.redlongcitywork.easytourlite.model.From_Cities;
 import com.redlongcitywork.easytourlite.model.Meal_Type;
 import com.redlongcitywork.easytourlite.model.Price;
 import com.redlongcitywork.easytourlite.model.TourCasual;
-import com.redlongcitywork.easytourlite.parsers.FacilityNodeParser;
 import com.redlongcitywork.easytourlite.parsers.TourCasualArrayNodeParser;
+import com.redlongcitywork.easytourlite.parsers.TourCasualNodeParser;
 import com.redlongcitywork.easytourlite.service.CurrencyService;
 import com.redlongcitywork.easytourlite.service.From_CitiesService;
 import com.redlongcitywork.easytourlite.service.Meal_TypeService;
@@ -39,14 +39,12 @@ public class TourCasualParserTest extends TestJsonConfig {
 
     @Mock
     private From_CitiesService cityService;
-    
+
     @InjectMocks
-    private TourCasualArrayNodeParser parser
-            = new TourCasualArrayNodeParser(
-                    mealTypeService,
-                    currencyService,
-                    cityService
-            );
+    private TourCasualNodeParser nodeParser;
+
+    private TourCasualArrayNodeParser arrayNodeParser
+            = new TourCasualArrayNodeParser(nodeParser);
 
     private JsonNode tourCasualNode;
 
@@ -113,7 +111,7 @@ public class TourCasualParserTest extends TestJsonConfig {
         List<TourCasual> tourList = new ArrayList<>();
         tourList.add(tour);
 
-        assertEquals(parser.parseNode(tourCasualNode), tourList);
+        assertEquals(arrayNodeParser.parseNode(tourCasualNode), tourList);
 
     }
 
