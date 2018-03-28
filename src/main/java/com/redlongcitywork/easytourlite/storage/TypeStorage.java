@@ -10,13 +10,13 @@ import org.springframework.stereotype.Service;
  * @author redlongcity 27/03/2018
  */
 @Service
-public class TypeStrorage implements Storage<List<Type>> {
+public class TypeStorage implements Storage<List<Type>> {
 
     private final TypeService service;
 
     private List<Type> content;
 
-    public TypeStrorage(TypeService service) {
+    public TypeStorage(TypeService service) {
         this.service = service;
     }
 

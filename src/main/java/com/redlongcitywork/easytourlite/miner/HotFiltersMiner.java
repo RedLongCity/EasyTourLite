@@ -17,6 +17,11 @@ import com.redlongcitywork.easytourlite.service.CurrencyService;
 import com.redlongcitywork.easytourlite.service.From_CitiesService;
 import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
 import com.redlongcitywork.easytourlite.service.Meal_TypeService;
+import com.redlongcitywork.easytourlite.storage.CityStorage;
+import com.redlongcitywork.easytourlite.storage.CountryStorage;
+import com.redlongcitywork.easytourlite.storage.CurrencyStorage;
+import com.redlongcitywork.easytourlite.storage.HotelRatingStorage;
+import com.redlongcitywork.easytourlite.storage.MealTypeStorage;
 import com.redlongcitywork.easytourlite.utils.HttpUtils;
 import com.redlongcitywork.easytourlite.utils.ItToursUrls;
 import static com.redlongcitywork.easytourlite.utils.ItToursUrls.api_base_url;
@@ -40,34 +45,49 @@ public class HotFiltersMiner implements Miner, ItToursUrls {
     private static final Logger LOG = Logger.getLogger(HotFiltersMiner.class.getName());
 
     @Autowired
-    CountryService countryService;
+    private CountryService countryService;
 
     @Autowired
-    From_CitiesService cityService;
+    private From_CitiesService cityService;
 
     @Autowired
-    Hotel_RatingService ratingService;
+    private Hotel_RatingService ratingService;
 
     @Autowired
-    Meal_TypeService mealTypeService;
+    private Meal_TypeService mealTypeService;
 
     @Autowired
-    CurrencyService currencyService;
+    private CurrencyService currencyService;
 
     @Autowired
-    CountryArrayNodeParser countryParser;
+    private CountryArrayNodeParser countryParser;
 
     @Autowired
-    CitiesArrayNodeParser citiesParser;
+    private CitiesArrayNodeParser citiesParser;
 
     @Autowired
-    RatingArrayNodeParser ratingParser;
+    private RatingArrayNodeParser ratingParser;
 
     @Autowired
-    MealTypeArrayNodeParser mealTypeParser;
+    private MealTypeArrayNodeParser mealTypeParser;
 
     @Autowired
-    CurrencyArrayNodeParser currencyParser;
+    private CurrencyArrayNodeParser currencyParser;
+
+    @Autowired
+    private CountryStorage countryStorage;
+
+    @Autowired
+    private CityStorage cityStorage;
+
+    @Autowired
+    private HotelRatingStorage ratingStorage;
+
+    @Autowired
+    private MealTypeStorage mealTypeStorage;
+
+    @Autowired
+    private CurrencyStorage currencyStorage;
 
     @Override
     public void mine() {
@@ -87,6 +107,7 @@ public class HotFiltersMiner implements Miner, ItToursUrls {
                     for (Country country : countryList) {
                         countryService.saveOrUpdateCountry(country);
                     }
+                    countryStorage.updateStorage();
                 }
 
                 ArrayNode cityNode = (ArrayNode) node.path("from_cities");
@@ -99,6 +120,7 @@ public class HotFiltersMiner implements Miner, ItToursUrls {
                     for (From_Cities city : cityList) {
                         cityService.saveOrUpdateFrom_Cities(city);
                     }
+                    cityStorage.updateStorage();
                 }
 
                 ArrayNode ratingNode = (ArrayNode) node.path("hotel_ratings");
@@ -111,6 +133,7 @@ public class HotFiltersMiner implements Miner, ItToursUrls {
                     for (Hotel_Rating rating : ratingList) {
                         ratingService.saveOrUpdateHotel_Rating(rating);
                     }
+                    ratingStorage.updateStorage();
                 }
 
                 ArrayNode mealTypeNode = (ArrayNode) node.path("meal_types");
@@ -123,6 +146,7 @@ public class HotFiltersMiner implements Miner, ItToursUrls {
                     for (Meal_Type type : mealTypeList) {
                         mealTypeService.saveOrUpdateMeal_Type(type);
                     }
+                    mealTypeStorage.updateStorage();
                 }
 
                 ArrayNode currencyNode = (ArrayNode) node.path("currencies");
@@ -135,6 +159,7 @@ public class HotFiltersMiner implements Miner, ItToursUrls {
                     for (Currency currency : currencyList) {
                         currencyService.saveOrUpdateCurrency(currency);
                     }
+                    currencyStorage.updateStorage();
                 }
             }
         } catch (IOException ex) {

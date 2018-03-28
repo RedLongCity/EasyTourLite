@@ -17,6 +17,11 @@ import com.redlongcitywork.easytourlite.service.CurrencyService;
 import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
 import com.redlongcitywork.easytourlite.service.RegionService;
 import com.redlongcitywork.easytourlite.service.TypeService;
+import com.redlongcitywork.easytourlite.storage.CountryStorage;
+import com.redlongcitywork.easytourlite.storage.CurrencyStorage;
+import com.redlongcitywork.easytourlite.storage.HotelRatingStorage;
+import com.redlongcitywork.easytourlite.storage.RegionStorage;
+import com.redlongcitywork.easytourlite.storage.TypeStorage;
 import com.redlongcitywork.easytourlite.utils.HttpUtils;
 import com.redlongcitywork.easytourlite.utils.ItToursUrls;
 import java.io.IOException;
@@ -38,33 +43,48 @@ public class SearchParamsMiner implements Miner, ItToursUrls {
 
     private final TypeArrayNodeParser typeParser;
 
+    private final TypeStorage typeStorage;
+
     private final CurrencyArrayNodeParser currencyParser;
 
     private final CurrencyService currencyService;
+
+    private final CurrencyStorage currencyStorage;
 
     private final CountryArrayNodeParser countryParser;
 
     private final CountryService countryService;
 
+    private final CountryStorage countryStorage;
+
     private final RegionArrayNodeParser regionParser;
 
     private final RegionService regionService;
+
+    private final RegionStorage regionStorage;
 
     private final Hotel_RatingService ratingService;
 
     private final RatingArrayNodeParser ratingParser;
 
-    public SearchParamsMiner(TypeService typeService, TypeArrayNodeParser typeExtractor, CurrencyArrayNodeParser currencyParser, CurrencyService currencyService, CountryArrayNodeParser countryParser, CountryService countryService, RegionArrayNodeParser regionParser, RegionService regionService, Hotel_RatingService ratingService, RatingArrayNodeParser ratingParser) {
+    private final HotelRatingStorage ratingStorage;
+
+    public SearchParamsMiner(TypeService typeService, TypeArrayNodeParser typeParser, TypeStorage typeStorage, CurrencyArrayNodeParser currencyParser, CurrencyService currencyService, CurrencyStorage currencyStorage, CountryArrayNodeParser countryParser, CountryService countryService, CountryStorage countryStorage, RegionArrayNodeParser regionParser, RegionService regionService, RegionStorage regionStorage, Hotel_RatingService ratingService, RatingArrayNodeParser ratingParser, HotelRatingStorage ratingStorage) {
         this.typeService = typeService;
-        this.typeParser = typeExtractor;
+        this.typeParser = typeParser;
+        this.typeStorage = typeStorage;
         this.currencyParser = currencyParser;
         this.currencyService = currencyService;
+        this.currencyStorage = currencyStorage;
         this.countryParser = countryParser;
         this.countryService = countryService;
+        this.countryStorage = countryStorage;
         this.regionParser = regionParser;
         this.regionService = regionService;
+        this.regionStorage = regionStorage;
         this.ratingService = ratingService;
         this.ratingParser = ratingParser;
+        this.ratingStorage = ratingStorage;
     }
 
     @Override
@@ -83,6 +103,7 @@ public class SearchParamsMiner implements Miner, ItToursUrls {
                     for (Type type : typeList) {
                         typeService.saveOrUpdateType(type);
                     }
+                    typeStorage.updateStorage();
                 }
 
                 ArrayNode currencyNode = (ArrayNode) node.path("currencies");
@@ -95,6 +116,7 @@ public class SearchParamsMiner implements Miner, ItToursUrls {
                     for (Currency currency : currencyList) {
                         currencyService.saveOrUpdateCurrency(currency);
                     }
+                    currencyStorage.updateStorage();
                 }
 
                 ArrayNode countryNode = (ArrayNode) node.path("countries");
@@ -107,6 +129,7 @@ public class SearchParamsMiner implements Miner, ItToursUrls {
                     for (Country country : countryList) {
                         countryService.saveOrUpdateCountry(country);
                     }
+                    countryStorage.updateStorage();
                 }
 
                 ArrayNode regionNode = (ArrayNode) node.path("regions");
@@ -119,6 +142,7 @@ public class SearchParamsMiner implements Miner, ItToursUrls {
                     for (Region region : regionList) {
                         regionService.saveOrUpdateRegion(region);
                     }
+                    regionStorage.updateStorage();
                 }
 
                 ArrayNode ratingNode = (ArrayNode) node.path("hotel_ratings");
@@ -131,11 +155,11 @@ public class SearchParamsMiner implements Miner, ItToursUrls {
                     for (Hotel_Rating rating : ratingList) {
                         ratingService.saveOrUpdateHotel_Rating(rating);
                     }
+                    ratingStorage.updateStorage();
                 }
             }
         } catch (IOException ex) {
             Logger.getLogger(SearchParamsMiner.class.getName()).log(Level.SEVERE, null, ex);
-
         }
     }
 

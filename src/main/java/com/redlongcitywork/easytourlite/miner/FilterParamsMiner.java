@@ -13,13 +13,14 @@ import com.redlongcitywork.easytourlite.service.CountryService;
 import com.redlongcitywork.easytourlite.service.From_CitiesService;
 import com.redlongcitywork.easytourlite.service.HotelFilterService;
 import com.redlongcitywork.easytourlite.service.Meal_TypeService;
+import com.redlongcitywork.easytourlite.storage.CityStorage;
+import com.redlongcitywork.easytourlite.storage.MealTypeStorage;
 import com.redlongcitywork.easytourlite.utils.HttpUtils;
 import com.redlongcitywork.easytourlite.utils.ItToursUrls;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -31,26 +32,35 @@ public class FilterParamsMiner implements Miner, ItToursUrls {
 
     private static final Logger LOG = Logger.getLogger(FilterParamsMiner.class.getName());
 
-    @Autowired
-    private CountryService countryService;
+    private final CountryService countryService;
 
-    @Autowired
-    private HotelFilterService hotelService;
+    private final HotelFilterService hotelService;
 
-    @Autowired
-    private Meal_TypeService typeService;
+    private final Meal_TypeService typeService;
 
-    @Autowired
-    private From_CitiesService cityService;
+    private final From_CitiesService cityService;
 
-    @Autowired
-    private HotelFilterArrayNodeParser hotelParser;
+    private final HotelFilterArrayNodeParser hotelParser;
 
-    @Autowired
-    private MealTypeArrayNodeParser typeParser;
+    private final MealTypeArrayNodeParser typeParser;
 
-    @Autowired
-    private CitiesArrayNodeParser cityParser;
+    private final CitiesArrayNodeParser cityParser;
+
+    private final MealTypeStorage mealTypeStorage;
+
+    private final CityStorage cityStorage;
+
+    public FilterParamsMiner(CountryService countryService, HotelFilterService hotelService, Meal_TypeService typeService, From_CitiesService cityService, HotelFilterArrayNodeParser hotelParser, MealTypeArrayNodeParser typeParser, CitiesArrayNodeParser cityParser, MealTypeStorage mealTypeStorage, CityStorage cityStorage) {
+        this.countryService = countryService;
+        this.hotelService = hotelService;
+        this.typeService = typeService;
+        this.cityService = cityService;
+        this.hotelParser = hotelParser;
+        this.typeParser = typeParser;
+        this.cityParser = cityParser;
+        this.mealTypeStorage = mealTypeStorage;
+        this.cityStorage = cityStorage;
+    }
 
     @Override
     public void mine() {
@@ -87,6 +97,7 @@ public class FilterParamsMiner implements Miner, ItToursUrls {
                             for (Meal_Type type : typeList) {
                                 typeService.saveOrUpdateMeal_Type(type);
                             }
+                            mealTypeStorage.updateStorage();
                         }
 
                         ArrayNode cityNode = (ArrayNode) node.path("from_cities");
@@ -99,6 +110,7 @@ public class FilterParamsMiner implements Miner, ItToursUrls {
                             for (From_Cities city : cityList) {
                                 cityService.saveOrUpdateFrom_Cities(city);
                             }
+                            cityStorage.updateStorage();
                         }
                     }
                 } catch (IOException e) {

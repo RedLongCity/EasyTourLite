@@ -10,15 +10,13 @@ import com.redlongcitywork.easytourlite.model.Hotel_Rating;
 import com.redlongcitywork.easytourlite.model.Meal_Type;
 import com.redlongcitywork.easytourlite.model.Price;
 import com.redlongcitywork.easytourlite.model.Tour;
-import com.redlongcitywork.easytourlite.service.CountryService;
-import com.redlongcitywork.easytourlite.service.CurrencyService;
-import com.redlongcitywork.easytourlite.service.From_CitiesService;
-import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
-import com.redlongcitywork.easytourlite.service.Meal_TypeService;
-import com.redlongcitywork.easytourlite.service.TourService;
+import com.redlongcitywork.easytourlite.storage.CityStorage;
+import com.redlongcitywork.easytourlite.storage.CountryStorage;
+import com.redlongcitywork.easytourlite.storage.CurrencyStorage;
+import com.redlongcitywork.easytourlite.storage.HotelRatingStorage;
+import com.redlongcitywork.easytourlite.storage.MealTypeStorage;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.stereotype.Service;
@@ -32,55 +30,26 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 @Service
 public class TourNodeParser implements NodeParser<Tour> {
 
-    private List<Country> countryList;
-
-    private List<From_Cities> cityList;
-
-    private List<Meal_Type> typeList;
-
-    private List<Hotel_Rating> ratingList;
-
-    private List<Currency> currencyList;
-
-    private final TourService tourService;
-
-    private final CountryService countryService;
-
-    private final From_CitiesService cityService;
-
-    private final Meal_TypeService typeService;
-
-    private final Hotel_RatingService ratingService;
-
-    private final CurrencyService currencyService;
-
-    public TourNodeParser(
-            TourService tourService,
-            CountryService countryService,
-            From_CitiesService cityService,
-            Meal_TypeService typeService,
-            Hotel_RatingService service,
-            CurrencyService currencyService) {
-        this.tourService = tourService;
-        this.countryService = countryService;
-        this.cityService = cityService;
-        this.typeService = typeService;
-        this.ratingService = service;
-        this.currencyService = currencyService;
-        init();
-    }
-
-    private void init() {
-        countryList = countryService.findAll();
-        cityList = cityService.findAll();
-        typeList = typeService.findAll();
-        ratingList = ratingService.findAll();
-        currencyList = currencyService.findAll();
-    }
-
     private static final Logger LOG = Logger.getLogger(TourNodeParser.class.getName());
 
-    @Override
+    private final CountryStorage countryStorage;
+
+    private final CityStorage cityStorage;
+
+    private final MealTypeStorage mealTypeStorage;
+
+    private final HotelRatingStorage ratingStorage;
+
+    private final CurrencyStorage currencyStorage;
+
+    public TourNodeParser(CountryStorage countryStorage, CityStorage cityStorage, MealTypeStorage mealTypeStorage, HotelRatingStorage ratingStorage, CurrencyStorage currencyStorage) {
+        this.countryStorage = countryStorage;
+        this.cityStorage = cityStorage;
+        this.mealTypeStorage = mealTypeStorage;
+        this.ratingStorage = ratingStorage;
+        this.currencyStorage = currencyStorage;
+    }
+
     public Tour parseNode(JsonNode jsonNode) {
         if (jsonNode.isMissingNode()) {
             LOG.log(Level.WARNING, "TourNode: tourNode is missing");
@@ -217,7 +186,7 @@ public class TourNodeParser implements NodeParser<Tour> {
     }
 
     private Country findCountry(String id) {
-        for (Country country : countryList) {
+        for (Country country : countryStorage.getContent()) {
             if (country.getId().equals(id)) {
                 return country;
             }
@@ -226,7 +195,7 @@ public class TourNodeParser implements NodeParser<Tour> {
     }
 
     private From_Cities findCity(String id) {
-        for (From_Cities city : cityList) {
+        for (From_Cities city : cityStorage.getContent()) {
             if (city.getId().equals(id)) {
                 return city;
             }
@@ -235,7 +204,7 @@ public class TourNodeParser implements NodeParser<Tour> {
     }
 
     private Meal_Type findType(String name) {
-        for (Meal_Type type : typeList) {
+        for (Meal_Type type : mealTypeStorage.getContent()) {
             if (type.getName().equals(name)) {
                 return type;
             }
@@ -244,7 +213,7 @@ public class TourNodeParser implements NodeParser<Tour> {
     }
 
     private Hotel_Rating findRating(String name) {
-        for (Hotel_Rating rating : ratingList) {
+        for (Hotel_Rating rating : ratingStorage.getContent()) {
             if (rating.getName().equals(name)) {
                 return rating;
             }
@@ -253,7 +222,7 @@ public class TourNodeParser implements NodeParser<Tour> {
     }
 
     private Currency findCurrency(String id) {
-        for (Currency currency : currencyList) {
+        for (Currency currency : currencyStorage.getContent()) {
             if (currency.getId().equals(id)) {
                 return currency;
             }

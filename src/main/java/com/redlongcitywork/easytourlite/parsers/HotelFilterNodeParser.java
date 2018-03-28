@@ -4,7 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.redlongcitywork.easytourlite.model.HotelFilter;
 import com.redlongcitywork.easytourlite.model.Hotel_Rating;
 import com.redlongcitywork.easytourlite.model.Region;
-import java.util.List;
+import com.redlongcitywork.easytourlite.storage.HotelRatingStorage;
+import com.redlongcitywork.easytourlite.storage.RegionStorage;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,13 +17,13 @@ public class HotelFilterNodeParser implements NodeParser<HotelFilter> {
 
     private static final Logger LOG = Logger.getLogger(HotelFilterNodeParser.class.getName());
 
-    private final List<Hotel_Rating> ratingList;
+    private final HotelRatingStorage ratingStorage;
 
-    private final List<Region> regionList;
+    private final RegionStorage regionStorage;
 
-    public HotelFilterNodeParser(List<Hotel_Rating> ratingList, List<Region> regionList) {
-        this.ratingList = ratingList;
-        this.regionList = regionList;
+    public HotelFilterNodeParser(HotelRatingStorage ratingStorage, RegionStorage regionStorage) {
+        this.ratingStorage = ratingStorage;
+        this.regionStorage = regionStorage;
     }
 
     @Override
@@ -54,7 +55,7 @@ public class HotelFilterNodeParser implements NodeParser<HotelFilter> {
     }
 
     private Hotel_Rating findRating(String name) {
-        for (Hotel_Rating rating : ratingList) {
+        for (Hotel_Rating rating : ratingStorage.getContent()) {
             if (rating.getName().equals(name)) {
                 return rating;
             }
@@ -63,7 +64,7 @@ public class HotelFilterNodeParser implements NodeParser<HotelFilter> {
     }
 
     private Region findRegion(String id) {
-        for (Region region : regionList) {
+        for (Region region : regionStorage.getContent()) {
             if (region.getId().equals(id)) {
                 return region;
             }

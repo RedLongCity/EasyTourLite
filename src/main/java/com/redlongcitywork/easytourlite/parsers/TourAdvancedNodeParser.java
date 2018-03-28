@@ -10,16 +10,15 @@ import com.redlongcitywork.easytourlite.model.Price;
 import com.redlongcitywork.easytourlite.model.Region;
 import com.redlongcitywork.easytourlite.model.TourAdvanced;
 import com.redlongcitywork.easytourlite.model.Type;
-import com.redlongcitywork.easytourlite.service.CountryService;
-import com.redlongcitywork.easytourlite.service.CurrencyService;
-import com.redlongcitywork.easytourlite.service.From_CitiesService;
-import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
-import com.redlongcitywork.easytourlite.service.Meal_TypeService;
-import com.redlongcitywork.easytourlite.service.RegionService;
-import com.redlongcitywork.easytourlite.service.TypeService;
+import com.redlongcitywork.easytourlite.storage.CityStorage;
+import com.redlongcitywork.easytourlite.storage.CountryStorage;
+import com.redlongcitywork.easytourlite.storage.CurrencyStorage;
+import com.redlongcitywork.easytourlite.storage.HotelRatingStorage;
+import com.redlongcitywork.easytourlite.storage.MealTypeStorage;
+import com.redlongcitywork.easytourlite.storage.RegionStorage;
+import com.redlongcitywork.easytourlite.storage.TypeStorage;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.stereotype.Service;
@@ -33,67 +32,34 @@ public class TourAdvancedNodeParser implements NodeParser<TourAdvanced> {
 
     private static final Logger LOG = Logger.getLogger(TourAdvancedNodeParser.class.getName());
 
-    private final CountryService countryService;
-
-    private final TypeService typeService;
-
-    private final RegionService regionService;
-
-    private final Hotel_RatingService ratingService;
-
-    private final Meal_TypeService mealTypeService;
-
-    private final CurrencyService currencyService;
-
-    private final From_CitiesService cityService;
-
     private final HotelImageArrayNodeParser imageParser;
 
     private final FacilityArrayNodeParser facilityParser;
 
-    private List<Country> countryList;
+    private final CountryStorage countryStorage;
 
-    private List<Type> typeList;
+    private final CityStorage cityStorage;
 
-    private List<Region> regionList;
+    private final TypeStorage typeStorage;
 
-    private List<Hotel_Rating> ratingList;
+    private final MealTypeStorage mealTypeStorage;
 
-    private List<Meal_Type> mealTypeList;
+    private final RegionStorage regionStorage;
 
-    private List<Currency> currencyList;
+    private final CurrencyStorage currencyStorage;
 
-    private List<From_Cities> cityList;
+    private final HotelRatingStorage ratingStorage;
 
-    public TourAdvancedNodeParser(CountryService countryService,
-            TypeService typeService,
-            RegionService regionService,
-            Meal_TypeService mealTypeService,
-            CurrencyService currencyService,
-            From_CitiesService cityService,
-            Hotel_RatingService ratingService,
-            HotelImageArrayNodeParser imageParser,
-            FacilityArrayNodeParser facilityParser) {
-        this.countryService = countryService;
-        this.typeService = typeService;
-        this.regionService = regionService;
-        this.mealTypeService = mealTypeService;
-        this.currencyService = currencyService;
-        this.cityService = cityService;
-        this.ratingService = ratingService;
+    public TourAdvancedNodeParser(HotelImageArrayNodeParser imageParser, FacilityArrayNodeParser facilityParser, CountryStorage countryStorage, CityStorage cityStorage, TypeStorage typeStorage, MealTypeStorage mealTypeStorage, RegionStorage regionStorage, CurrencyStorage currencyStorage, HotelRatingStorage ratingStorage) {
         this.imageParser = imageParser;
         this.facilityParser = facilityParser;
-        init();
-    }
-
-    private void init() {
-        countryList = countryService.findAll();
-        typeList = typeService.findAll();
-        regionList = regionService.findAll();
-        mealTypeList = mealTypeService.findAll();
-        currencyList = currencyService.findAll();
-        cityList = cityService.findAll();
-        ratingList = ratingService.findAll();
+        this.countryStorage = countryStorage;
+        this.cityStorage = cityStorage;
+        this.typeStorage = typeStorage;
+        this.mealTypeStorage = mealTypeStorage;
+        this.regionStorage = regionStorage;
+        this.currencyStorage = currencyStorage;
+        this.ratingStorage = ratingStorage;
     }
 
     @Override
@@ -213,7 +179,7 @@ public class TourAdvancedNodeParser implements NodeParser<TourAdvanced> {
     }
 
     private Country findCountry(String name) {
-        for (Country country : countryList) {
+        for (Country country : countryStorage.getContent()) {
             if (country.getName().equals(name)) {
                 return country;
             }
@@ -222,7 +188,7 @@ public class TourAdvancedNodeParser implements NodeParser<TourAdvanced> {
     }
 
     private Type findType(String name) {
-        for (Type type : typeList) {
+        for (Type type : typeStorage.getContent()) {
             if (type.getName().equals(name)) {
                 return type;
             }
@@ -231,7 +197,7 @@ public class TourAdvancedNodeParser implements NodeParser<TourAdvanced> {
     }
 
     private Meal_Type findMealType(String name) {
-        for (Meal_Type type : mealTypeList) {
+        for (Meal_Type type : mealTypeStorage.getContent()) {
             if (type.getName().equals(name)) {
                 return type;
             }
@@ -240,7 +206,7 @@ public class TourAdvancedNodeParser implements NodeParser<TourAdvanced> {
     }
 
     private Currency findCurrency(String id) {
-        for (Currency currency : currencyList) {
+        for (Currency currency : currencyStorage.getContent()) {
             if (currency.getId().equals(id)) {
                 return currency;
             }
@@ -249,7 +215,7 @@ public class TourAdvancedNodeParser implements NodeParser<TourAdvanced> {
     }
 
     private From_Cities findCity(String name) {
-        for (From_Cities city : cityList) {
+        for (From_Cities city : cityStorage.getContent()) {
             if (city.getName().equals(name)) {
                 return city;
             }
@@ -258,7 +224,7 @@ public class TourAdvancedNodeParser implements NodeParser<TourAdvanced> {
     }
 
     private Region findRegion(String id) {
-        for (Region region : regionList) {
+        for (Region region : regionStorage.getContent()) {
             if (region.getId().equals(id)) {
                 return region;
             }
@@ -267,7 +233,7 @@ public class TourAdvancedNodeParser implements NodeParser<TourAdvanced> {
     }
 
     private Hotel_Rating findRating(String name) {
-        for (Hotel_Rating rating : ratingList) {
+        for (Hotel_Rating rating : ratingStorage.getContent()) {
             if (rating.getName().equals(name)) {
                 return rating;
             }

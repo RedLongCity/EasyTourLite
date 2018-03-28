@@ -5,8 +5,9 @@ import com.redlongcitywork.easytourlite.model.HotelFilter;
 import com.redlongcitywork.easytourlite.model.Hotel_Rating;
 import com.redlongcitywork.easytourlite.model.Region;
 import com.redlongcitywork.easytourlite.parsers.HotelFilterArrayNodeParser;
-import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
-import com.redlongcitywork.easytourlite.service.RegionService;
+import com.redlongcitywork.easytourlite.parsers.HotelFilterNodeParser;
+import com.redlongcitywork.easytourlite.storage.HotelRatingStorage;
+import com.redlongcitywork.easytourlite.storage.RegionStorage;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
@@ -26,14 +27,17 @@ import org.mockito.runners.MockitoJUnitRunner;
 public class HotelFilterParserTest extends TestJsonConfig {
 
     @Mock
-    private RegionService regionService;
+    private RegionStorage regionStorage;
 
     @Mock
-    private Hotel_RatingService ratingService;
+    private HotelRatingStorage ratingStorage;
 
     @InjectMocks
+    private HotelFilterNodeParser nodeParser
+            = new HotelFilterNodeParser(ratingStorage, regionStorage);
+
     private HotelFilterArrayNodeParser parser
-            = new HotelFilterArrayNodeParser();
+            = new HotelFilterArrayNodeParser(nodeParser);
 
     private JsonNode hotelFilterNode;
 
@@ -52,8 +56,8 @@ public class HotelFilterParserTest extends TestJsonConfig {
         region.setId("5498");
         regionList.add(region);
         ratingList.add(rating);
-        stub(regionService.findAll()).toReturn(regionList);
-        stub(ratingService.findAll()).toReturn(ratingList);
+        stub(regionStorage.getContent()).toReturn(regionList);
+        stub(ratingStorage.getContent()).toReturn(ratingList);
 
         List<HotelFilter> filterList = new ArrayList<>();
         HotelFilter filter = new HotelFilter();
