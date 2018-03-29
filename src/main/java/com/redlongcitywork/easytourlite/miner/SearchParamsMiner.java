@@ -2,6 +2,7 @@ package com.redlongcitywork.easytourlite.miner;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.redlongcitywork.easytourlite.http.HttpService;
 import com.redlongcitywork.easytourlite.model.Country;
 import com.redlongcitywork.easytourlite.model.Currency;
 import com.redlongcitywork.easytourlite.model.Hotel_Rating;
@@ -22,9 +23,7 @@ import com.redlongcitywork.easytourlite.storage.CurrencyStorage;
 import com.redlongcitywork.easytourlite.storage.HotelRatingStorage;
 import com.redlongcitywork.easytourlite.storage.RegionStorage;
 import com.redlongcitywork.easytourlite.storage.TypeStorage;
-import com.redlongcitywork.easytourlite.utils.HttpUtils;
 import com.redlongcitywork.easytourlite.utils.ItToursUrls;
-import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -69,7 +68,9 @@ public class SearchParamsMiner implements Miner, ItToursUrls {
 
     private final HotelRatingStorage ratingStorage;
 
-    public SearchParamsMiner(TypeService typeService, TypeArrayNodeParser typeParser, TypeStorage typeStorage, CurrencyArrayNodeParser currencyParser, CurrencyService currencyService, CurrencyStorage currencyStorage, CountryArrayNodeParser countryParser, CountryService countryService, CountryStorage countryStorage, RegionArrayNodeParser regionParser, RegionService regionService, RegionStorage regionStorage, Hotel_RatingService ratingService, RatingArrayNodeParser ratingParser, HotelRatingStorage ratingStorage) {
+    private final HttpService httpService;
+
+    public SearchParamsMiner(TypeService typeService, TypeArrayNodeParser typeParser, TypeStorage typeStorage, CurrencyArrayNodeParser currencyParser, CurrencyService currencyService, CurrencyStorage currencyStorage, CountryArrayNodeParser countryParser, CountryService countryService, CountryStorage countryStorage, RegionArrayNodeParser regionParser, RegionService regionService, RegionStorage regionStorage, Hotel_RatingService ratingService, RatingArrayNodeParser ratingParser, HotelRatingStorage ratingStorage, HttpService httpService) {
         this.typeService = typeService;
         this.typeParser = typeParser;
         this.typeStorage = typeStorage;
@@ -85,81 +86,78 @@ public class SearchParamsMiner implements Miner, ItToursUrls {
         this.ratingService = ratingService;
         this.ratingParser = ratingParser;
         this.ratingStorage = ratingStorage;
+        this.httpService = httpService;
     }
 
     @Override
     public void mine() {
-        try {
-            JsonNode node = HttpUtils.getJsonNodeFromUrl(api_base_url + api_params_url);
+        JsonNode node = httpService.getJsonNodeFromUrl(api_base_url + api_params_url);
 
-            if (node != null) {
-                ArrayNode typeNode = (ArrayNode) node.path("types");
-                if (typeNode.isMissingNode()) {
-                    LOG.log(Level.WARNING, "typeNode is missing");
-                    return;
-                }
-                List<Type> typeList = typeParser.parseNode(typeNode);
-                if (typeList != null) {
-                    for (Type type : typeList) {
-                        typeService.saveOrUpdateType(type);
-                    }
-                    typeStorage.updateStorage();
-                }
-
-                ArrayNode currencyNode = (ArrayNode) node.path("currencies");
-                if (currencyNode.isMissingNode()) {
-                    LOG.log(Level.WARNING, "currencyNode is missing");
-                    return;
-                }
-                List<Currency> currencyList = currencyParser.parseNode(currencyNode);
-                if (currencyList != null) {
-                    for (Currency currency : currencyList) {
-                        currencyService.saveOrUpdateCurrency(currency);
-                    }
-                    currencyStorage.updateStorage();
-                }
-
-                ArrayNode countryNode = (ArrayNode) node.path("countries");
-                if (countryNode.isMissingNode()) {
-                    LOG.log(Level.WARNING, "countryNode is missing");
-                    return;
-                }
-                List<Country> countryList = countryParser.parseNode(countryNode);
-                if (countryList != null) {
-                    for (Country country : countryList) {
-                        countryService.saveOrUpdateCountry(country);
-                    }
-                    countryStorage.updateStorage();
-                }
-
-                ArrayNode regionNode = (ArrayNode) node.path("regions");
-                if (regionNode.isMissingNode()) {
-                    LOG.log(Level.WARNING, "regionNode is missing");
-                    return;
-                }
-                List<Region> regionList = regionParser.parseNode(regionNode);
-                if (regionList != null) {
-                    for (Region region : regionList) {
-                        regionService.saveOrUpdateRegion(region);
-                    }
-                    regionStorage.updateStorage();
-                }
-
-                ArrayNode ratingNode = (ArrayNode) node.path("hotel_ratings");
-                if (ratingNode.isMissingNode()) {
-                    LOG.log(Level.WARNING, "ratingNode is missing");
-                    return;
-                }
-                List<Hotel_Rating> ratingList = ratingParser.parseNode(ratingNode);
-                if (ratingList != null) {
-                    for (Hotel_Rating rating : ratingList) {
-                        ratingService.saveOrUpdateHotel_Rating(rating);
-                    }
-                    ratingStorage.updateStorage();
-                }
+        if (node != null) {
+            ArrayNode typeNode = (ArrayNode) node.path("types");
+            if (typeNode.isMissingNode()) {
+                LOG.log(Level.WARNING, "typeNode is missing");
+                return;
             }
-        } catch (IOException ex) {
-            Logger.getLogger(SearchParamsMiner.class.getName()).log(Level.SEVERE, null, ex);
+            List<Type> typeList = typeParser.parseNode(typeNode);
+            if (typeList != null) {
+                for (Type type : typeList) {
+                    typeService.saveOrUpdateType(type);
+                }
+                typeStorage.updateStorage();
+            }
+
+            ArrayNode currencyNode = (ArrayNode) node.path("currencies");
+            if (currencyNode.isMissingNode()) {
+                LOG.log(Level.WARNING, "currencyNode is missing");
+                return;
+            }
+            List<Currency> currencyList = currencyParser.parseNode(currencyNode);
+            if (currencyList != null) {
+                for (Currency currency : currencyList) {
+                    currencyService.saveOrUpdateCurrency(currency);
+                }
+                currencyStorage.updateStorage();
+            }
+
+            ArrayNode countryNode = (ArrayNode) node.path("countries");
+            if (countryNode.isMissingNode()) {
+                LOG.log(Level.WARNING, "countryNode is missing");
+                return;
+            }
+            List<Country> countryList = countryParser.parseNode(countryNode);
+            if (countryList != null) {
+                for (Country country : countryList) {
+                    countryService.saveOrUpdateCountry(country);
+                }
+                countryStorage.updateStorage();
+            }
+
+            ArrayNode regionNode = (ArrayNode) node.path("regions");
+            if (regionNode.isMissingNode()) {
+                LOG.log(Level.WARNING, "regionNode is missing");
+                return;
+            }
+            List<Region> regionList = regionParser.parseNode(regionNode);
+            if (regionList != null) {
+                for (Region region : regionList) {
+                    regionService.saveOrUpdateRegion(region);
+                }
+                regionStorage.updateStorage();
+            }
+
+            ArrayNode ratingNode = (ArrayNode) node.path("hotel_ratings");
+            if (ratingNode.isMissingNode()) {
+                LOG.log(Level.WARNING, "ratingNode is missing");
+                return;
+            }
+            List<Hotel_Rating> ratingList = ratingParser.parseNode(ratingNode);
+            if (ratingList != null) {
+                for (Hotel_Rating rating : ratingList) {
+                    ratingService.saveOrUpdateHotel_Rating(rating);
+                }
+                ratingStorage.updateStorage();
+            }
         }
     }
 

@@ -2,6 +2,7 @@ package com.redlongcitywork.easytourlite.miner;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.redlongcitywork.easytourlite.http.HttpService;
 import com.redlongcitywork.easytourlite.model.Country;
 import com.redlongcitywork.easytourlite.model.From_Cities;
 import com.redlongcitywork.easytourlite.model.HotelFilter;
@@ -15,9 +16,7 @@ import com.redlongcitywork.easytourlite.service.HotelFilterService;
 import com.redlongcitywork.easytourlite.service.Meal_TypeService;
 import com.redlongcitywork.easytourlite.storage.CityStorage;
 import com.redlongcitywork.easytourlite.storage.MealTypeStorage;
-import com.redlongcitywork.easytourlite.utils.HttpUtils;
 import com.redlongcitywork.easytourlite.utils.ItToursUrls;
-import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,7 +49,9 @@ public class FilterParamsMiner implements Miner, ItToursUrls {
 
     private final CityStorage cityStorage;
 
-    public FilterParamsMiner(CountryService countryService, HotelFilterService hotelService, Meal_TypeService typeService, From_CitiesService cityService, HotelFilterArrayNodeParser hotelParser, MealTypeArrayNodeParser typeParser, CitiesArrayNodeParser cityParser, MealTypeStorage mealTypeStorage, CityStorage cityStorage) {
+    private final HttpService httpService;
+
+    public FilterParamsMiner(CountryService countryService, HotelFilterService hotelService, Meal_TypeService typeService, From_CitiesService cityService, HotelFilterArrayNodeParser hotelParser, MealTypeArrayNodeParser typeParser, CitiesArrayNodeParser cityParser, MealTypeStorage mealTypeStorage, CityStorage cityStorage, HttpService httpService) {
         this.countryService = countryService;
         this.hotelService = hotelService;
         this.typeService = typeService;
@@ -60,6 +61,7 @@ public class FilterParamsMiner implements Miner, ItToursUrls {
         this.cityParser = cityParser;
         this.mealTypeStorage = mealTypeStorage;
         this.cityStorage = cityStorage;
+        this.httpService = httpService;
     }
 
     @Override
@@ -67,54 +69,50 @@ public class FilterParamsMiner implements Miner, ItToursUrls {
         List<Country> list = countryService.findAll();
         if (list != null) {
             for (Country country : list) {
-                try {
-                    JsonNode node = HttpUtils.getJsonNodeFromUrl(
-                            api_base_url
-                            + api_params_url
-                            + country.getId()
-                            + api_country_params);
+                JsonNode node = httpService.getJsonNodeFromUrl(
+                        api_base_url
+                        + api_params_url
+                        + country.getId()
+                        + api_country_params);
 
-                    if (node != null) {
-                        ArrayNode hotelNode = (ArrayNode) node.path("hotels");
-                        if (hotelNode.isMissingNode()) {
-                            LOG.log(Level.WARNING, "Node is missing");
-                            return;
-                        }
-                        List<HotelFilter> hotelList = hotelParser.parseNode(hotelNode);
-                        if (hotelList != null) {
-                            for (HotelFilter hotel : hotelList) {
-                                hotelService.saveOrUpdateHotel(hotel);
-                            }
-                        }
-
-                        ArrayNode typeNode = (ArrayNode) node.path("meal_types");
-                        if (typeNode.isMissingNode()) {
-                            LOG.log(Level.WARNING, "Node is missing");
-                            return;
-                        }
-                        List<Meal_Type> typeList = typeParser.parseNode(typeNode);
-                        if (typeList != null) {
-                            for (Meal_Type type : typeList) {
-                                typeService.saveOrUpdateMeal_Type(type);
-                            }
-                            mealTypeStorage.updateStorage();
-                        }
-
-                        ArrayNode cityNode = (ArrayNode) node.path("from_cities");
-                        if (cityNode.isMissingNode()) {
-                            LOG.log(Level.WARNING, "Node is missing");
-                            return;
-                        }
-                        List<From_Cities> cityList = cityParser.parseNode(cityNode);
-                        if (cityList != null) {
-                            for (From_Cities city : cityList) {
-                                cityService.saveOrUpdateFrom_Cities(city);
-                            }
-                            cityStorage.updateStorage();
+                if (node != null) {
+                    ArrayNode hotelNode = (ArrayNode) node.path("hotels");
+                    if (hotelNode.isMissingNode()) {
+                        LOG.log(Level.WARNING, "Node is missing");
+                        return;
+                    }
+                    List<HotelFilter> hotelList = hotelParser.parseNode(hotelNode);
+                    if (hotelList != null) {
+                        for (HotelFilter hotel : hotelList) {
+                            hotelService.saveOrUpdateHotel(hotel);
                         }
                     }
-                } catch (IOException e) {
-                    LOG.log(Level.WARNING, e.getMessage());
+
+                    ArrayNode typeNode = (ArrayNode) node.path("meal_types");
+                    if (typeNode.isMissingNode()) {
+                        LOG.log(Level.WARNING, "Node is missing");
+                        return;
+                    }
+                    List<Meal_Type> typeList = typeParser.parseNode(typeNode);
+                    if (typeList != null) {
+                        for (Meal_Type type : typeList) {
+                            typeService.saveOrUpdateMeal_Type(type);
+                        }
+                        mealTypeStorage.updateStorage();
+                    }
+
+                    ArrayNode cityNode = (ArrayNode) node.path("from_cities");
+                    if (cityNode.isMissingNode()) {
+                        LOG.log(Level.WARNING, "Node is missing");
+                        return;
+                    }
+                    List<From_Cities> cityList = cityParser.parseNode(cityNode);
+                    if (cityList != null) {
+                        for (From_Cities city : cityList) {
+                            cityService.saveOrUpdateFrom_Cities(city);
+                        }
+                        cityStorage.updateStorage();
+                    }
                 }
             }
         }

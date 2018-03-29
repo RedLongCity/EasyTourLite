@@ -2,6 +2,7 @@ package com.redlongcitywork.easytourlite.miner;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.redlongcitywork.easytourlite.http.HttpService;
 import com.redlongcitywork.easytourlite.model.Country;
 import com.redlongcitywork.easytourlite.model.Currency;
 import com.redlongcitywork.easytourlite.model.From_Cities;
@@ -22,16 +23,13 @@ import com.redlongcitywork.easytourlite.storage.CountryStorage;
 import com.redlongcitywork.easytourlite.storage.CurrencyStorage;
 import com.redlongcitywork.easytourlite.storage.HotelRatingStorage;
 import com.redlongcitywork.easytourlite.storage.MealTypeStorage;
-import com.redlongcitywork.easytourlite.utils.HttpUtils;
 import com.redlongcitywork.easytourlite.utils.ItToursUrls;
 import static com.redlongcitywork.easytourlite.utils.ItToursUrls.api_base_url;
 import static com.redlongcitywork.easytourlite.utils.ItToursUrls.api_showcases;
 import static com.redlongcitywork.easytourlite.utils.ItToursUrls.api_showcases_filters;
-import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -44,126 +42,128 @@ public class HotFiltersMiner implements Miner, ItToursUrls {
 
     private static final Logger LOG = Logger.getLogger(HotFiltersMiner.class.getName());
 
-    @Autowired
-    private CountryService countryService;
+    private final CountryService countryService;
 
-    @Autowired
-    private From_CitiesService cityService;
+    private final From_CitiesService cityService;
 
-    @Autowired
-    private Hotel_RatingService ratingService;
+    private final Hotel_RatingService ratingService;
 
-    @Autowired
-    private Meal_TypeService mealTypeService;
+    private final Meal_TypeService mealTypeService;
 
-    @Autowired
-    private CurrencyService currencyService;
+    private final CurrencyService currencyService;
 
-    @Autowired
-    private CountryArrayNodeParser countryParser;
+    private final CountryArrayNodeParser countryParser;
 
-    @Autowired
-    private CitiesArrayNodeParser citiesParser;
+    private final CitiesArrayNodeParser citiesParser;
 
-    @Autowired
-    private RatingArrayNodeParser ratingParser;
+    private final RatingArrayNodeParser ratingParser;
 
-    @Autowired
-    private MealTypeArrayNodeParser mealTypeParser;
+    private final MealTypeArrayNodeParser mealTypeParser;
 
-    @Autowired
-    private CurrencyArrayNodeParser currencyParser;
+    private final CurrencyArrayNodeParser currencyParser;
 
-    @Autowired
-    private CountryStorage countryStorage;
+    private final CountryStorage countryStorage;
 
-    @Autowired
-    private CityStorage cityStorage;
+    private final CityStorage cityStorage;
 
-    @Autowired
-    private HotelRatingStorage ratingStorage;
+    private final HotelRatingStorage ratingStorage;
 
-    @Autowired
-    private MealTypeStorage mealTypeStorage;
+    private final MealTypeStorage mealTypeStorage;
 
-    @Autowired
-    private CurrencyStorage currencyStorage;
+    private final CurrencyStorage currencyStorage;
+
+    private final HttpService httpService;
+
+    public HotFiltersMiner(CountryService countryService, From_CitiesService cityService, Hotel_RatingService ratingService, Meal_TypeService mealTypeService, CurrencyService currencyService, CountryArrayNodeParser countryParser, CitiesArrayNodeParser citiesParser, RatingArrayNodeParser ratingParser, MealTypeArrayNodeParser mealTypeParser, CurrencyArrayNodeParser currencyParser, CountryStorage countryStorage, CityStorage cityStorage, HotelRatingStorage ratingStorage, MealTypeStorage mealTypeStorage, CurrencyStorage currencyStorage, HttpService httpService) {
+        this.countryService = countryService;
+        this.cityService = cityService;
+        this.ratingService = ratingService;
+        this.mealTypeService = mealTypeService;
+        this.currencyService = currencyService;
+        this.countryParser = countryParser;
+        this.citiesParser = citiesParser;
+        this.ratingParser = ratingParser;
+        this.mealTypeParser = mealTypeParser;
+        this.currencyParser = currencyParser;
+        this.countryStorage = countryStorage;
+        this.cityStorage = cityStorage;
+        this.ratingStorage = ratingStorage;
+        this.mealTypeStorage = mealTypeStorage;
+        this.currencyStorage = currencyStorage;
+        this.httpService = httpService;
+    }
 
     @Override
     public void mine() {
-        try {
-            JsonNode node = HttpUtils.getJsonNodeFromUrl(api_base_url
-                    + api_showcases
-                    + api_showcases_filters);
+        JsonNode node = httpService.getJsonNodeFromUrl(api_base_url
+                + api_showcases
+                + api_showcases_filters);
 
-            if (node != null) {
-                ArrayNode countriesNode = (ArrayNode) node.path("countries");
-                if (countriesNode.isMissingNode()) {
-                    LOG.log(Level.WARNING, "countriesNode is missing");
-                    return;
-                }
-                List<Country> countryList = countryParser.parseNode(countriesNode);
-                if (countryList != null) {
-                    for (Country country : countryList) {
-                        countryService.saveOrUpdateCountry(country);
-                    }
-                    countryStorage.updateStorage();
-                }
-
-                ArrayNode cityNode = (ArrayNode) node.path("from_cities");
-                if (cityNode.isMissingNode()) {
-                    LOG.log(Level.WARNING, "From_CitiesNode is missing");
-                    return;
-                }
-                List<From_Cities> cityList = citiesParser.parseNode(cityNode);
-                if (cityList != null) {
-                    for (From_Cities city : cityList) {
-                        cityService.saveOrUpdateFrom_Cities(city);
-                    }
-                    cityStorage.updateStorage();
-                }
-
-                ArrayNode ratingNode = (ArrayNode) node.path("hotel_ratings");
-                if (ratingNode.isMissingNode()) {
-                    LOG.log(Level.WARNING, "Hotel_RatingNode is missing");
-                    return;
-                }
-                List<Hotel_Rating> ratingList = ratingParser.parseNode(ratingNode);
-                if (ratingList != null) {
-                    for (Hotel_Rating rating : ratingList) {
-                        ratingService.saveOrUpdateHotel_Rating(rating);
-                    }
-                    ratingStorage.updateStorage();
-                }
-
-                ArrayNode mealTypeNode = (ArrayNode) node.path("meal_types");
-                if (mealTypeNode.isMissingNode()) {
-                    LOG.log(Level.WARNING, "Meal_TypeNode is missing");
-                    return;
-                }
-                List<Meal_Type> mealTypeList = mealTypeParser.parseNode(mealTypeNode);
-                if (mealTypeList != null) {
-                    for (Meal_Type type : mealTypeList) {
-                        mealTypeService.saveOrUpdateMeal_Type(type);
-                    }
-                    mealTypeStorage.updateStorage();
-                }
-
-                ArrayNode currencyNode = (ArrayNode) node.path("currencies");
-                if (currencyNode.isMissingNode()) {
-                    LOG.log(Level.WARNING, "CurrencyNode is missing");
-                    return;
-                }
-                List<Currency> currencyList = currencyParser.parseNode(currencyNode);
-                if (currencyList != null) {
-                    for (Currency currency : currencyList) {
-                        currencyService.saveOrUpdateCurrency(currency);
-                    }
-                    currencyStorage.updateStorage();
-                }
+        if (node != null) {
+            ArrayNode countriesNode = (ArrayNode) node.path("countries");
+            if (countriesNode.isMissingNode()) {
+                LOG.log(Level.WARNING, "countriesNode is missing");
+                return;
             }
-        } catch (IOException ex) {
-            Logger.getLogger(HotFiltersMiner.class.getName()).log(Level.SEVERE, null, ex);
+            List<Country> countryList = countryParser.parseNode(countriesNode);
+            if (countryList != null) {
+                for (Country country : countryList) {
+                    countryService.saveOrUpdateCountry(country);
+                }
+                countryStorage.updateStorage();
+            }
+
+            ArrayNode cityNode = (ArrayNode) node.path("from_cities");
+            if (cityNode.isMissingNode()) {
+                LOG.log(Level.WARNING, "From_CitiesNode is missing");
+                return;
+            }
+            List<From_Cities> cityList = citiesParser.parseNode(cityNode);
+            if (cityList != null) {
+                for (From_Cities city : cityList) {
+                    cityService.saveOrUpdateFrom_Cities(city);
+                }
+                cityStorage.updateStorage();
+            }
+
+            ArrayNode ratingNode = (ArrayNode) node.path("hotel_ratings");
+            if (ratingNode.isMissingNode()) {
+                LOG.log(Level.WARNING, "Hotel_RatingNode is missing");
+                return;
+            }
+            List<Hotel_Rating> ratingList = ratingParser.parseNode(ratingNode);
+            if (ratingList != null) {
+                for (Hotel_Rating rating : ratingList) {
+                    ratingService.saveOrUpdateHotel_Rating(rating);
+                }
+                ratingStorage.updateStorage();
+            }
+
+            ArrayNode mealTypeNode = (ArrayNode) node.path("meal_types");
+            if (mealTypeNode.isMissingNode()) {
+                LOG.log(Level.WARNING, "Meal_TypeNode is missing");
+                return;
+            }
+            List<Meal_Type> mealTypeList = mealTypeParser.parseNode(mealTypeNode);
+            if (mealTypeList != null) {
+                for (Meal_Type type : mealTypeList) {
+                    mealTypeService.saveOrUpdateMeal_Type(type);
+                }
+                mealTypeStorage.updateStorage();
+            }
+
+            ArrayNode currencyNode = (ArrayNode) node.path("currencies");
+            if (currencyNode.isMissingNode()) {
+                LOG.log(Level.WARNING, "CurrencyNode is missing");
+                return;
+            }
+            List<Currency> currencyList = currencyParser.parseNode(currencyNode);
+            if (currencyList != null) {
+                for (Currency currency : currencyList) {
+                    currencyService.saveOrUpdateCurrency(currency);
+                }
+                currencyStorage.updateStorage();
+            }
         }
     }
 

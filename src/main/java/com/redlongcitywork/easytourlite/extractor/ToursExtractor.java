@@ -2,14 +2,12 @@ package com.redlongcitywork.easytourlite.extractor;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.redlongcitywork.easytourlite.convertor.HotSearchConvertor;
+import com.redlongcitywork.easytourlite.http.HttpService;
 import com.redlongcitywork.easytourlite.model.HotToursRequest;
 import com.redlongcitywork.easytourlite.model.Tour;
 import com.redlongcitywork.easytourlite.parsers.TourArrayNodeParser;
-import com.redlongcitywork.easytourlite.utils.HttpUtils;
 import com.redlongcitywork.easytourlite.utils.ItToursUrls;
-import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.stereotype.Service;
 
@@ -26,22 +24,20 @@ public class ToursExtractor implements Extractor<List<Tour>, HotToursRequest>, I
 
     private final TourArrayNodeParser parser;
 
-    public ToursExtractor(HotSearchConvertor convertor, TourArrayNodeParser parser) {
+    private final HttpService service;
+
+    public ToursExtractor(HotSearchConvertor convertor, TourArrayNodeParser parser, HttpService service) {
         this.convertor = convertor;
         this.parser = parser;
+        this.service = service;
     }
 
     @Override
     public List<Tour> extract(HotToursRequest request) {
         List<Tour> result = null;
-        try {
-            JsonNode node = HttpUtils.getJsonNodeFromUrl(convertor.getURLByRequest(request));
-            if (node != null) {
-                result = parser.parseNode(node);
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(ToursExtractor.class.getName()).log(Level.SEVERE, null, ex);
-
+        JsonNode node = service.getJsonNodeFromUrl(convertor.getURLByRequest(request));
+        if (node != null) {
+            result = parser.parseNode(node);
         }
         return result;
     }

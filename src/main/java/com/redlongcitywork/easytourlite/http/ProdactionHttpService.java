@@ -1,5 +1,6 @@
-package com.redlongcitywork.easytourlite.utils;
+package com.redlongcitywork.easytourlite.http;
 
+import com.redlongcitywork.easytourlite.utils.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
@@ -19,14 +20,18 @@ import org.apache.http.client.fluent.Response;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.ContentType;
 import org.apache.http.util.EntityUtils;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author redlongcity
  */
-public class HttpUtils implements ItToursUrls {
+@Service
+@Profile("prodaction")
+public class ProdactionHttpService implements ItToursUrls, HttpService {
 
-    private static final Logger LOG = Logger.getLogger(HttpUtils.class.getName());
+    private static final Logger LOG = Logger.getLogger(ProdactionHttpService.class.getName());
 
     public static final int CONNECT_TIMEOUT = 60 * 1000;
     public static final int SOCKET_TIMEOUT = 60 * 1000;
@@ -48,7 +53,7 @@ public class HttpUtils implements ItToursUrls {
         return OM.readTree(content);
     };
 
-    public static String cleanURLFromParameters(String url) throws URISyntaxException {
+    public String cleanURLFromParameters(String url) throws URISyntaxException {
         if (url != null) {
             url = new URIBuilder(url)
                     .clearParameters()
@@ -58,7 +63,7 @@ public class HttpUtils implements ItToursUrls {
         return url;
     }
 
-    public static Content getRequest(String url) throws IOException {
+    public Content getRequest(String url) throws IOException {
         Response response = null;
         try {
             response = Request.Get(url)
@@ -68,30 +73,46 @@ public class HttpUtils implements ItToursUrls {
                     .addHeader(acceptLanguage, response_language)
                     .execute();
         } catch (IOException e) {
+            StatusLine line = response.returnResponse().getStatusLine();
+            LOG.log(Level.WARNING, "Response Info: Code: "
+                    + line.getStatusCode() + "; ReasonPhrase: "
+                    + line.getReasonPhrase() + "; ProtocolVersion: "
+                    + line.getProtocolVersion());
             LOG.log(Level.WARNING, e.toString());
-            e.printStackTrace();
         }
         LOG.log(Level.INFO, response.toString());
         return response.returnContent();
     }
 
-    public static JsonNode getJsonNodeFromUrl(String url) throws IOException {
+    @Override
+    public JsonNode getJsonNodeFromUrl(String url) {
+        Response response = null;
         try {
-            return Request.Get(url)
+            response = Request.Get(url)
                     .connectTimeout(CONNECT_TIMEOUT)
                     .socketTimeout(SOCKET_TIMEOUT)
                     .addHeader(authorization, authorization_token)
                     .addHeader(acceptLanguage, response_language)
-                    .execute()
-                    .handleResponse(JSONNODE_CONTENT_HANDLER);
+                    .execute();
+
+            return response.handleResponse(JSONNODE_CONTENT_HANDLER);
 
         } catch (IOException e) {
-            LOG.log(Level.WARNING, e.toString());
-            return null;
+            try {
+                StatusLine line = response.returnResponse().getStatusLine();
+                LOG.log(Level.WARNING, "Response Info: Code: "
+                        + line.getStatusCode() + "; ReasonPhrase: "
+                        + line.getReasonPhrase() + "; ProtocolVersion: "
+                        + line.getProtocolVersion());
+                LOG.log(Level.WARNING, e.toString());
+            } catch (IOException ex) {
+                LOG.log(Level.WARNING, ex.toString());
+            }
         }
+        return null;
     }
 
-    public static Content postWithBodyAsRawRequestAsContent(String url, String body) throws IOException {
+    public Content postWithBodyAsRawRequestAsContent(String url, String body) throws IOException {
         try {
             return Request.Post(url)
                     .connectTimeout(CONNECT_TIMEOUT)
@@ -106,7 +127,7 @@ public class HttpUtils implements ItToursUrls {
         }
     }
 
-    public static JsonNode postWithBodyAsJsonRequestAsJson(String url, String body) throws IOException {
+    public JsonNode postWithBodyAsJsonRequestAsJson(String url, String body) throws IOException {
         try {
             return Request.Post(url)
                     .connectTimeout(CONNECT_TIMEOUT)
