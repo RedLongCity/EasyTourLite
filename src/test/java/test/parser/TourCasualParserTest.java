@@ -8,9 +8,9 @@ import com.redlongcitywork.easytourlite.model.Price;
 import com.redlongcitywork.easytourlite.model.TourCasual;
 import com.redlongcitywork.easytourlite.parsers.TourCasualArrayNodeParser;
 import com.redlongcitywork.easytourlite.parsers.TourCasualNodeParser;
-import com.redlongcitywork.easytourlite.service.CurrencyService;
-import com.redlongcitywork.easytourlite.service.From_CitiesService;
-import com.redlongcitywork.easytourlite.service.Meal_TypeService;
+import com.redlongcitywork.easytourlite.storage.CityStorage;
+import com.redlongcitywork.easytourlite.storage.CurrencyStorage;
+import com.redlongcitywork.easytourlite.storage.MealTypeStorage;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -32,16 +32,21 @@ import org.mockito.runners.MockitoJUnitRunner;
 public class TourCasualParserTest extends TestJsonConfig {
 
     @Mock
-    private Meal_TypeService mealTypeService;
+    private MealTypeStorage mealTypeStorage;
 
     @Mock
-    private CurrencyService currencyService;
+    private CurrencyStorage currencyStorage;
 
     @Mock
-    private From_CitiesService cityService;
+    private CityStorage cityStorage;
 
     @InjectMocks
-    private TourCasualNodeParser nodeParser;
+    private TourCasualNodeParser nodeParser
+            = new TourCasualNodeParser(
+                    mealTypeStorage,
+                    currencyStorage,
+                    cityStorage
+            );
 
     private TourCasualArrayNodeParser arrayNodeParser
             = new TourCasualArrayNodeParser(nodeParser);
@@ -93,9 +98,9 @@ public class TourCasualParserTest extends TestJsonConfig {
         prices.add(priceUah);
         prices.add(priceEur);
 
-        stub(mealTypeService.findAll()).toReturn(mealTypeList);
-        stub(currencyService.findAll()).toReturn(currencyList);
-        stub(cityService.findAll()).toReturn(cityList);
+        stub(mealTypeStorage.getContent()).toReturn(mealTypeList);
+        stub(currencyStorage.getContent()).toReturn(currencyList);
+        stub(cityStorage.getContent()).toReturn(cityList);
 
         TourCasual tour = new TourCasual();
         tour.setKey("10-02-7859fb5585b9e58792c85c75325a0691");

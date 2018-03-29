@@ -11,10 +11,11 @@ import com.redlongcitywork.easytourlite.model.TourCasual;
 import com.redlongcitywork.easytourlite.parsers.FacilityArrayNodeParser;
 import com.redlongcitywork.easytourlite.parsers.HotelArrayNodeParser;
 import com.redlongcitywork.easytourlite.parsers.HotelImageArrayNodeParser;
+import com.redlongcitywork.easytourlite.parsers.HotelNodeParser;
 import com.redlongcitywork.easytourlite.parsers.TourCasualArrayNodeParser;
-import com.redlongcitywork.easytourlite.service.CountryService;
-import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
-import com.redlongcitywork.easytourlite.service.RegionService;
+import com.redlongcitywork.easytourlite.storage.CountryStorage;
+import com.redlongcitywork.easytourlite.storage.HotelRatingStorage;
+import com.redlongcitywork.easytourlite.storage.RegionStorage;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -36,13 +37,13 @@ import org.mockito.runners.MockitoJUnitRunner;
 public class HotelParserTest extends TestJsonConfig {
 
     @Mock
-    private RegionService regionService;
+    private RegionStorage regionStorage;
 
     @Mock
-    private CountryService countryService;
+    private HotelRatingStorage ratingStorage;
 
     @Mock
-    private Hotel_RatingService ratingService;
+    private CountryStorage countryStorage;
 
     @Mock
     private TourCasualArrayNodeParser tourParser;
@@ -54,14 +55,17 @@ public class HotelParserTest extends TestJsonConfig {
     private HotelImageArrayNodeParser imageParser;
 
     @InjectMocks
-    private HotelArrayNodeParser parser = new HotelArrayNodeParser(
-            regionService,
-            countryService,
-            ratingService,
+    private HotelNodeParser nodeParser = new HotelNodeParser(
             facilityParser,
             imageParser,
-            tourParser
+            tourParser,
+            regionStorage,
+            ratingStorage,
+            countryStorage
     );
+
+    private HotelArrayNodeParser arrayNodeParser
+            = new HotelArrayNodeParser(nodeParser);
 
     private JsonNode node;
 
@@ -89,9 +93,9 @@ public class HotelParserTest extends TestJsonConfig {
         regionList.add(region);
         ratingList.add(rating);
 
-        stub(ratingService.findAll()).toReturn(ratingList);
-        stub(regionService.findAll()).toReturn(regionList);
-        stub(countryService.findAll()).toReturn(countryList);
+        stub(ratingStorage.getContent()).toReturn(ratingList);
+        stub(regionStorage.getContent()).toReturn(regionList);
+        stub(countryStorage.getContent()).toReturn(countryList);
         stub(tourParser.parseNode(anyObject())).toReturn(new ArrayList<TourCasual>());
 
         Facility facility = new Facility();
@@ -129,7 +133,7 @@ public class HotelParserTest extends TestJsonConfig {
         hotel.getImages().add(image);
         List<Hotel> hotelList = new ArrayList<>();
         hotelList.add(hotel);
-        List<Hotel> entityList = parser.parseNode(node);
+        List<Hotel> entityList = arrayNodeParser.parseNode(node);
         assertEquals(entityList, hotelList);
     }
 

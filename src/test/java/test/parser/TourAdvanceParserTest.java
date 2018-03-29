@@ -8,13 +8,13 @@ import com.redlongcitywork.easytourlite.parsers.FacilityArrayNodeParser;
 import com.redlongcitywork.easytourlite.parsers.HotelImageArrayNodeParser;
 import com.redlongcitywork.easytourlite.parsers.TourAdvancedArrayNodeParser;
 import com.redlongcitywork.easytourlite.parsers.TourAdvancedNodeParser;
-import com.redlongcitywork.easytourlite.service.CountryService;
-import com.redlongcitywork.easytourlite.service.CurrencyService;
-import com.redlongcitywork.easytourlite.service.From_CitiesService;
-import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
-import com.redlongcitywork.easytourlite.service.Meal_TypeService;
-import com.redlongcitywork.easytourlite.service.RegionService;
-import com.redlongcitywork.easytourlite.service.TypeService;
+import com.redlongcitywork.easytourlite.storage.CityStorage;
+import com.redlongcitywork.easytourlite.storage.CountryStorage;
+import com.redlongcitywork.easytourlite.storage.CurrencyStorage;
+import com.redlongcitywork.easytourlite.storage.HotelRatingStorage;
+import com.redlongcitywork.easytourlite.storage.MealTypeStorage;
+import com.redlongcitywork.easytourlite.storage.RegionStorage;
+import com.redlongcitywork.easytourlite.storage.TypeStorage;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -37,43 +37,43 @@ import org.mockito.runners.MockitoJUnitRunner;
 public class TourAdvanceParserTest extends TestJsonConfig {
 
     @Mock
-    private CountryService countryService;
+    private CountryStorage countryStorage;
 
     @Mock
-    private TypeService typeService;
+    private TypeStorage typeStorage;
 
     @Mock
-    private RegionService regionService;
+    private RegionStorage regionStorage;
 
     @Mock
-    private Meal_TypeService mealTypeService;
+    private MealTypeStorage mealTypeStorage;
 
     @Mock
-    private CurrencyService currencyService;
+    private CurrencyStorage currencyStorage;
 
     @Mock
-    private From_CitiesService cityService;
+    private CityStorage cityStorage;
 
     @Mock
-    private Hotel_RatingService ratingService;
+    private HotelRatingStorage ratingStorage;
 
     @Mock
     private HotelImageArrayNodeParser imageParser;
 
     @Mock
     private FacilityArrayNodeParser facilityParser;
-    
+
     @InjectMocks
     private final TourAdvancedNodeParser parser = new TourAdvancedNodeParser(
-            countryService,
-            typeService,
-            regionService,
-            mealTypeService,
-            currencyService,
-            cityService,
-            ratingService,
             imageParser,
-            facilityParser
+            facilityParser,
+            countryStorage,
+            cityStorage,
+            typeStorage,
+            mealTypeStorage,
+            regionStorage,
+            currencyStorage,
+            ratingStorage
     );
 
     TourAdvancedArrayNodeParser arrayParser = new TourAdvancedArrayNodeParser(parser);
@@ -87,13 +87,13 @@ public class TourAdvanceParserTest extends TestJsonConfig {
 
     @Test
     public void parsingTest() {
-        stub(countryService.findAll()).toReturn(new ArrayList<>());
-        stub(typeService.findAll()).toReturn(new ArrayList<>());
-        stub(regionService.findAll()).toReturn(new ArrayList<>());
-        stub(mealTypeService.findAll()).toReturn(new ArrayList<>());
-        stub(currencyService.findAll()).toReturn(new ArrayList<>());
-        stub(cityService.findAll()).toReturn(new ArrayList<>());
-        stub(ratingService.findAll()).toReturn(new ArrayList<>());
+        stub(countryStorage.getContent()).toReturn(new ArrayList<>());
+        stub(typeStorage.getContent()).toReturn(new ArrayList<>());
+        stub(regionStorage.getContent()).toReturn(new ArrayList<>());
+        stub(mealTypeStorage.getContent()).toReturn(new ArrayList<>());
+        stub(currencyStorage.getContent()).toReturn(new ArrayList<>());
+        stub(cityStorage.getContent()).toReturn(new ArrayList<>());
+        stub(ratingStorage.getContent()).toReturn(new ArrayList<>());
         stub(imageParser.parseNode(anyObject())).toReturn(new ArrayList<>());
         stub(facilityParser.parseNode(anyObject())).toReturn(new ArrayList<>());
 
