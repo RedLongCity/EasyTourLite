@@ -1,4 +1,4 @@
-package test.database;
+package test.config;
 
 import com.redlongcitywork.easytourlite.convertor.SearchConvertor;
 import com.redlongcitywork.easytourlite.dao.CountryDao;

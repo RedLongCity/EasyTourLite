@@ -1,0 +1,37 @@
+[
+    {
+        "id": "512",
+        "name": "AI",
+        "name_Full": "Всё включено"
+    },
+    {
+        "id": "388",
+        "name": "BB",
+        "name_Full": "Завтрак"
+    },
+    {
+        "id": "498",
+        "name": "FB",
+        "name_Full": "Полный пансион"
+    },
+    {
+        "id": "496",
+        "name": "HB",
+        "name_Full": "Завтрак и ужин"
+    },
+    {
+        "id": "4951",
+        "name": "Platinum Plus",
+        "name_Full": "null"
+    },
+    {
+        "id": "1956",
+        "name": "RO",
+        "name_Full": "Без питания"
+    },
+    {
+        "id": "560",
+        "name": "UAI",
+        "name_Full": "Ультра всё включено"
+    }
+]

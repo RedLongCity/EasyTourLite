@@ -26,7 +26,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
-import test.database.TestJPAConfig;
+import test.config.TestJPAConfig;
 
 /**
  *

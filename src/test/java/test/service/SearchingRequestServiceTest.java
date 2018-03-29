@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import test.dao.Instances;
-import test.database.TestJPAConfig;
+import test.config.TestJPAConfig;
 
 /**
  *

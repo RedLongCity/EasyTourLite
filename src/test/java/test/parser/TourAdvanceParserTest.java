@@ -1,5 +1,6 @@
 package test.parser;
 
+import test.config.TestJsonConfig;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.redlongcitywork.easytourlite.model.Currency;
 import com.redlongcitywork.easytourlite.model.Price;

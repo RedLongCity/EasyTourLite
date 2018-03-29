@@ -1,0 +1,45 @@
+{
+    "page": 20,
+    "items_per_page": 1,
+    "offers": [
+        {
+            "key": "05-02-c1ab57906607ca7972e75fa3c1f8d5e2",
+            "type": 1,
+            "country_id": 318,
+            "country": "Турция",
+            "region": "Кемер",
+            "hotel_id": 24360,
+            "hotel": "Kemer Paradise",
+            "hotel_rating": "3",
+            "meal_type": "AI",
+            "meal_type_full": "Всё включено",
+            "room_type": "Dbl (Standard)",
+            "adult_amount": 2,
+            "child_amount": 0,
+            "accomodation": "DBL",
+            "duration": 7,
+            "date_from": "2017-05-06",
+            "date_from_unix": 1494018000,
+            "currency_id": 1,
+            "currency_symbol": "$",
+            "prices": {
+                "1": 375,
+                "2": 9712,
+                "10": 337
+            },
+            "price_fall": 400,
+            "price_fall_percent": -6.25,
+            "from_city_id": 2014,
+            "from_city": "Киев",
+            "from_city_gen": "Киева",
+            "transport_type": "flight",
+            "hotel_images": [
+                {
+                    "full": "http://ittour.com.ua/images/hotel_image/1/7/9/1/5/file_name/17915.jpg",
+                    "thumb": "http://ittour.com.ua/images/hotel_image_thumb/1/7/9/1/5/file_name/17915.jpg"
+                }
+            ]
+        }
+    ],
+    "has_more_pages": true
+}

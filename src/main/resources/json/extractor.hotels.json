@@ -1,0 +1,63 @@
+{
+    "page": 1,
+    "items_per_page": 10,
+    "offer_count": 119,
+    "hotels": [
+        {
+            "country": "\u0422\u0443\u0440\u0446\u0438\u044f",
+            "region_id": 5186,
+            "region": "\u0410\u043b\u0430\u043d\u044c\u044f",
+            "hotel_rating": "4",
+            "adult_amount": 2,
+            "child_amount": 0,
+            "accomodation": "DBL",
+            "hotel": "Xeno Club Mare (ex.Porto Azzurro Club Mare)",
+            "hotel_review_rate": "2.3",
+            "hotel_review_count": 12,
+            "hotel_facilities": [
+                {
+                    "id": "1",
+                    "name": "Wi-fi",
+                    "category_id": "1",
+                    "category": "Интернет",
+                    "is_main": 0,
+                    "is_paid": 0
+                }
+            ],
+            "lat": "36.47030",
+            "lng": "32.11530",
+            "wifi_free": true,
+            "images": [
+                {
+                    "full": "http:\/\/ittour.com.ua\/images\/hotel_image\/3\/0\/4\/7\/8\/4\/file_name\/304784.jpg",
+                    "thumb": "http:\/\/ittour.com.ua\/images\/hotel_image_thumb\/3\/0\/4\/7\/8\/4\/file_name\/304784.jpg",
+                    "thumb_preview": "http:\/\/ittour.com.ua\/images\/hotel_image_thumb\/3\/0\/4\/7\/8\/4\/file_name\/304784.jpg",
+                    "is_main": 0
+                }
+            ],
+            "offers": [
+                {
+                    "key": "10-02-7859fb5585b9e58792c85c75325a0691",
+                    "meal_type": "AI",
+                    "meal_type_full": "\u0412\u0441\u0451 \u0432\u043a\u043b\u044e\u0447\u0435\u043d\u043e",
+                    "room_type": "Standart - Dbl",
+                    "duration": 6,
+                    "date_from": "2016-10-07",
+                    "is_combined": 0,
+                    "currency_id": 1,
+                    "prices": {
+                        "1": 510,
+                        "2": 13208,
+                        "10": 458
+                    },
+                    "(__is_operator_show)operator": "Tez Tour",
+                    "from_city": "\u041a\u0438\u0435\u0432",
+                    "transport_type": "flight"
+                }
+            ]
+        }
+    ],
+    "max_page": 4,
+    "has_more_pages": true,
+    "update_key": 1234567
+}

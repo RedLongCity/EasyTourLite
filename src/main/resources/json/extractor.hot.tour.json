@@ -1,0 +1,377 @@
+{
+    "key": "10-02-1ff82899834e9d542777c16556f564f2",
+    "id": 47,
+    "tour_id": 722315,
+    "stop_sale": 0,
+    "type": 1,
+    "country_id": 318,
+    "country": "\u0422\u0443\u0440\u0446\u0438\u044f",
+    "region_id": 5690,
+    "region": "\u0410\u043b\u0430\u043d\u044c\u044f",
+    "hotel_id": 343366,
+    "hotel": "Galaxy Beach",
+    "hotel_rating": "4",
+    "hotel_rating_kn": "4*",
+    "meal_type": "AI",
+    "meal_type_full": "\u0412\u0441\u0451 \u0432\u043a\u043b\u044e\u0447\u0435\u043d\u043e",
+    "adult_amount": 2,
+    "child_amount": 0,
+    "duration": 7,
+    "date_from": "2016-10-22",
+    "from_city": "\u041a\u0438\u0435\u0432",
+    "from_city_genetive_case": "\u041a\u0438\u0435\u0432\u0430",
+    "currency_id": 1,
+    "price": 598,
+    "prices": {
+        "1": 598,
+        "2": 15488,
+        "10": 537
+    },
+    "room_type": "Standard - Dbl",
+    "accomodation": "2 Adults",
+    "online_booking_form": "<form method=\"get\" action=\"http://pegasys.pegast.com.ua/PackageBooking/Construct\" target=\"_blank\"><input type=\"hidden\" name=\"id\" value=\"kHmNQcJjjUHyYo1BonYZQWC/jUGhf41B+YCNQTKCjUFJg41BprCNQTuSjUHMho1BIZGNQVyJjUFKB2VKy4uNQUc7h0ppjo1B8jmHSvuQjUHckY1BEZONQVSOjUGfj41B\" /><input type=\"submit\" class=\"reserve_button\" /></form>",
+    "spo": "\u0410\u043d\u0442\u0430\u043b\u0438\u0439\u0441\u043a\u043e\u0435 \u043f\u043e\u0431\u0435\u0440\u0435\u0436\u044c\u0435 (\u043f\u0430\u043a\u0435\u0442\u043d\u044b\u0435 \u0442\u0443\u0440\u044b) M",
+    "(__is_operator_show)operator_id": 7,
+    "(__is_operator_show)operator": "Tez Tour",
+    "price_fall_old": 610,
+    "price_fall_percent": -1.97,
+    "combined_hotels": [
+        {
+            "country_id": 318,
+            "country": "\u0422\u0443\u0440\u0446\u0438\u044f",
+            "region_id": 5690,
+            "region": "\u0410\u043b\u0430\u043d\u044c\u044f",
+            "hotel_id": 1,
+            "hotel": "Sultan Beach Hurghada",
+            "hotel_rating": "4",
+            "hotel_rating_kn": "4*",
+            "room_type": "Double Room",
+            "meal_type": "BB",
+            "meal_type_full": "\u0417\u0430\u0432\u0442\u0440\u0430\u043a"
+        }
+    ],
+    "transport_type": "flight",
+    "stop_flight": 0,
+    "flights": {
+        "from": [
+            {
+                "id": 293897109,
+                "code": "BAY4405",
+                "air_company": "Bravo Airways",
+                "plane": "B-737",
+                "from_city_id": 2014,
+                "from_city": "\u041a\u0438\u0435\u0432",
+                "from_airport": "IEV",
+                "to_city_id": 1753,
+                "to_city": "\u0410\u043d\u0442\u0430\u043b\u0438\u044f",
+                "to_airport": "AYT",
+                "date_from": "22.10.16",
+                "time_from": "06:50",
+                "datetime_from": 1477108200,
+                "date_till": "22.10.16",
+                "time_till": "09:30",
+                "datetime_till": 1477117800,
+                "duration": "2:40",
+                "travel_class": "\u042d\u043a\u043e\u043d\u043e\u043c",
+                "place": "yes"
+            }
+        ],
+        "to": [
+            {
+                "id": 293897110,
+                "code": "BAY4406",
+                "air_company": "Bravo Airways",
+                "plane": "B-737",
+                "from_city_id": 1753,
+                "from_city": "\u0410\u043d\u0442\u0430\u043b\u0438\u044f",
+                "from_airport": "AYT",
+                "to_city_id": 2014,
+                "to_city": "\u041a\u0438\u0435\u0432",
+                "to_airport": "IEV",
+                "date_from": "29.10.16",
+                "time_from": "10:30",
+                "datetime_from": 1477726200,
+                "date_till": "29.10.16",
+                "time_till": "13:00",
+                "datetime_till": 1477735200,
+                "duration": "2:30",
+                "travel_class": "\u042d\u043a\u043e\u043d\u043e\u043c",
+                "place": "yes"
+            }
+        ]
+    },
+    "comment": "<b>\u0412\u043d\u0438\u043c\u0430\u043d\u0438\u0435! <\/b>\r\n\u0417\u0430\u044f\u0432\u043a\u0438 \u0437\u0430\u0431\u0440\u043e\u043d\u0438\u0440\u043e\u0432\u0430\u043d\u043d\u044b\u0435 \u043f\u043e \u041e\u041e\u041e \u00ab\u0422\u0440\u0435\u0432\u0435\u043b \u043f\u0440\u043e\u0444\u0435\u0448\u043d\u043b \u0433\u0440\u0443\u043f\u043f\u00bb \u043e\u043f\u043b\u0430\u0447\u0438\u0432\u0430\u044e\u0442\u0441\u044f \u0432 \u0434\u0435\u043d\u044c \u043f\u043e\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0435\u043d\u0438\u044f! \r\n\u0412 \u0441\u043b\u0443\u0447\u0430\u0435 \u043d\u0435 \u0441\u0432\u043e\u0435\u0432\u0440\u0435\u043c\u0435\u043d\u043d\u043e\u0439 \u043e\u043f\u043b\u0430\u0442\u044b, \u0442\u0443\u0440\u043e\u043f\u0435\u0440\u0430\u0442\u043e\u0440 \u043f\u0435\u0440\u0435\u0432\u044b\u0441\u0442\u0430\u0432\u043b\u044f\u0435\u0442 \u0441\u0447\u0435\u0442 \u0441 \u0443\u0447\u0435\u0442\u043e\u043c \u0443\u0432\u0435\u043b\u0438\u0447\u0435\u043d\u0438\u044f \u043a\u043e\u043c\u043c\u0435\u0440\u0447\u0435\u0441\u043a\u043e\u0433\u043e \u043a\u0443\u0440\u0441\u0430.",
+    "hotel_info": {
+        "hotel_review_rate": "2.3",
+        "lat": "36.54388",
+        "lng": "32.01608",
+        "description_html": "<div class=\"hotel-text-block\">\r\n                           <div class=\"text-block-title\">\r\n                               <span class=\"left-grey-corner\"> </span>\r\n                               <span class=\"center-grey-corner\"><h2>\r\n<a name=\"raspolozhenie\"></a>Расположение</h2>...",
+        "mail": "info@galaxybeachhotel.com",
+        "tel": "+90 242 528 38 38",
+        "url": "http:\/\/www.galaxybeachhotel.com\/",
+        "address": "Cumhuriyet Mah., D-400, Karayolu Uzeri, 07450, Mahmutlar",
+        "beach": "\u0412 30 \u043c \u0447\u0435\u0440\u0435\u0437 \u0434\u043e\u0440\u043e\u0433\u0443 \u043e\u0442 \u0441\u043e\u0431\u0441\u0442\u0432\u0435\u043d\u043d\u043e\u0433\u043e \u043f\u043b\u044f\u0436\u0430 \u043f\u043e \u043f\u043e\u0434\u0437\u0435\u043c\u043d\u043e\u043c\u0443 \u043f\u0435\u0440\u0435\u0445\u043e\u0434\u0443. \u0411\u0435\u0441\u043f\u043b\u0430\u0442\u043d\u044b\u0439 \u0431\u0430\u0440 \u043d\u0430 \u043f\u043b\u044f\u0436\u0435.",
+        "disposition": "\u0420\u0430\u0441\u043f\u043e\u043b\u043e\u0436\u0435\u043d \u0432 130 \u043a\u043c \u043e\u0442 \u0430\u044d\u0440\u043e\u043f\u043e\u0440\u0442\u0430 \u0433. \u0410\u043d\u0442\u0430\u043b\u044c\u044f, \u0432 12 \u043a\u043c \u043e\u0442 \u0446\u0435\u043d\u0442\u0440\u0430 \u0433. \u0410\u043b\u0430\u043d\u044c\u044f, \u0432 2 \u043a\u043c \u043e\u0442 \u043f\u043e\u0441\u0435\u043b\u043a\u0430 \u041c\u0430\u0445\u043c\u0443\u0442\u043b\u0430\u0440.",
+        "featureshotel": "3 \u0431\u0430\u0440\u0430, \u043c\u0430\u0433\u0430\u0437\u0438\u043d\u044b, \u0444\u043e\u0442\u043e\u0433\u0440\u0430\u0444.",
+        "descapt": "\u0412 \u043e\u0442\u0435\u043b\u0435 111 \u043d\u043e\u043c\u0435\u0440\u043e\u0432.",
+        "sport": "\u0411\u043e\u0447\u0447\u0435, \u0430\u043a\u0432\u0430\u0430\u044d\u0440\u043e\u0431\u0438\u043a\u0430, \u0434\u0430\u0440\u0442\u0441.",
+        "description": "\u041e\u0442\u0435\u043b\u044c Galaxy Beach \u043f\u043e\u0441\u0442\u0440\u043e\u0435\u043d \u0432 2002 \u0433\u043e\u0434\u0443, \u043e\u0431\u0449\u0430\u044f \u043f\u043b\u043e\u0449\u0430\u0434\u044c \u043e\u0442\u0435\u043b\u044f \u0441\u043e\u0441\u0442\u0430\u0432\u043b\u044f\u0435\u0442 3800 \u043a\u0432.\u043c, \u043f\u043e\u0441\u043b\u0435\u0434\u043d\u044f\u044f \u0440\u0435\u0441\u0442\u0430\u0432\u0440\u0430\u0446\u0438\u044f \u0431\u044b\u043b\u0430 \u0441\u0434\u0435\u043b\u0430\u043d\u0430 \u0432 2013 \u0433\u043e\u0434\u0443. \u0413\u043e\u0440\u043e\u0434\u0441\u043a\u043e\u0439 \u044d\u043a\u043e\u043d\u043e\u043c\u0438\u0447\u043d\u044b\u0439 \u043e\u0442\u0435\u043b\u044c \u0441\u043e\u0441\u0442\u043e\u0438\u0442 \u0438\u0437 \u0434\u0432\u0443\u0445 \u043f\u044f\u0442\u0438\u044d\u0442\u0430\u0436\u043d\u044b\u0445 \u0437\u0434\u0430\u043d\u0438\u0439. \u0420\u0430\u0441\u043f\u043e\u043b\u043e\u0436\u0435\u043d \u0447\u0435\u0440\u0435\u0437 \u0434\u043e\u0440\u043e\u0433\u0443 \u043e\u0442 \u043c\u043e\u0440\u044f. \u041e\u0442\u0435\u043b\u044c \u0441\u043e\u0441\u0442\u043e\u0438\u0442 \u0438\u0437 \u0434\u0432\u0443\u0445 5-\u044d\u0442\u0430\u0436\u043d\u044b\u0445 \u043a\u043e\u0440\u043f\u0443\u0441\u043e\u0432 (75% \u043d\u043e\u043c\u0435\u0440\u043e\u0432 \u0441 \u043f\u0440\u044f\u043c\u044b\u043c \u0438\u043b\u0438 \u0447\u0430\u0441\u0442\u0438\u0447\u043d\u044b\u043c...",
+        "hotel_services": {
+            "restaurant": 1,
+            "a_la_carte": 2,
+            "cafe": 1,
+            "dining": 2,
+            "outdoor_pool": 1,
+            "indoor_pool": 2,
+            "conference": 1,
+            "banqueting": 2,
+            "business": 2,
+            "secretarial": 2,
+            "parking": 4,
+            "rent_car": 1,
+            "safe": 1,
+            "wifi": 4,
+            "internet": 2,
+            "elevator": 1,
+            "tv": 2,
+            "laundry": 3,
+            "cleaners": 2,
+            "salon": 2,
+            "conversion": 1,
+            "atm": 2,
+            "doctor": 3,
+            "invalids": 1,
+            "pets": 2,
+            "non_smoking": 1,
+            "ski_rental": 2,
+            "ski_storage": 2,
+            "transfer": 2,
+            "late_check": 2,
+            "dock": 2,
+            "park": 1,
+            "visa": 1
+        },
+        "wifi_free": true,
+        "child_services": {
+            "pool": 1,
+            "playground": 1,
+            "club": 2,
+            "menu": 2,
+            "highchairs": 2,
+            "cot": 2,
+            "nurse": 2
+        },
+        "sport_services": {
+            "sauna": 1,
+            "jacuzzi": 2,
+            "massage": 1,
+            "spa": 2,
+            "billiards": 1,
+            "bowling": 2,
+            "table_tennis": 4,
+            "tennis_court": 2,
+            "squash": 2,
+            "golf": 2,
+            "volleyball": 4,
+            "basketball": 2,
+            "football": 2,
+            "baseball": 2,
+            "equestrian": 2,
+            "bikes": 2,
+            "alpinism": 2,
+            "ski_slopes": 2,
+            "training_skiing": 2,
+            "fitness": 4,
+            "aerobics": 2,
+            "yoga": 2,
+            "dance": 2,
+            "aquapark": 2,
+            "waterslides": 2,
+            "water_sports": 3,
+            "diving": 2,
+            "surfing": 2,
+            "windsurfing": 2,
+            "yachts": 2,
+            "fishing": 2,
+            "discotheque": 1,
+            "music": 2,
+            "casino": 2,
+            "animation": 4,
+            "excursions": 1,
+            "weddings": 2
+        },
+        "beach_services": {
+            "own": 1,
+            "town": 2,
+            "sandy": 2,
+            "sandy_pebble": 1,
+            "pebble": 2,
+            "pontoon": 2,
+            "chairs": 4,
+            "mats": 3,
+            "towels": 2,
+            "umbrella": 4
+        },
+        "images": [
+            {
+                "full": "http:\/\/ittour.com.ua\/images\/hotel_image\/3\/2\/0\/1\/7\/6\/file_name\/320176.jpg",
+                "thumb": "http:\/\/ittour.com.ua\/images\/hotel_image_thumb\/3\/2\/0\/1\/7\/6\/file_name\/320176.jpg",
+                "thumb_preview": "http:\/\/ittour.com.ua\/images\/hotel_image_thumb\/3\/2\/0\/1\/7\/6\/file_name\/320176.jpg",
+                "is_main": 1
+            }
+        ],
+        "turpravda_rate": "6",
+        "tripadvisor_rate": "2.5",
+        "tophotels_rate": "3.34",
+        "hotel_review_count": 12,
+        "hotel_data": [
+            {
+                "name": "infrastructure",
+                "description": "Инфраструктура (несколько значений)",
+                "value": [
+                    {
+                        "id": "2",
+                        "name": "Спортзал"
+                    },
+                    {
+                        "id": "3",
+                        "name": "Пляжный волейбол"
+                    }
+                ]
+            },
+            {
+                "name": "tour_kind",
+                "description": "Вид туров (несколько значений)",
+                "value": [
+                    {
+                        "id": "1",
+                        "name": "Семейный"
+                    }
+                ]
+            },
+            {
+                "name": "rest_kind",
+                "description": "Виды отдыха (несколько значений)",
+                "value": [
+                    {
+                        "id": "4",
+                        "name": "Активный"
+                    }
+                ]
+            },
+            {
+                "name": "category",
+                "description": "Категория (несколько значений)",
+                "value": [
+                    {
+                        "id": "2",
+                        "name": "Эконом"
+                    }
+                ]
+            },
+            {
+                "name": "building_type",
+                "description": "Тип здания (несколько значений)",
+                "value": [
+                    {
+                        "id": "3",
+                        "name": "Частная вилла"
+                    }
+                ]
+            },
+            {
+                "name": "beach_type",
+                "description": "Наличие пляжа (1 значение)",
+                "value": [
+                    {
+                        "id": "1",
+                        "name": "Собственный"
+                    }
+                ]
+            },
+            {
+                "name": "beach_kind",
+                "description": "Вид пляжа (1 значение)",
+                "value": [
+                    {
+                        "id": "1",
+                        "name": "Песок"
+                    }
+                ]
+            },
+            {
+                "name": "beach_line",
+                "description": "Линия (1 значение)",
+                "value": [
+                    {
+                        "id": "1",
+                        "name": "Первая",
+                        "icon": "http://ittour.com.ua/resources/images/service_icons/liniya_1.svg"
+                    }
+                ]
+            },
+            {
+                "name": "distance_to_beach",
+                "description": "Пляж - расстояние от отеля (1 значение)",
+                "value": [
+                    {
+                        "id": "1",
+                        "name": "0-100 м.",
+                        "icon": "http://ittour.com.ua/resources/images/service_icons/rastojanie_100.svg"
+                    }
+                ]
+            }
+        ],
+        "hotel_facilities": [
+            {
+                "id": "1",
+                "name": "Wi-fi",
+                "category_id": "1",
+                "category": "Интернет",
+                "is_main": 0,
+                "is_paid": 0
+            }
+        ],
+        "hotel_room_types": [
+            {
+                "id": "191406",
+                "name": "Стандарт ( Вид На Бассейн)"
+            }
+        ],
+        "hotel_area": [
+            {
+                "id": "1",
+                "name": "Водные горки"
+            }
+        ],
+        "hotel_reasons": [
+            {
+                "id": "1",
+                "description": "Высокий уровень сервиса"
+            }
+        ],
+        "hotel_details": [
+            {
+                "category_id": "1",
+                "category_name": "Особенности размещения",
+                "section_id": "1",
+                "section_name": "Размещение с животними"
+            }
+        ],
+        "hotel_visit_card": [
+            {
+                "id": "1",
+                "file_path": "http:\/\/ittour.com.ua\/images/itt_hotel_visit_card/file_name/hotel-vcard-1-1.jpg"
+            }
+        ],
+        "hotel_videos": [
+            {
+                "id": "692",
+                "name": "Galaxy Beach 4*. Корал. 08.05.2014",
+                "url": "https://vimeo.com/1019599254",
+                "video": "<iframe src=\"//player.vimeo.com/video/1019599254\" width=\"#WIDTH#\" height=\"#HEIGHT#\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>",
+                "datetime": "2014-10-07 22:58:54"
+            }
+        ]
+    }
+}
