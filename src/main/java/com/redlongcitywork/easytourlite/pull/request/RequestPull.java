@@ -1,7 +1,6 @@
 package com.redlongcitywork.easytourlite.pull.request;
 
 import com.redlongcitywork.easytourlite.command.request.RequestCommand;
-import com.redlongcitywork.easytourlite.quartz.services.QuartzService;
 import com.redlongcitywork.easytourlite.constants.AppConstants;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -11,9 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * @author redlongcity
- * 13/12/2017
- * class for keeping and handling request elements
+ * @author redlongcity 13/12/2017 class for keeping and handling request
+ * elements
  */
 @Service
 public class RequestPull {
@@ -24,9 +22,6 @@ public class RequestPull {
 
     @Autowired
     private AppConstants constants;
-
-    @Autowired
-    private QuartzService quartzService;
 
     public void handleCommand(RequestCommand command) {
         if (pull == null) {
@@ -45,7 +40,6 @@ public class RequestPull {
 
         if (pull.size() < constants.getRequestPullSize()) {
             pull.add(command);
-            quartzService.resumeShortJob();
             return;
         }
     }
@@ -104,15 +98,15 @@ public class RequestPull {
             }
         }
     }
-    
-    public void deleteCommand(RequestCommand command){
-        if(pull == null){
+
+    public void deleteCommand(RequestCommand command) {
+        if (pull == null) {
             return;
         }
         Iterator<RequestCommand> it = pull.iterator();
-        while(it.hasNext()){
+        while (it.hasNext()) {
             RequestCommand inside = it.next();
-            if(inside.equals(command)){
+            if (inside.equals(command)) {
                 pull.remove(command);
                 return;
             }

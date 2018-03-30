@@ -29,13 +29,13 @@ public class ComeBackUtils {
         RequestCommand command = pull.getCommandByRequest(request);
         
         if(command == null){
-            return constants.getShortUpdatingDelay();
+            return 1000;
         }
         
         if(command.isProcessed()){
             return 1500;
         }
         
-        return constants.getShortUpdatingDelay();
+        return 1000;
     }
 }

@@ -30,27 +30,27 @@ public class TestHttpService implements HttpService {
         JsonNode result = null;
 
         if (contains(url, searchParams) && length < searchParams.length) {
-            result = getJsonFromFile("json/miner.search.params");
+            result = getJsonFromFile("json/miner_search_params.json");
             length = searchParams.length;
         }
         if (contains(url, searchFilters) && length < searchFilters.length) {
-            result = getJsonFromFile("json/miner.search.params");
+            result = getJsonFromFile("json/miner_search_filters.json");
             length = searchFilters.length;
         }
         if (contains(url, searchHotels) && length < searchHotels.length) {
-            result = getJsonFromFile("json/miner.search.params");
+            result = getJsonFromFile("json/extractor_hotels.json");
             length = searchHotels.length;
         }
         if (contains(url, searchTours) && length < searchTours.length) {
-            result = getJsonFromFile("json/miner.search.params");
+            result = getJsonFromFile("json/extractor_advanced.json");
             length = searchTours.length;
         }
         if (contains(url, hotFilters) && length < hotFilters.length) {
-            result = getJsonFromFile("json/miner.search.params");
+            result = getJsonFromFile("json/miner_hot_filters.json");
             length = hotFilters.length;
         }
         if (contains(url, hotTours) && length < hotTours.length) {
-            result = getJsonFromFile("json/miner.search.params");
+            result = getJsonFromFile("json/extractor_hot_tours.json");
             length = hotTours.length;
         }
         return result;

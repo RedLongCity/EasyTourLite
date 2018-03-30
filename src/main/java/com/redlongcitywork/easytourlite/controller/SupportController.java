@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author redlongcity
- * 21/11/2017
+ * @author redlongcity 21/11/2017
  */
 @RestController
 @RequestMapping("/json")
@@ -38,24 +37,12 @@ public class SupportController {
 
     @RequestMapping(value = "/getshortsuspended", method = RequestMethod.GET)
     public ResponseEntity<Boolean> getShortSuspended() {
-        return new ResponseEntity<Boolean>(constants.isShortSuspended(), HttpStatus.OK);
+        return new ResponseEntity<Boolean>(constants.isShortFire(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/getglobalsuspended", method = RequestMethod.GET)
     public ResponseEntity<Boolean> getGlobalSuspended() {
         return new ResponseEntity<Boolean>(constants.isGlobalSuspended(), HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/getshortdelay", method = RequestMethod.GET)
-    public ResponseEntity<Long> getShortDelay() {
-        Long delay = constants.getShortUpdatingDelay();
-        return new ResponseEntity<Long>(delay, HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/getglobaldelay", method = RequestMethod.GET)
-    public ResponseEntity<Integer> getGlobalDelay() {
-        Integer delay = delayUtils.getHumanData(constants.getGlobalUpdatingDelay());
-        return new ResponseEntity<Integer>(delay, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/getrequestpullsize", method = RequestMethod.GET)

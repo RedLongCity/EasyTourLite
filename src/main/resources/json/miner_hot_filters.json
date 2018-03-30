@@ -1,0 +1,34 @@
+{
+    "countries": [
+        {
+            "id": "338",
+            "name": "Египет"
+        }
+    ],
+    "from_cities": [
+        {
+            "id": "1212",
+            "name": "Запорожье",
+            "country_id": "338"
+        }
+    ],
+    "hotel_ratings": [
+        {
+            "id": "7",
+            "name": "2"
+        }
+    ],
+    "meal_types": [
+        {
+            "id": "512",
+            "name": "AI",
+            "name_full": "Все включено"
+        }
+    ],
+    "currencies": [
+        {
+            "id": "1",
+            "name": "USD"
+        }
+    ]
+}

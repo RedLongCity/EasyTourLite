@@ -34,7 +34,7 @@ public class GlobalUpdateBean implements UpdateBean {
     }
 
     @Override
-    @Scheduled(cron = "0 0 0 * * ?")
+    @Scheduled(cron = "0/5 * * * * ?")
     public void update() {
         LOG.log(Level.INFO, "New Global Job Doing");
         constants.setGlobalSuspended(false);

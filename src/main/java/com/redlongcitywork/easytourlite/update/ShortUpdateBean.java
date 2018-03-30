@@ -43,9 +43,9 @@ public class ShortUpdateBean implements UpdateBean {
     @Override
     @Scheduled(cron = "0/1 * * * * ?")
     public void update() {
-        LOG.log(Level.INFO, "New ShortJob Doing");
-        if (constants.isShortSuspended()) {
-            constants.setShortSuspended(false);
+        if (constants.isShortFire()) {
+            LOG.log(Level.INFO, "New ShortJob Doing");
+            constants.setShortFire(false);
             RequestCommand command = requestPull.getNextCommand();
             if (command != null) {
                 command.setProcessed(true);
@@ -68,10 +68,10 @@ public class ShortUpdateBean implements UpdateBean {
                         command.setProcessed(false);
                         LOG.log(Level.WARNING, "Executing response command failed!");
                     }
-                    constants.setShortSuspended(true);
+                    constants.setShortFire(true);
                 }
             } else {
-                constants.setShortSuspended(true);
+                constants.setShortFire(true);
                 saveData();
             }
         }
@@ -81,7 +81,7 @@ public class ShortUpdateBean implements UpdateBean {
         List<ResponseItem> list = responsePull.getItemsForSave();
         if (list != null) {
             for (ResponseItem item : list) {
-                if (constants.isSaving() || !constants.isShortSuspended()) {
+                if (constants.isSaving() || !constants.isShortFire()) {
                     return;
                 }
                 saver.save(item);

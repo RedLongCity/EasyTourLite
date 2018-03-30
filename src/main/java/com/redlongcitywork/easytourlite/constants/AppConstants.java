@@ -20,14 +20,9 @@ public class AppConstants {
 
     private boolean filtersUpdate = false;//consist Country, From_Cities updating etc.
 
-    private long shortUpdatingDelay = 1000;//Previous or Current update time
-
     private boolean shortRun = true;//indicator for short job running
 
-    private boolean shortSuspended = false;//indicator pause job by itself
-
-//    private String globalUpdatingDelay = "0 0 0/2 * * ?";//delay between global updating
-    private String globalUpdatingDelay = "0 0/1 * * * ?";//delay between global updating
+    private boolean shortFire = false;//indicator pause job by itself
 
     private boolean globalRun = true;//indicator for global job running
 
@@ -54,22 +49,6 @@ public class AppConstants {
         this.filtersUpdate = filtersUpdate;
     }
 
-    public long getShortUpdatingDelay() {
-        return shortUpdatingDelay;
-    }
-
-    public void setShortUpdatingDelay(long shortUpdatingDelay) {
-        this.shortUpdatingDelay = shortUpdatingDelay;
-    }
-
-    public String getGlobalUpdatingDelay() {
-        return globalUpdatingDelay;
-    }
-
-    public void setGlobalUpdatingDelay(String globalUpdatingDelay) {
-        this.globalUpdatingDelay = globalUpdatingDelay;
-    }
-
     public boolean isGlobalDelay() {
         return globalDelay;
     }
@@ -94,12 +73,12 @@ public class AppConstants {
         this.globalRun = isGlobalRunning;
     }
 
-    public boolean isShortSuspended() {
-        return shortSuspended;
+    public boolean isShortFire() {
+        return shortFire;
     }
 
-    public void setShortSuspended(boolean shortSuspended) {
-        this.shortSuspended = shortSuspended;
+    public void setShortFire(boolean shortSuspended) {
+        this.shortFire = shortSuspended;
     }
 
     public boolean isGlobalSuspended() {
