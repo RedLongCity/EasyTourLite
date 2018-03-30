@@ -23,13 +23,13 @@ import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
 public class QuartzConfiguration {
     
     @Autowired
-    AppConstants projectConsantsSingletone;
+    private AppConstants constants;
     
 	@Bean
 	public SimpleTriggerFactoryBean simpleTriggerFactoryBean(){
 		SimpleTriggerFactoryBean stFactory = new SimpleTriggerFactoryBean();
 		stFactory.setJobDetail(jobShortDetailFactoryBean().getObject());
-		stFactory.setRepeatInterval(projectConsantsSingletone.
+		stFactory.setRepeatInterval(constants.
                         getShortUpdatingDelay());
                 stFactory.setGroup("quartzTriggers");
                 stFactory.setName("shortTrigger");
@@ -62,7 +62,7 @@ public class QuartzConfiguration {
 		stFactory.setJobDetail(jobGlobalDetailFactoryBean().getObject());
 		stFactory.setName("globalTrigger");
 		stFactory.setGroup("quartzTriggers");
-		stFactory.setCronExpression(projectConsantsSingletone.
+		stFactory.setCronExpression(constants.
                         getGlobalUpdatingDelay());
                 stFactory.setStartDelay(5000);
 		return stFactory;

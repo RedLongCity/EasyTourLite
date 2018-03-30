@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
  *
  * @author redlongcity 16/02/2018
  */
-@Repository("hotelDao")
+@Repository("hotelFilterDao")
 public class HotelFilterDaoImpl extends AbstractDao<String, HotelFilter> implements HotelFilterDao {
 
     @Override

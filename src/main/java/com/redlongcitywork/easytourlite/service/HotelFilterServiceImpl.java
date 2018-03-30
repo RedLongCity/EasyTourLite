@@ -11,7 +11,7 @@ import com.redlongcitywork.easytourlite.dao.HotelFilterDao;
  *
  * @author redlongcity 16/02/2018
  */
-@Service("hotelService")
+@Service("hotelFilterService")
 @Transactional
 public class HotelFilterServiceImpl implements HotelFilterService {
 

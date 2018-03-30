@@ -2,13 +2,11 @@ package com.redlongcitywork.easytourlite.command.request;
 
 import com.redlongcitywork.easytourlite.model.SearchingRequest;
 import java.sql.Timestamp;
-import org.springframework.stereotype.Component;
 
 /**
  *
  * @author redlongcity 18/03/2018
  */
-@Component
 public class TourAdvancedRequestCommand implements RequestCommand<SearchingRequest> {
 
     private final SearchingRequest request;

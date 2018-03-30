@@ -8,11 +8,13 @@ import com.redlongcitywork.easytourlite.storage.HotelRatingStorage;
 import com.redlongcitywork.easytourlite.storage.RegionStorage;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author redlongcity 19/02/2018
  */
+@Service
 public class HotelFilterNodeParser implements NodeParser<HotelFilter> {
 
     private static final Logger LOG = Logger.getLogger(HotelFilterNodeParser.class.getName());
