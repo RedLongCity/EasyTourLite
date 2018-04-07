@@ -4,8 +4,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.redlongcitywork.easytourlite.model.HotelFilter;
 import com.redlongcitywork.easytourlite.model.Hotel_Rating;
 import com.redlongcitywork.easytourlite.model.Region;
+import com.redlongcitywork.easytourlite.model.Type;
 import com.redlongcitywork.easytourlite.storage.HotelRatingStorage;
 import com.redlongcitywork.easytourlite.storage.RegionStorage;
+import com.redlongcitywork.easytourlite.storage.TypeStorage;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.stereotype.Service;
@@ -23,9 +25,12 @@ public class HotelFilterNodeParser implements NodeParser<HotelFilter> {
 
     private final RegionStorage regionStorage;
 
-    public HotelFilterNodeParser(HotelRatingStorage ratingStorage, RegionStorage regionStorage) {
+    private final TypeStorage typeStorage;
+
+    public HotelFilterNodeParser(HotelRatingStorage ratingStorage, RegionStorage regionStorage, TypeStorage typeStorage) {
         this.ratingStorage = ratingStorage;
         this.regionStorage = regionStorage;
+        this.typeStorage = typeStorage;
     }
 
     @Override
@@ -45,12 +50,19 @@ public class HotelFilterNodeParser implements NodeParser<HotelFilter> {
             filter.setName(jsonNode.path("name").asText());
         }
 
-        if (jsonNode.has("hotel_rating_name")) {
+        if (jsonNode.has("hotel_rating_id")) {
             filter.setRating(findRating(jsonNode.path("hotel_rating_id").asText()));
         }
 
         if (jsonNode.has("region_id")) {
             filter.setRegion(findRegion(jsonNode.path("region_id").asText()));
+        }
+
+        if (jsonNode.has("type_id")) {
+            String[] array = jsonNode.path("type_id").asText().split(",");
+            for (String str : array) {
+                filter.getTypeSet().add(findType(str));
+            }
         }
 
         return filter;
@@ -69,6 +81,15 @@ public class HotelFilterNodeParser implements NodeParser<HotelFilter> {
         for (Region region : regionStorage.getContent()) {
             if (region.getId().equals(id)) {
                 return region;
+            }
+        }
+        return null;
+    }
+
+    private Type findType(String id) {
+        for (Type type : typeStorage.getContent()) {
+            if (type.getId().equals(id)) {
+                return type;
             }
         }
         return null;

@@ -24,6 +24,18 @@ public class Type {
     @Column(name = "type_name", unique = false)
     private String name;
 
+    public Type() {
+    }
+
+    public Type(String id) {
+        this.id = id;
+    }
+
+    public Type(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public String getId() {
         return id;
     }

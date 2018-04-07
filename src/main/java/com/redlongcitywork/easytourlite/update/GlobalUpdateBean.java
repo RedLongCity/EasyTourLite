@@ -6,6 +6,7 @@ import com.redlongcitywork.easytourlite.miner.HotFiltersMiner;
 import com.redlongcitywork.easytourlite.miner.SearchParamsMiner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +35,7 @@ public class GlobalUpdateBean implements UpdateBean {
     }
 
     @Override
-    @Scheduled(cron = "0/5 * * * * ?")
+    @Scheduled(cron = "0 0 0 * * ?")
     public void update() {
         LOG.log(Level.INFO, "New Global Job Doing");
         constants.setGlobalSuspended(false);
@@ -42,6 +43,11 @@ public class GlobalUpdateBean implements UpdateBean {
         hotMiner.mine();
         searchMiner.mine();
         filterParamsMiner.mine();
+    }
+    
+    @PostConstruct
+    private void forceUpdate(){
+        update();
     }
 
 }

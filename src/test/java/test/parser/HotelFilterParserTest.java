@@ -5,10 +5,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.redlongcitywork.easytourlite.model.HotelFilter;
 import com.redlongcitywork.easytourlite.model.Hotel_Rating;
 import com.redlongcitywork.easytourlite.model.Region;
+import com.redlongcitywork.easytourlite.model.Type;
 import com.redlongcitywork.easytourlite.parsers.HotelFilterArrayNodeParser;
 import com.redlongcitywork.easytourlite.parsers.HotelFilterNodeParser;
 import com.redlongcitywork.easytourlite.storage.HotelRatingStorage;
 import com.redlongcitywork.easytourlite.storage.RegionStorage;
+import com.redlongcitywork.easytourlite.storage.TypeStorage;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
@@ -33,9 +35,12 @@ public class HotelFilterParserTest extends TestJsonConfig {
     @Mock
     private HotelRatingStorage ratingStorage;
 
+    @Mock
+    private TypeStorage typeStorage;
+
     @InjectMocks
     private HotelFilterNodeParser nodeParser
-            = new HotelFilterNodeParser(ratingStorage, regionStorage);
+            = new HotelFilterNodeParser(ratingStorage, regionStorage, typeStorage);
 
     private HotelFilterArrayNodeParser parser
             = new HotelFilterArrayNodeParser(nodeParser);
@@ -51,14 +56,20 @@ public class HotelFilterParserTest extends TestJsonConfig {
     public void parsingTest() {
         List<Region> regionList = new ArrayList<>();
         List<Hotel_Rating> ratingList = new ArrayList<>();
+        List<Type> typeList = new ArrayList<>();
         Hotel_Rating rating = new Hotel_Rating();
         rating.setId("4");
+        rating.setName("4");
         Region region = new Region();
         region.setId("5498");
         regionList.add(region);
         ratingList.add(rating);
+        typeList.add(new Type("1"));
+        typeList.add(new Type("2"));
+
         stub(regionStorage.getContent()).toReturn(regionList);
         stub(ratingStorage.getContent()).toReturn(ratingList);
+        stub(typeStorage.getContent()).toReturn(typeList);
 
         List<HotelFilter> filterList = new ArrayList<>();
         HotelFilter filter = new HotelFilter();

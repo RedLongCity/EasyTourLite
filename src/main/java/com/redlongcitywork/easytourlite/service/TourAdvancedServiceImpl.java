@@ -7,12 +7,14 @@ import java.util.List;
 import org.hibernate.criterion.Criterion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author redlongcity 03/03/2018
  */
 @Service("tourAdvancedService")
+@Transactional
 public class TourAdvancedServiceImpl implements TourAdvancedService {
 
     @Autowired

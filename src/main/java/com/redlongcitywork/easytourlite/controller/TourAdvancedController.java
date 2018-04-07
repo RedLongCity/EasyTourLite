@@ -48,39 +48,39 @@ public class TourAdvancedController {
         if (request == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        if (request.getCountry() == null) {
-            request.setCountry(new Country("338"));
-        }
-
-        if (request.getCity() == null) {
-            request.setCity(new From_Cities("2014"));
-        }
-
-        if (request.getRatingSet() == null) {
-            request.getRatingSet().add(new Hotel_Rating("78", "5"));
-        }
-
-        if (request.getAdultAmount() == null) {
-            request.setAdultAmount(2);
-        }
-
-        if (request.getNightFrom() == null) {
-            request.setNightFrom(2);
-        }
-
-        if (request.getNightTill() == null) {
-            request.setNightTill(7);
-        }
-
-        if (request.getDateFrom() == null) {
-            request.setDateFrom(new Date(System.currentTimeMillis()));
-        }
-
-        if (request.getDateTill() == null) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.DAY_OF_MONTH, 7);
-            request.setDateTill((Date) calendar.getTime());
-        }
+//        if (request.getCountry() == null) {
+//            request.setCountry(new Country("338"));
+//        }
+//
+//        if (request.getCity() == null) {
+//            request.setCity(new From_Cities("2014"));
+//        }
+//
+//        if (request.getRatingSet() == null) {
+//            request.getRatingSet().add(new Hotel_Rating("78", "5"));
+//        }
+//
+//        if (request.getAdultAmount() == null) {
+//            request.setAdultAmount(2);
+//        }
+//
+//        if (request.getNightFrom() == null) {
+//            request.setNightFrom(2);
+//        }
+//
+//        if (request.getNightTill() == null) {
+//            request.setNightTill(7);
+//        }
+//
+//        if (request.getDateFrom() == null) {
+//            request.setDateFrom(new Date(System.currentTimeMillis()));
+//        }
+//
+//        if (request.getDateTill() == null) {
+//            Calendar calendar = Calendar.getInstance();
+//            calendar.add(Calendar.DAY_OF_MONTH, 7);
+//            request.setDateTill((Date) calendar.getTime());
+//        }
 
         TourAdvancedResponse answer = handler.execute(request);
         if (answer == null) {

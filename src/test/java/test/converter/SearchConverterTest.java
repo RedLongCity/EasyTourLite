@@ -172,7 +172,7 @@ public class SearchConverterTest extends TestJPAConfig {
         tour.setRating(rating);
 
         currency2 = new Currency();
-        currency2.setId("2");
+        currency2.setId("id2");
         currency2.setName("Currency");
         price2 = new Price();
         price2.setCurrency(currency2);

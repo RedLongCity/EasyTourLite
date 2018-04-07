@@ -2,39 +2,43 @@ package com.redlongcitywork.easytourlite.model;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.redlongcitywork.easytourlite.json.view.TourView;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
 import org.hibernate.validator.constraints.NotEmpty;
+
 /**
  *
  * @author redlongcity
  */
 @Entity
-@Table(name="meal_types")
+@Table(name = "meal_types")
 public class Meal_Type {
-    
+
     @JsonView(TourView.class)
     @Id
-    @Column(name="meal_type_id",unique=true,nullable=false)
+    @Column(name = "meal_type_id")
     private String id;
-    
+
     @JsonView(TourView.class)
     @NotEmpty
-    @Column(name="name",unique=false,nullable=false)
+    @Column(name = "name")
     private String name;
-    
+
     @JsonView(TourView.class)
-    @NotEmpty
-    @Column(name="name_full",unique=false,nullable=false)
+    @Column(name = "name_full")
     private String name_Full;
+
+    public Meal_Type() {
+    }
+    
+    public Meal_Type(String id, String name, String name_Full) {
+        this.id = id;
+        this.name = name;
+        this.name_Full = name_Full;
+    }
     
     public String getId() {
         return id;
@@ -89,6 +93,5 @@ public class Meal_Type {
     public String toString() {
         return "Meal_Type{" + "id=" + id + ", name=" + name + ", name_full=" + name_Full + '}';
     }
-    
-    
+
 }

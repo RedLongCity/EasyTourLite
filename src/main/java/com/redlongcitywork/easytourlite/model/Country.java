@@ -36,6 +36,11 @@ public class Country {
     public Country(String id) {
         this.id = id;
     }
+
+    public Country(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
     
     public String getId() {
         return id;

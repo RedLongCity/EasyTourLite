@@ -313,6 +313,7 @@ public class SearchConvertor implements ItToursUrls {
     public static List<Criterion> getRequestCriterions(SearchingRequest request) {
         List<Criterion> result = null;
         if (request != null) {
+            result = new ArrayList<Criterion>();
             Type type = request.getType();
             if (type != null) {
                 result.add(Restrictions.eq("type", type));
@@ -447,6 +448,17 @@ public class SearchConvertor implements ItToursUrls {
             }
         }
 
+        return result;
+    }
+
+    private static List<Criterion> getMultiply(String prop, List<Object> values) {
+        List<Criterion> result = null;
+        if (prop != null && values != null) {
+            result = new ArrayList<>();
+            for (Object value : values) {
+                result.add(Restrictions.)
+            }
+        }
         return result;
     }
 

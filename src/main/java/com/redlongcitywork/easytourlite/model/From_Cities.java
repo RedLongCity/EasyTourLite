@@ -33,6 +33,11 @@ public class From_Cities {
     public From_Cities(String id) {
         this.id = id;
     }
+
+    public From_Cities(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
     
     public String getId() {
         return id;

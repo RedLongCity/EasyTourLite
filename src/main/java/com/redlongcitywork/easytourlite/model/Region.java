@@ -25,6 +25,14 @@ public class Region {
     @Column(name = "region_name", unique = false)
     private String name;
 
+    public Region() {
+    }
+
+    public Region(String Id, String name) {
+        this.Id = Id;
+        this.name = name;
+    }
+    
     public String getId() {
         return Id;
     }
