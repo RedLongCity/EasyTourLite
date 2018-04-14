@@ -37,10 +37,10 @@ public class TypeStorage implements Storage<List<Type>, Type> {
     public Type findById(String id) {
         Type result = null;
         if (content != null) {
-            result = content.stream().filter(obj -> obj.getName()
+            result = content.stream().filter(obj -> obj.getId()
                     .equalsIgnoreCase(id))
                     .findFirst()
-                    .get();
+                    .orElse(result);
         }
         return result;
     }
@@ -52,7 +52,7 @@ public class TypeStorage implements Storage<List<Type>, Type> {
             result = content.stream().filter(obj -> obj.getName()
                     .equalsIgnoreCase(name))
                     .findFirst()
-                    .get();
+                    .orElse(result);
         }
         return result;
     }

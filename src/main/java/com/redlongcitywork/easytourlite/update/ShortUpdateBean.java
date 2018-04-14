@@ -43,14 +43,13 @@ public class ShortUpdateBean implements UpdateBean {
     @Override
     @Scheduled(cron = "0/1 * * * * ?")
     public void update() {
-        if (constants.isShortFire()) {
-            LOG.log(Level.INFO, "New ShortJob Doing");
-            constants.setShortFire(false);
+        if (!constants.isShortFire()) {
+            constants.setShortFire(true);
             RequestCommand command = requestPull.getNextCommand();
             if (command != null) {
+                LOG.log(Level.INFO, "New ShortJob Doing");
                 command.setProcessed(true);
-                ResponseItem item = responsePull.getEmptyResponseItem(
-                        command.getRequest());
+                ResponseItem item = responsePull.getEmptyResponseItem();
                 if (item != null) {
                     ResponseItem newItem = handler.execute(command);
                     if (newItem != null) {
@@ -68,10 +67,10 @@ public class ShortUpdateBean implements UpdateBean {
                         command.setProcessed(false);
                         LOG.log(Level.WARNING, "Executing response command failed!");
                     }
-                    constants.setShortFire(true);
+                    constants.setShortFire(false);
                 }
             } else {
-                constants.setShortFire(true);
+                constants.setShortFire(false);
                 saveData();
             }
         }

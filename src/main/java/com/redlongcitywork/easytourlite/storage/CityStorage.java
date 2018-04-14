@@ -37,10 +37,10 @@ public class CityStorage implements Storage<List<From_Cities>, From_Cities> {
     public From_Cities findById(String id) {
         From_Cities result = null;
         if (content != null) {
-            result = content.stream().filter(obj -> obj.getName()
+            result = content.stream().filter(obj -> obj.getId()
                     .equalsIgnoreCase(id))
                     .findFirst()
-                    .get();
+                    .orElse(result);
         }
         return result;
     }
@@ -52,7 +52,7 @@ public class CityStorage implements Storage<List<From_Cities>, From_Cities> {
             result = content.stream().filter(obj -> obj.getName()
                     .equalsIgnoreCase(name))
                     .findFirst()
-                    .get();
+                    .orElse(result);
         }
         return result;
     }

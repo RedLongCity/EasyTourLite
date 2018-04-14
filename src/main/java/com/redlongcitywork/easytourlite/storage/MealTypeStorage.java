@@ -37,10 +37,10 @@ public class MealTypeStorage implements Storage<List<Meal_Type>, Meal_Type> {
     public Meal_Type findById(String id) {
         Meal_Type result = null;
         if (content != null) {
-            result = content.stream().filter(obj -> obj.getName()
+            result = content.stream().filter(obj -> obj.getId()
                     .equalsIgnoreCase(id))
                     .findFirst()
-                    .get();
+                    .orElse(result);
         }
         return result;
     }
@@ -52,7 +52,7 @@ public class MealTypeStorage implements Storage<List<Meal_Type>, Meal_Type> {
             result = content.stream().filter(obj -> obj.getName()
                     .equalsIgnoreCase(name))
                     .findFirst()
-                    .get();
+                    .orElse(result);
         }
         return result;
     }

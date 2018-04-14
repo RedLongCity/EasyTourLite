@@ -37,10 +37,10 @@ public class CurrencyStorage implements Storage<List<Currency>, Currency> {
     public Currency findById(String id) {
         Currency result = null;
         if (content != null) {
-            result = content.stream().filter(obj -> obj.getName()
+            result = content.stream().filter(obj -> obj.getId()
                     .equalsIgnoreCase(id))
                     .findFirst()
-                    .get();
+                    .orElse(result);
         }
         return result;
     }
@@ -52,7 +52,7 @@ public class CurrencyStorage implements Storage<List<Currency>, Currency> {
             result = content.stream().filter(obj -> obj.getName()
                     .equalsIgnoreCase(name))
                     .findFirst()
-                    .get();
+                    .orElse(result);
         }
         return result;
     }

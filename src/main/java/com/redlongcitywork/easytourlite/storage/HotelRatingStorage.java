@@ -36,10 +36,10 @@ public class HotelRatingStorage implements Storage<List<Hotel_Rating>, Hotel_Rat
     public Hotel_Rating findById(String id) {
         Hotel_Rating result = null;
         if (content != null) {
-            result = content.stream().filter(obj -> obj.getName()
+            result = content.stream().filter(obj -> obj.getId()
                     .equalsIgnoreCase(id))
                     .findFirst()
-                    .get();
+                    .orElse(result);
         }
         return result;
     }
@@ -50,7 +50,7 @@ public class HotelRatingStorage implements Storage<List<Hotel_Rating>, Hotel_Rat
             result = content.stream().filter(obj -> obj.getName()
                     .equalsIgnoreCase(name))
                     .findFirst()
-                    .get();
+                    .orElse(result);
         }
         return result;
     }

@@ -36,10 +36,10 @@ public class CountryStorage implements Storage<List<Country>, Country> {
     public Country findById(String id) {
         Country result = null;
         if (content != null) {
-            result = content.stream().filter(obj -> obj.getName()
+            result = content.stream().filter(obj -> obj.getId()
                     .equalsIgnoreCase(id))
                     .findFirst()
-                    .get();
+                    .orElse(result);
         }
         return result;
     }
@@ -50,7 +50,7 @@ public class CountryStorage implements Storage<List<Country>, Country> {
             result = content.stream().filter(obj -> obj.getName()
                     .equalsIgnoreCase(name))
                     .findFirst()
-                    .get();
+                    .orElse(result);
         }
         return result;
     }
