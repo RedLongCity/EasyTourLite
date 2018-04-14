@@ -8,14 +8,18 @@ import com.redlongcitywork.easytourlite.model.Meal_Type;
 import com.redlongcitywork.easytourlite.model.Region;
 import com.redlongcitywork.easytourlite.model.SearchingRequest;
 import com.redlongcitywork.easytourlite.model.Type;
+import com.redlongcitywork.easytourlite.storage.HotelRatingStorage;
+import com.redlongcitywork.easytourlite.storage.MealTypeStorage;
+import com.redlongcitywork.easytourlite.storage.RegionStorage;
 import com.redlongcitywork.easytourlite.utils.ItToursUrls;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
@@ -32,7 +36,22 @@ public class SearchConvertor implements ItToursUrls {
 
     private static Calendar calendar = Calendar.getInstance();
 
-    public static List<Criterion> getCriterionsByRequest(SearchingRequest request) {
+//    private final MealTypeStorage mealTypeStorage;
+//
+//    private final RegionStorage regionStorage;
+//
+//    private final HotelRatingStorage ratingStorage;
+//
+//    public SearchConvertor(
+//            MealTypeStorage mealTypeStorage,
+//            RegionStorage regionStorage,
+//            HotelRatingStorage ratingStorage) {
+//        this.mealTypeStorage = mealTypeStorage;
+//        this.regionStorage = regionStorage;
+//        this.ratingStorage = ratingStorage;
+//    }
+
+    public List<Criterion> getCriterionsByRequest(SearchingRequest request) {
         List<Criterion> result = new ArrayList<>();
 
         Country country = request.getCountry();
@@ -64,19 +83,66 @@ public class SearchConvertor implements ItToursUrls {
             result.add(Restrictions.eq("city", city));
         }
 
-        Set<Region> regions = request.getRegions();
-        if (regions != null) {
-            result.add(Restrictions.in("region", regions));
-        }
-
         String ids = request.getHotel();
         if (ids != null) {
             result.add(Restrictions.in("hotelId", ids.split(",")));
         }
 
-        Set<Hotel_Rating> ratings = request.getRatingSet();
-        if (ratings != null && !ratings.isEmpty()) {
-            result.add(Restrictions.in("rating", ratings));
+//        String regions = request.getRegions();
+//        if (regions != null) {
+//            List<String> list = Arrays.asList(regions.split(":"));
+//            result.add(Restrictions.in(
+//                    "region",
+//                    list.stream()
+//                            .map((p) -> regionStorage.findById(p))
+//                            .collect(Collectors.toList())));
+//        }
+        String regions = request.getRegions();
+        if (regions != null) {
+            List<String> list = Arrays.asList(regions.split(":"));
+            result.add(Restrictions.in(
+                    "region",
+                    list.stream()
+                            .map((p) -> new Region(p))
+                            .collect(Collectors.toList())));
+        }
+
+//        String ratings = request.getRatings();
+//        if (ratings != null) {
+//            List<String> list = Arrays.asList(ratings.split(":"));
+//            result.add(Restrictions.in(
+//                    "rating",
+//                    list.stream()
+//                            .map((p) -> ratingStorage.findById(p))
+//                            .collect(Collectors.toList())));
+//        }
+        String ratings = request.getRatings();
+        if (ratings != null) {
+            List<String> list = Arrays.asList(ratings.split(":"));
+            result.add(Restrictions.in(
+                    "rating",
+                    list.stream()
+                            .map((p) -> new Hotel_Rating(p))
+                            .collect(Collectors.toList())));
+        }
+
+//        String mealTypes = request.getMealTypes();
+//        if (mealTypes != null) {
+//            List<String> list = Arrays.asList(ratings.split(":"));
+//            result.add(Restrictions.in(
+//                    "mealType",
+//                    list.stream()
+//                            .map((p) -> mealTypeStorage.findById(p))
+//                            .collect(Collectors.toList())));
+//        }
+        String mealTypes = request.getMealTypes();
+        if (mealTypes != null) {
+            List<String> list = Arrays.asList(ratings.split(":"));
+            result.add(Restrictions.in(
+                    "mealType",
+                    list.stream()
+                            .map((p) -> new Meal_Type(p))
+                            .collect(Collectors.toList())));
         }
 
         Integer adultAmount = request.getAdultAmount();
@@ -112,7 +178,7 @@ public class SearchConvertor implements ItToursUrls {
         return result;
     }
 
-    public static void addPriceCriteria(
+    public void addPriceCriteria(
             Criteria crit,
             Integer priceFrom,
             Integer priceTill,
@@ -137,7 +203,7 @@ public class SearchConvertor implements ItToursUrls {
         }
     }
 
-    public static String getURLByRequest(SearchingRequest request) {
+    public String getURLByRequest(SearchingRequest request) {
         String result = null;
         if (request != null) {
             result = new String("?");
@@ -252,7 +318,7 @@ public class SearchConvertor implements ItToursUrls {
 
             if (request.getCurrency() != null) {
                 result = result.concat(
-                        addPattern("currency", request.getCurrency().getId().toString(), flag)
+                        addPattern("currency", request.getCurrency().getId(), flag)
                 );
                 flag = false;
             }
@@ -264,53 +330,32 @@ public class SearchConvertor implements ItToursUrls {
                 flag = false;
             }
 
-            if (request.getRegions() != null && !request.getRegions().isEmpty()) {
+            if (request.getRegions() != null) {
                 result = result.concat(
-                        addBeginning("region", flag)
+                        addPattern("region", request.getRegions(), flag)
                 );
                 flag = false;
-                boolean eachFlag = true;
-                for (Region region : request.getRegions()) {
-                    result = result.concat(
-                            addEndElement(region.getId(), eachFlag)
-                    );
-                    eachFlag = false;
-                }
             }
 
-            if (request.getRatingSet() != null && !request.getRatingSet().isEmpty()) {
+            if (request.getRatings() != null) {
                 result = result.concat(
-                        addBeginning("hotel_rating", flag)
+                        addPattern("hotel_rating", request.getRatings(), flag)
                 );
                 flag = false;
-                boolean eachFlag = true;
-                for (Hotel_Rating rating : request.getRatingSet()) {
-                    result = result.concat(
-                            addEndElement(rating.getId(), eachFlag)
-                    );
-                    eachFlag = false;
-                }
             }
 
-            if (request.getMealTypes() != null && !request.getMealTypes().isEmpty()) {
+            if (request.getMealTypes() != null) {
                 result = result.concat(
-                        addBeginning("meal_type", flag)
+                        addPattern("meal_type", request.getMealTypes(), flag)
                 );
                 flag = false;
-                boolean eachFlag = true;
-                for (Meal_Type type : request.getMealTypes()) {
-                    result = result.concat(
-                            addEndElement(type.getId(), eachFlag)
-                    );
-                    eachFlag = false;
-                }
             }
 
         }
         return result;
     }
 
-    public static List<Criterion> getRequestCriterions(SearchingRequest request) {
+    public List<Criterion> getRequestCriterions(SearchingRequest request) {
         List<Criterion> result = null;
         if (request != null) {
             result = new ArrayList<Criterion>();
@@ -342,8 +387,8 @@ public class SearchConvertor implements ItToursUrls {
                 result.add(Restrictions.isNull("city"));
             }
 
-            Set<Region> regions = request.getRegions();
-            if (regions != null && !regions.isEmpty()) {
+            String regions = request.getRegions();
+            if (regions != null) {
                 result.add(Restrictions.eq("regions", regions));
             } else {
                 result.add(Restrictions.isEmpty("regions"));//Проверить
@@ -356,11 +401,11 @@ public class SearchConvertor implements ItToursUrls {
                 result.add(Restrictions.isNull("hotel"));
             }
 
-            Set<Hotel_Rating> ratings = request.getRatingSet();
+            String ratings = request.getRatings();
             if (ratings != null) {
-                result.add(Restrictions.eq("ratingSet", ratings));
+                result.add(Restrictions.eq("ratings", ratings));
             } else {
-                result.add(Restrictions.isNull("ratingSet"));
+                result.add(Restrictions.isEmpty("ratings"));
             }
 
             Integer adultAmount = request.getAdultAmount();
@@ -377,21 +422,21 @@ public class SearchConvertor implements ItToursUrls {
                 result.add(Restrictions.isNull("childAmount"));
             }
 
-            Integer childAge = request.getChildAmount();
+            String childAge = request.getChildAge();
             if (childAge != null) {
                 result.add(Restrictions.eq("childAge", childAge));
             } else {
                 result.add(Restrictions.isNull("childAge"));
             }
 
-            Integer nightFrom = request.getChildAmount();
+            Integer nightFrom = request.getNightFrom();
             if (nightFrom != null) {
                 result.add(Restrictions.eq("nightFrom", nightFrom));
             } else {
                 result.add(Restrictions.isNull("nightFrom"));
             }
 
-            Integer nightTill = request.getChildAmount();
+            Integer nightTill = request.getNightTill();
             if (nightTill != null) {
                 result.add(Restrictions.eq("nightTill", nightTill));
             } else {
@@ -412,21 +457,21 @@ public class SearchConvertor implements ItToursUrls {
                 result.add(Restrictions.isNull("dateTill"));
             }
 
-            Set<Meal_Type> mealTypes = request.getMealTypes();
+            String mealTypes = request.getMealTypes();
             if (ratings != null) {
                 result.add(Restrictions.eq("mealTypes", mealTypes));
             } else {
                 result.add(Restrictions.isNull("mealTypes"));
             }
 
-            Integer priceFrom = request.getChildAmount();
+            Integer priceFrom = request.getPriceFrom();
             if (priceFrom != null) {
                 result.add(Restrictions.eq("priceFrom", priceFrom));
             } else {
                 result.add(Restrictions.isNull("priceFrom"));
             }
 
-            Integer priceTill = request.getChildAmount();
+            Integer priceTill = request.getPriceTill();
             if (priceTill != null) {
                 result.add(Restrictions.eq("priceTill", priceTill));
             } else {
@@ -440,7 +485,7 @@ public class SearchConvertor implements ItToursUrls {
                 result.add(Restrictions.isNull("currency"));
             }
 
-            Integer onlyStandart = request.getChildAmount();
+            Integer onlyStandart = request.getOnlyStandart();
             if (onlyStandart != null) {
                 result.add(Restrictions.eq("onlyStandart", onlyStandart));
             } else {
@@ -451,18 +496,7 @@ public class SearchConvertor implements ItToursUrls {
         return result;
     }
 
-    private static List<Criterion> getMultiply(String prop, List<Object> values) {
-        List<Criterion> result = null;
-        if (prop != null && values != null) {
-            result = new ArrayList<>();
-            for (Object value : values) {
-                result.add(Restrictions.)
-            }
-        }
-        return result;
-    }
-
-    private static String addPattern(String key, String value, boolean first) {
+    private String addPattern(String key, String value, boolean first) {
         if (first) {
             return key + "=" + value;
         } else {
@@ -470,7 +504,7 @@ public class SearchConvertor implements ItToursUrls {
         }
     }
 
-    private static String addBeginning(String key, boolean first) {
+    private String addBeginning(String key, boolean first) {
         if (first) {
             return key + "=";
         } else {
@@ -478,7 +512,7 @@ public class SearchConvertor implements ItToursUrls {
         }
     }
 
-    private static String addEndElement(String key, boolean first) {
+    private String addEndElement(String key, boolean first) {
         if (first) {
             return key;
         } else {
@@ -486,7 +520,7 @@ public class SearchConvertor implements ItToursUrls {
         }
     }
 
-    private static Criterion[] getCriterionsForDateTill(Date dateTill) {
+    private Criterion[] getCriterionsForDateTill(Date dateTill) {
         List<Criterion> list = new ArrayList<>();
         for (int i = 1; i < 22; i++) {
             list.add(getDateTill(dateTill, i));
@@ -494,7 +528,7 @@ public class SearchConvertor implements ItToursUrls {
         return list.toArray(new Criterion[list.size()]);
     }
 
-    private static Criterion getDateTill(Date dateTill, int daysBefore) {
+    private Criterion getDateTill(Date dateTill, int daysBefore) {
         calendar.setTime(dateTill);
         calendar.add(Calendar.DAY_OF_YEAR, -daysBefore);
         return Restrictions.and(Restrictions.eq("dateFrom", calendar.getTime()),

@@ -2,8 +2,8 @@ package test.service;
 
 import com.redlongcitywork.easytourlite.model.From_Cities;
 import com.redlongcitywork.easytourlite.service.From_CitiesService;
+import javax.persistence.PersistenceException;
 import javax.validation.ConstraintViolationException;
-import org.hibernate.HibernateException;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -45,7 +45,7 @@ public class From_CitiesServiceTest extends TestJPAConfig {
         assertFalse(service.findAll().contains(city));
     }
 
-    @Test(expected = HibernateException.class)
+    @Test(expected = PersistenceException.class)
     public void exceptionTest() {
         city.setId(null);
         service.saveFrom_Cities(city);

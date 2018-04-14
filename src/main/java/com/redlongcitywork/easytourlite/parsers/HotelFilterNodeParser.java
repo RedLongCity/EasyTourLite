@@ -2,9 +2,6 @@ package com.redlongcitywork.easytourlite.parsers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.redlongcitywork.easytourlite.model.HotelFilter;
-import com.redlongcitywork.easytourlite.model.Hotel_Rating;
-import com.redlongcitywork.easytourlite.model.Region;
-import com.redlongcitywork.easytourlite.model.Type;
 import com.redlongcitywork.easytourlite.storage.HotelRatingStorage;
 import com.redlongcitywork.easytourlite.storage.RegionStorage;
 import com.redlongcitywork.easytourlite.storage.TypeStorage;
@@ -51,47 +48,24 @@ public class HotelFilterNodeParser implements NodeParser<HotelFilter> {
         }
 
         if (jsonNode.has("hotel_rating_id")) {
-            filter.setRating(findRating(jsonNode.path("hotel_rating_id").asText()));
+            filter.setRating(ratingStorage
+                    .findByName(jsonNode.path("hotel_rating_id")
+                            .asText()));
         }
 
         if (jsonNode.has("region_id")) {
-            filter.setRegion(findRegion(jsonNode.path("region_id").asText()));
+            filter.setRegion(regionStorage
+                    .findById(jsonNode.path("region_id")
+                            .asText()));
         }
 
         if (jsonNode.has("type_id")) {
             String[] array = jsonNode.path("type_id").asText().split(",");
             for (String str : array) {
-                filter.getTypeSet().add(findType(str));
+                filter.getTypeSet().add(typeStorage.findById(str));
             }
         }
 
         return filter;
-    }
-
-    private Hotel_Rating findRating(String name) {
-        for (Hotel_Rating rating : ratingStorage.getContent()) {
-            if (rating.getName().equals(name)) {
-                return rating;
-            }
-        }
-        return null;
-    }
-
-    private Region findRegion(String id) {
-        for (Region region : regionStorage.getContent()) {
-            if (region.getId().equals(id)) {
-                return region;
-            }
-        }
-        return null;
-    }
-
-    private Type findType(String id) {
-        for (Type type : typeStorage.getContent()) {
-            if (type.getId().equals(id)) {
-                return type;
-            }
-        }
-        return null;
     }
 }

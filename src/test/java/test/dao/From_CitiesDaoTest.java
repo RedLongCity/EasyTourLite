@@ -2,6 +2,7 @@ package test.dao;
 
 import com.redlongcitywork.easytourlite.dao.From_CitiesDao;
 import com.redlongcitywork.easytourlite.model.From_Cities;
+import javax.persistence.PersistenceException;
 import org.hibernate.HibernateException;
 import javax.validation.ConstraintViolationException;
 import static org.junit.Assert.assertFalse;
@@ -46,7 +47,7 @@ public class From_CitiesDaoTest extends TestJPAConfig {
         assertFalse(dao.findAll().contains(city));
     }
 
-    @Test(expected = HibernateException.class)
+    @Test(expected = PersistenceException.class)
     public void exceptionTest() {
         city.setId(null);
         dao.save(city);

@@ -2,10 +2,7 @@ package com.redlongcitywork.easytourlite.model;
 
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,8 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -49,21 +44,15 @@ public class SearchingRequest {
     @JoinColumn(name = "from_city_id")
     private From_Cities city;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "searching_request_region",
-            joinColumns = @JoinColumn(name = "request_id"),
-            inverseJoinColumns = @JoinColumn(name = "region_id"))
-    private Set<Region> regions = new HashSet<>();
+    @Column(name = "regions")
+    private String regions;
 
     @Column(name = "hotel", unique = false, nullable = true)
     private String hotel;
 
     @NotNull
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "rating_request",
-            joinColumns = @JoinColumn(name = "request_id"),
-            inverseJoinColumns = @JoinColumn(name = "rating_id"))
-    private Set<Hotel_Rating> ratingSet = new HashSet<>();
+    @Column(name = "ratings")
+    private String ratings;
 
     @NotNull
     @Column(name = "adult_amount", unique = false)
@@ -91,11 +80,8 @@ public class SearchingRequest {
     @Column(name = "date_till", unique = false)
     private Date dateTill;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "meal_type_request",
-            joinColumns = @JoinColumn(name = "request_id"),
-            inverseJoinColumns = @JoinColumn(name = "meal_type_id"))
-    private Set<Meal_Type> mealTypes = new HashSet<>();
+    @Column(name = "meal_types")
+    private String mealTypes;
 
     @Column(name = "price_from", unique = false, nullable = true)
     private Integer priceFrom;
@@ -154,28 +140,12 @@ public class SearchingRequest {
         this.city = city;
     }
 
-    public Set<Region> getRegions() {
-        return regions;
-    }
-
-    public void setRegions(Set<Region> regions) {
-        this.regions = regions;
-    }
-
     public String getHotel() {
         return hotel;
     }
 
     public void setHotel(String hotel) {
         this.hotel = hotel;
-    }
-
-    public Set<Hotel_Rating> getRatingSet() {
-        return ratingSet;
-    }
-
-    public void setRatingSet(Set<Hotel_Rating> ratingSet) {
-        this.ratingSet = ratingSet;
     }
 
     public Integer getAdultAmount() {
@@ -234,14 +204,6 @@ public class SearchingRequest {
         this.dateTill = dateTill;
     }
 
-    public Set<Meal_Type> getMealTypes() {
-        return mealTypes;
-    }
-
-    public void setMealTypes(Set<Meal_Type> mealTypes) {
-        this.mealTypes = mealTypes;
-    }
-
     public Integer getPriceFrom() {
         return priceFrom;
     }
@@ -282,28 +244,53 @@ public class SearchingRequest {
         this.requestTime = requestTime;
     }
 
+    public String getRegions() {
+        return regions;
+    }
+
+    public void setRegions(String regions) {
+        this.regions = regions;
+    }
+
+    public String getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(String ratings) {
+        this.ratings = ratings;
+    }
+
+    public String getMealTypes() {
+        return mealTypes;
+    }
+
+    public void setMealTypes(String mealTypes) {
+        this.mealTypes = mealTypes;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.type);
-        hash = 97 * hash + Objects.hashCode(this.kind);
-        hash = 97 * hash + Objects.hashCode(this.country);
-        hash = 97 * hash + Objects.hashCode(this.city);
-        hash = 97 * hash + Objects.hashCode(this.regions);
-        hash = 97 * hash + Objects.hashCode(this.hotel);
-        hash = 97 * hash + Objects.hashCode(this.ratingSet);
-        hash = 97 * hash + Objects.hashCode(this.adultAmount);
-        hash = 97 * hash + Objects.hashCode(this.childAmount);
-        hash = 97 * hash + Objects.hashCode(this.childAge);
-        hash = 97 * hash + Objects.hashCode(this.nightFrom);
-        hash = 97 * hash + Objects.hashCode(this.nightTill);
-        hash = 97 * hash + Objects.hashCode(this.dateFrom);
-        hash = 97 * hash + Objects.hashCode(this.dateTill);
-        hash = 97 * hash + Objects.hashCode(this.mealTypes);
-        hash = 97 * hash + Objects.hashCode(this.priceFrom);
-        hash = 97 * hash + Objects.hashCode(this.priceTill);
-        hash = 97 * hash + Objects.hashCode(this.currency);
-        hash = 97 * hash + Objects.hashCode(this.onlyStandart);
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.type);
+        hash = 37 * hash + Objects.hashCode(this.kind);
+        hash = 37 * hash + Objects.hashCode(this.country);
+        hash = 37 * hash + Objects.hashCode(this.city);
+        hash = 37 * hash + Objects.hashCode(this.regions);
+        hash = 37 * hash + Objects.hashCode(this.hotel);
+        hash = 37 * hash + Objects.hashCode(this.ratings);
+        hash = 37 * hash + Objects.hashCode(this.adultAmount);
+        hash = 37 * hash + Objects.hashCode(this.childAmount);
+        hash = 37 * hash + Objects.hashCode(this.childAge);
+        hash = 37 * hash + Objects.hashCode(this.nightFrom);
+        hash = 37 * hash + Objects.hashCode(this.nightTill);
+        hash = 37 * hash + Objects.hashCode(this.dateFrom);
+        hash = 37 * hash + Objects.hashCode(this.dateTill);
+        hash = 37 * hash + Objects.hashCode(this.mealTypes);
+        hash = 37 * hash + Objects.hashCode(this.priceFrom);
+        hash = 37 * hash + Objects.hashCode(this.priceTill);
+        hash = 37 * hash + Objects.hashCode(this.currency);
+        hash = 37 * hash + Objects.hashCode(this.onlyStandart);
+        hash = 37 * hash + Objects.hashCode(this.requestTime);
         return hash;
     }
 
@@ -319,10 +306,19 @@ public class SearchingRequest {
             return false;
         }
         final SearchingRequest other = (SearchingRequest) obj;
+        if (!Objects.equals(this.regions, other.regions)) {
+            return false;
+        }
         if (!Objects.equals(this.hotel, other.hotel)) {
             return false;
         }
+        if (!Objects.equals(this.ratings, other.ratings)) {
+            return false;
+        }
         if (!Objects.equals(this.childAge, other.childAge)) {
+            return false;
+        }
+        if (!Objects.equals(this.mealTypes, other.mealTypes)) {
             return false;
         }
         if (!Objects.equals(this.type, other.type)) {
@@ -335,12 +331,6 @@ public class SearchingRequest {
             return false;
         }
         if (!Objects.equals(this.city, other.city)) {
-            return false;
-        }
-        if (!Objects.equals(this.regions, other.regions)) {
-            return false;
-        }
-        if (!Objects.equals(this.ratingSet, other.ratingSet)) {
             return false;
         }
         if (!Objects.equals(this.adultAmount, other.adultAmount)) {
@@ -361,9 +351,6 @@ public class SearchingRequest {
         if (!Objects.equals(this.dateTill, other.dateTill)) {
             return false;
         }
-        if (!Objects.equals(this.mealTypes, other.mealTypes)) {
-            return false;
-        }
         if (!Objects.equals(this.priceFrom, other.priceFrom)) {
             return false;
         }
@@ -376,12 +363,15 @@ public class SearchingRequest {
         if (!Objects.equals(this.onlyStandart, other.onlyStandart)) {
             return false;
         }
+        if (!Objects.equals(this.requestTime, other.requestTime)) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "SearchingRequest{" + "id=" + id + ", type=" + type + ", kind=" + kind + ", country=" + country + ", city=" + city + ", regions=" + regions + ", hotel=" + hotel + ", ratingSet=" + ratingSet + ", adultAmount=" + adultAmount + ", childAmount=" + childAmount + ", childAge=" + childAge + ", nightFrom=" + nightFrom + ", nightTill=" + nightTill + ", dateFrom=" + dateFrom + ", dateTill=" + dateTill + ", mealTypes=" + mealTypes + ", priceFrom=" + priceFrom + ", priceTill=" + priceTill + ", currency=" + currency + ", onlyStandart=" + onlyStandart + ", requestTime=" + requestTime + '}';
+        return "SearchingRequest{" + "id=" + id + ", type=" + type + ", kind=" + kind + ", country=" + country + ", city=" + city + ", regions=" + regions + ", hotel=" + hotel + ", ratings=" + ratings + ", adultAmount=" + adultAmount + ", childAmount=" + childAmount + ", childAge=" + childAge + ", nightFrom=" + nightFrom + ", nightTill=" + nightTill + ", dateFrom=" + dateFrom + ", dateTill=" + dateTill + ", mealTypes=" + mealTypes + ", priceFrom=" + priceFrom + ", priceTill=" + priceTill + ", currency=" + currency + ", onlyStandart=" + onlyStandart + ", requestTime=" + requestTime + '}';
     }
 
 }

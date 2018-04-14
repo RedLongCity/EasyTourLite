@@ -33,6 +33,10 @@ public class Meal_Type {
 
     public Meal_Type() {
     }
+
+    public Meal_Type(String id) {
+        this.id = id;
+    }
     
     public Meal_Type(String id, String name, String name_Full) {
         this.id = id;

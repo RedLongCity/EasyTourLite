@@ -21,8 +21,8 @@ import com.redlongcitywork.easytourlite.service.RegionService;
 import com.redlongcitywork.easytourlite.service.TypeService;
 import java.sql.Date;
 import java.util.HashSet;
+import javax.persistence.PersistenceException;
 import javax.validation.ConstraintViolationException;
-import org.hibernate.HibernateException;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -170,7 +170,7 @@ public class TourAdvanceDaoTest extends TestJPAConfig {
         assertFalse(dao.findAll().contains(tour));
     }
 
-    @Test(expected = HibernateException.class)
+    @Test(expected = PersistenceException.class)
     public void exceptionTest() {
         tour.setKey(null);
         dao.save(tour);

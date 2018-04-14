@@ -10,6 +10,7 @@ import com.redlongcitywork.easytourlite.service.CurrencyService;
 import com.redlongcitywork.easytourlite.service.From_CitiesService;
 import com.redlongcitywork.easytourlite.service.Meal_TypeService;
 import java.sql.Date;
+import javax.persistence.PersistenceException;
 import javax.validation.ConstraintViolationException;
 import org.hibernate.HibernateException;
 import static org.junit.Assert.assertFalse;
@@ -96,7 +97,7 @@ public class TourCasualDaoTest extends TestJPAConfig {
         assertFalse(dao.findAll().contains(tour));
     }
 
-    @Test(expected = HibernateException.class)
+    @Test(expected = PersistenceException.class)
     public void exceptionTest() {
         tour.setKey(null);
         dao.save(tour);

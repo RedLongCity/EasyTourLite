@@ -23,8 +23,8 @@ import com.redlongcitywork.easytourlite.service.TourAdvancedService;
 import com.redlongcitywork.easytourlite.service.TypeService;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import test.config.TestJPAConfig;
 
@@ -33,6 +33,8 @@ import test.config.TestJPAConfig;
  * @author redlongcity 24/03/2018
  */
 public class Instances extends TestJPAConfig {
+
+    private static final Logger LOG = Logger.getLogger(Instances.class.getName());
 
     public static final String STR = "STR";
     public static final int INT = 1;
@@ -60,9 +62,9 @@ public class Instances extends TestJPAConfig {
 
     @Autowired
     private SearchingRequestService searchingRequestService;
-
-    @Autowired
-    private TourAdvancedService tourAdvancedService;
+//
+//    @Autowired
+//    private TourAdvancedService tourAdvancedService;
 
     private From_Cities city;
 
@@ -176,9 +178,9 @@ public class Instances extends TestJPAConfig {
             searchingRequest.setKind(INT);
             searchingRequest.setCountry(getCountry());
             searchingRequest.setCity(getCity());
-            searchingRequest.getRegions().add(getRegion());
+            searchingRequest.setRegions("id");
             searchingRequest.setHotel(STR);
-            searchingRequest.getRatingSet().add(getRating());
+            searchingRequest.setRatings("id");
             searchingRequest.setAdultAmount(INT);
             searchingRequest.setChildAmount(INT);
             searchingRequest.setChildAge(STR);
@@ -186,7 +188,7 @@ public class Instances extends TestJPAConfig {
             searchingRequest.setNightTill(INT);
             searchingRequest.setDateFrom(getDate());
             searchingRequest.setDateTill(getDate());
-            searchingRequest.getMealTypes().add(getMealType());
+            searchingRequest.setMealTypes("id");
             searchingRequest.setPriceFrom(INT);
             searchingRequest.setPriceTill(INT);
             searchingRequest.setCurrency(getCurrency());
@@ -227,9 +229,8 @@ public class Instances extends TestJPAConfig {
         return new Date(System.currentTimeMillis());
     }
 
-    public Date getDate(String str) throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-        return (Date) formatter.parse(str);
+    public Date getDate(String str) {
+        return Date.valueOf(LocalDate.parse(str));
     }
 
     public Timestamp getTimeStamp() {

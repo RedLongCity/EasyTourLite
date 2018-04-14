@@ -8,7 +8,6 @@ import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
 import com.redlongcitywork.easytourlite.service.RegionService;
 import com.redlongcitywork.easytourlite.service.TypeService;
 import javax.validation.ConstraintViolationException;
-import org.hibernate.id.IdentifierGenerationException;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -19,6 +18,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import test.config.TestJPAConfig;
 import com.redlongcitywork.easytourlite.dao.HotelFilterDao;
+import javax.persistence.PersistenceException;
 
 /**
  *
@@ -88,7 +88,7 @@ public class HotelFilterDaoTest extends TestJPAConfig {
         assertFalse(dao.findAll().contains(hotel));
     }
 
-    @Test(expected = IdentifierGenerationException.class)
+    @Test(expected = PersistenceException.class)
     public void exceptionTest() {
         hotel.setId(null);
         dao.save(hotel);

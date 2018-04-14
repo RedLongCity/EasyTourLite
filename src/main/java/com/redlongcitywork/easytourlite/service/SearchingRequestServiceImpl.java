@@ -39,7 +39,7 @@ public class SearchingRequestServiceImpl implements SearchingRequestService {
             entity.setCountry(request.getCountry());
             entity.setCity(request.getCity());
             entity.setRegions(request.getRegions());
-            entity.setRatingSet(request.getRatingSet());
+            entity.setRatings(request.getRatings());
             entity.setAdultAmount(request.getAdultAmount());
             entity.setChildAmount(request.getChildAmount());
             entity.setChildAge(request.getChildAge());
@@ -86,5 +86,4 @@ public class SearchingRequestServiceImpl implements SearchingRequestService {
     public SearchingRequest findByCriterions(List<Criterion> criterions) {
         return dao.findByCriterions(criterions);
     }
-
 }

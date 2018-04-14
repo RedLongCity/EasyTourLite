@@ -13,14 +13,9 @@ import com.redlongcitywork.easytourlite.model.Region;
 import com.redlongcitywork.easytourlite.model.SearchingRequest;
 import com.redlongcitywork.easytourlite.model.TourAdvanced;
 import com.redlongcitywork.easytourlite.model.Type;
-import com.redlongcitywork.easytourlite.service.CountryService;
 import com.redlongcitywork.easytourlite.service.CurrencyService;
-import com.redlongcitywork.easytourlite.service.From_CitiesService;
-import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
-import com.redlongcitywork.easytourlite.service.Meal_TypeService;
-import com.redlongcitywork.easytourlite.service.RegionService;
+import com.redlongcitywork.easytourlite.service.SearchingRequestService;
 import com.redlongcitywork.easytourlite.service.TourAdvancedService;
-import com.redlongcitywork.easytourlite.service.TypeService;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
@@ -34,6 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import test.config.TestJPAConfig;
+import test.dao.Instances;
 
 /**
  *
@@ -44,31 +40,19 @@ import test.config.TestJPAConfig;
 public class SearchConverterTest extends TestJPAConfig {
 
     @Autowired
-    private SearchConvertor convertor;
-
-    @Autowired
     private TourAdvancedService service;
-
-    @Autowired
-    private CountryService countryService;
-
-    @Autowired
-    private TypeService typeService;
-
-    @Autowired
-    private RegionService regionService;
-
-    @Autowired
-    private Meal_TypeService mealTypeService;
 
     @Autowired
     private CurrencyService currencyService;
 
     @Autowired
-    private From_CitiesService cityService;
+    private SearchingRequestService requestService;
 
     @Autowired
-    private Hotel_RatingService ratingService;
+    private Instances instances;
+
+    @Autowired
+    private SearchConvertor convertor;
 
     private TourAdvanced tour;
 
@@ -103,50 +87,22 @@ public class SearchConverterTest extends TestJPAConfig {
     @Before
     public void populate() {
         tour = new TourAdvanced();
-        country = new Country();
-        country.setId("id");
-        country.setName("name");
-        type = new Type();
-        type.setId("id");
-        type.setName("name");
-        region = new Region();
-        region.setId("id");
-        region.setName("name");
-        mealType = new Meal_Type();
-        mealType.setId("id");
-        mealType.setName("name");
-        mealType.setName_Full("name");
-        currency = new Currency();
-        currency.setId("id");
-        currency.setName("name");
-        price = new Price();
+        country = instances.getCountry();
+        type = instances.getType();
+        region = instances.getRegion();
+        mealType = instances.getMealType();
+        currency = instances.getCurrency();
+        price = instances.getPrice();
         price.setCost(500);
-        price.setCurrency(currency);
-        image = new Hotel_Image();
-        image.setThumb("thumb");
-        image.setFull("full");
-        facility = new Facility();
-        facility.setId("id");
-        facility.setCategory("category");
-        facility.setCategoryId("categoryId");
-        facility.setName("name");
-        facility.setMain(Boolean.TRUE);
-        facility.setPaid(Boolean.TRUE);
-        city = new From_Cities();
-        city.setId("id");
-        city.setName("name");
-        rating = new Hotel_Rating();
-        rating.setId("id");
-        rating.setName("name");
+        image = instances.getHotelImage();
+        facility = instances.getFacility();
+        city = instances.getCity();
+        rating = instances.getRating();
+        instances.saveInstances();
 
-        countryService.saveCountry(country);
-        typeService.saveType(type);
-        regionService.saveRegion(region);
-        mealTypeService.saveMeal_Type(mealType);
-        currencyService.saveCurrency(currency);
-        cityService.saveFrom_Cities(city);
-        ratingService.saveHotel_Rating(rating);
-
+//        stub(mealTypeStorage.findById(anyString())).toReturn(mealType);
+//        stub(regionStorage.findById(anyString())).toReturn(region);
+//        stub(ratingStorage.findById(anyString())).toReturn(rating);
         tour.setKey("key");
         tour.setCountry(country);
         tour.setType(type);
@@ -209,16 +165,17 @@ public class SearchConverterTest extends TestJPAConfig {
         request.setKind(1);
         request.setCountry(country);
         request.setCity(city);
-        request.getRegions().add(region);
-        request.getRatingSet().add(rating);
+        request.setRegions(region.getId());
+        request.setRatings(rating.getId());
         request.setAdultAmount(1);
         request.setChildAmount(2);
         request.setNightFrom(0);
         request.setNightTill(3);
-        request.setDateFrom(Date.valueOf(LocalDate.parse("2000-01-01")));
-        request.setDateTill(Date.valueOf(LocalDate.parse("2000-01-04")));
-        request.getMealTypes().add(mealType);
+        request.setDateFrom(instances.getDate("2000-01-01"));
+        request.setDateTill(instances.getDate("2000-01-04"));
+        request.setMealTypes(mealType.getId());
         request.setCurrency(currency);
+        request.setRequestTime(instances.getTimeStamp());
     }
 
     @Test
@@ -250,54 +207,6 @@ public class SearchConverterTest extends TestJPAConfig {
 
     @Test
     public void urlConvertTest() {
-        String regions = null;
-        if (request.getRegions() != null) {
-            regions = new String("");
-            boolean flag = true;
-            for (Region entity : request.getRegions()) {
-                if (flag) {
-                    regions = regions.concat(entity.getId());
-                    flag = false;
-                } else {
-                    regions = regions.concat(
-                            ":" + entity.getId()
-                    );
-                }
-            }
-        }
-
-        String ratings = null;
-        if (request.getRatingSet() != null) {
-            ratings = new String("");
-            boolean flag = true;
-            for (Hotel_Rating entity : request.getRatingSet()) {
-                if (flag) {
-                    ratings = ratings.concat(entity.getId());
-                    flag = false;
-                } else {
-                    ratings = ratings.concat(
-                            ":" + entity.getId()
-                    );
-                }
-            }
-        }
-
-        String types = null;
-        if (request.getMealTypes() != null) {
-            types = new String("");
-            boolean flag = true;
-            for (Meal_Type entity : request.getMealTypes()) {
-                if (flag) {
-                    types = types.concat(entity.getId());
-                    flag = false;
-                } else {
-                    types = types.concat(
-                            ":" + entity.getId()
-                    );
-                }
-            }
-        }
-
         String url = "?type=" + request.getType().getId()
                 + "&kind=" + request.getKind()
                 + "&country=" + request.getCountry().getId()
@@ -310,20 +219,51 @@ public class SearchConverterTest extends TestJPAConfig {
                 + "&date_till=" + "04.01.00"
                 + "&currency=" + request.getCurrency().getId();
 
-        if (regions != null) {
-            url = url.concat("&region=" + regions);
+        if (request.getRegions() != null) {
+            url = url.concat("&region=" + request.getRegions());
         }
 
-        if (ratings != null) {
-            url = url.concat("&hotel_rating=" + ratings);
+        if (request.getRatings() != null) {
+            url = url.concat("&hotel_rating=" + request.getRatings());
         }
 
-        if (types != null) {
-            url = url.concat("&meal_type=" + types);
+        if (request.getMealTypes() != null) {
+            url = url.concat("&meal_type=" + request.getMealTypes());
         }
-        
+
         String result = convertor.getURLByRequest(request);
-        assertEquals(url,convertor.getURLByRequest(request));
+        assertEquals(url, convertor.getURLByRequest(request));
+    }
+
+    @Test
+    public void selectTest() {
+        requestService.saveOrUpdateSearchingRequest(request);
+        SearchingRequest request2 = new SearchingRequest();
+        request2.setType(type);
+        request2.setKind(1);
+        request2.setCountry(country);
+        request2.setCity(city);
+        request2.setRegions(region.getId());
+        request2.setRatings(rating.getId() + ":id2");
+        request2.setAdultAmount(1);
+        request2.setChildAmount(2);
+        request2.setNightFrom(0);
+        request2.setNightTill(3);
+        request2.setDateFrom(instances.getDate("2000-01-01"));
+        request2.setDateTill(instances.getDate("2000-01-04"));
+        request2.setMealTypes(mealType.getId());
+        request2.setCurrency(currency);
+        request2.setRequestTime(instances.getTimeStamp());
+        requestService.saveOrUpdateSearchingRequest(request2);
+
+        assertTrue(requestService.findByCriterions(
+                convertor.getRequestCriterions(request)).equals(request));
+        assertTrue(requestService.findByCriterions(
+                convertor.getRequestCriterions(request2)).equals(request2));
+        assertFalse(requestService.findByCriterions(
+                convertor.getRequestCriterions(request)).equals(request2));
+        assertFalse(requestService.findByCriterions(
+                convertor.getRequestCriterions(request2)).equals(request));
     }
 
 }

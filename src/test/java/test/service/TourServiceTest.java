@@ -11,8 +11,8 @@ import com.redlongcitywork.easytourlite.service.Hotel_RatingService;
 import com.redlongcitywork.easytourlite.service.Meal_TypeService;
 import com.redlongcitywork.easytourlite.service.TourService;
 import java.sql.Date;
+import javax.persistence.PersistenceException;
 import javax.validation.ConstraintViolationException;
-import org.hibernate.HibernateException;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -107,7 +107,7 @@ public class TourServiceTest extends TestJPAConfig {
         assertFalse(service.findAll().contains(tour));
     }
 
-    @Test(expected = HibernateException.class)
+    @Test(expected = PersistenceException.class)
     public void exceptionTest() {
         tour.setKey(null);
         service.saveTour(tour);

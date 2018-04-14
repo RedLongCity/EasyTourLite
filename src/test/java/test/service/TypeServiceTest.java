@@ -2,8 +2,8 @@ package test.service;
 
 import com.redlongcitywork.easytourlite.model.Type;
 import com.redlongcitywork.easytourlite.service.TypeService;
+import javax.persistence.PersistenceException;
 import javax.validation.ConstraintViolationException;
-import org.hibernate.HibernateException;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -45,7 +45,7 @@ public class TypeServiceTest extends TestJPAConfig {
         assertFalse(service.findAll().contains(type));
     }
 
-    @Test(expected = HibernateException.class)
+    @Test(expected = PersistenceException.class)
     public void exceptionTest() {
         type.setId(null);
         service.saveType(type);

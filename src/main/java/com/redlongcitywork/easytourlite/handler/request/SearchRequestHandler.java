@@ -37,14 +37,9 @@ public class SearchRequestHandler implements RequestHandler<TourAdvancedResponse
 
     private final TourAdvancedService tourService;
 
-    public SearchRequestHandler(
-            TourAdvancedExtractor extractor,
-            TimeUtils utils,
-            ResponsePull responsePull,
-            RequestPull requestPull,
-            ComeBackUtils comeBackUtils,
-            SearchingRequestService requestService,
-            TourAdvancedService tourService) {
+    private final SearchConvertor convertor;
+
+    public SearchRequestHandler(TourAdvancedExtractor extractor, TimeUtils utils, ResponsePull responsePull, RequestPull requestPull, ComeBackUtils comeBackUtils, SearchingRequestService requestService, TourAdvancedService tourService, SearchConvertor convertor) {
         this.extractor = extractor;
         this.utils = utils;
         this.responsePull = responsePull;
@@ -52,6 +47,7 @@ public class SearchRequestHandler implements RequestHandler<TourAdvancedResponse
         this.comeBackUtils = comeBackUtils;
         this.requestService = requestService;
         this.tourService = tourService;
+        this.convertor = convertor;
     }
 
     @Override
@@ -60,11 +56,12 @@ public class SearchRequestHandler implements RequestHandler<TourAdvancedResponse
         if (item != null && item.isImmune()) {
             return new TourAdvancedResponse(0, (List<TourAdvanced>) item.getAnswer(), request);
         }
-        SearchingRequest entity = (SearchingRequest) requestService.findByCriterions(SearchConvertor.getRequestCriterions(request));
+        SearchingRequest entity = (SearchingRequest) requestService
+                .findByCriterions(convertor.getRequestCriterions(request));
         if (entity != null) {
             if (entity.getRequestTime().after(utils.getRevelanceTime())) {
                 List<TourAdvanced> list = tourService.findByCriterions(
-                        SearchConvertor.getCriterionsByRequest(request)
+                        convertor.getCriterionsByRequest(request)
                 );
                 return new TourAdvancedResponse(0, list, request);
             }

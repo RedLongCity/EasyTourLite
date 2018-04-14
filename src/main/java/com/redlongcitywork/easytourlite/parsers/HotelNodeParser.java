@@ -1,10 +1,7 @@
 package com.redlongcitywork.easytourlite.parsers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.redlongcitywork.easytourlite.model.Country;
 import com.redlongcitywork.easytourlite.model.Hotel;
-import com.redlongcitywork.easytourlite.model.Hotel_Rating;
-import com.redlongcitywork.easytourlite.model.Region;
 import com.redlongcitywork.easytourlite.storage.CountryStorage;
 import com.redlongcitywork.easytourlite.storage.HotelRatingStorage;
 import com.redlongcitywork.easytourlite.storage.RegionStorage;
@@ -58,15 +55,21 @@ public class HotelNodeParser implements NodeParser<Hotel> {
         Hotel hotel = new Hotel();
 
         if (jsonNode.has("country")) {
-            hotel.setCountry(findCountry(jsonNode.path("country").asText()));
+            hotel.setCountry(countryStorage
+                    .findByName(jsonNode.path("country")
+                            .asText()));
         }
 
         if (jsonNode.has("region_id")) {
-            hotel.setRegion(findRegion(jsonNode.path("region_id").asText()));
+            hotel.setRegion(regionStorage
+                    .findById(jsonNode.path("region_id")
+                            .asText()));
         }
 
         if (jsonNode.has("hotel_rating")) {
-            hotel.setRating(findRating(jsonNode.path("hotel_rating").asText()));
+            hotel.setRating(ratingStorage
+                    .findByName(jsonNode.path("hotel_rating")
+                            .asText()));
         }
 
         if (jsonNode.has("adult_amount")) {
@@ -121,32 +124,5 @@ public class HotelNodeParser implements NodeParser<Hotel> {
         }
 
         return hotel;
-    }
-
-    private Region findRegion(String id) {
-        for (Region region : regionStorage.getContent()) {
-            if (region.getId().equals(id)) {
-                return region;
-            }
-        }
-        return null;
-    }
-
-    private Country findCountry(String name) {
-        for (Country country : countryStorage.getContent()) {
-            if (country.getName().equals(name)) {
-                return country;
-            }
-        }
-        return null;
-    }
-
-    private Hotel_Rating findRating(String name) {
-        for (Hotel_Rating rating : ratingStorage.getContent()) {
-            if (rating.getName().equals(name)) {
-                return rating;
-            }
-        }
-        return null;
     }
 }

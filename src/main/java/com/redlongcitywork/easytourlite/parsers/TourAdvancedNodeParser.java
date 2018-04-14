@@ -1,15 +1,8 @@
 package com.redlongcitywork.easytourlite.parsers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.redlongcitywork.easytourlite.model.Country;
-import com.redlongcitywork.easytourlite.model.Currency;
-import com.redlongcitywork.easytourlite.model.From_Cities;
-import com.redlongcitywork.easytourlite.model.Hotel_Rating;
-import com.redlongcitywork.easytourlite.model.Meal_Type;
 import com.redlongcitywork.easytourlite.model.Price;
-import com.redlongcitywork.easytourlite.model.Region;
 import com.redlongcitywork.easytourlite.model.TourAdvanced;
-import com.redlongcitywork.easytourlite.model.Type;
 import com.redlongcitywork.easytourlite.storage.CityStorage;
 import com.redlongcitywork.easytourlite.storage.CountryStorage;
 import com.redlongcitywork.easytourlite.storage.CurrencyStorage;
@@ -19,6 +12,8 @@ import com.redlongcitywork.easytourlite.storage.RegionStorage;
 import com.redlongcitywork.easytourlite.storage.TypeStorage;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.stereotype.Service;
@@ -76,11 +71,15 @@ public class TourAdvancedNodeParser implements NodeParser<TourAdvanced> {
         }
 
         if (jsonNode.has("country")) {
-            tour.setCountry(findCountry(jsonNode.path("country").asText()));
+            tour.setCountry(countryStorage
+                    .findByName(jsonNode.path("country")
+                            .asText()));
         }
 
         if (jsonNode.has("region_id")) {
-            tour.setRegion(findRegion(jsonNode.path("region_id").asText()));
+            tour.setRegion(regionStorage
+                    .findById(jsonNode.path("region_id")
+                            .asText()));
         }
 
         if (jsonNode.has("hotel_id")) {
@@ -92,11 +91,15 @@ public class TourAdvancedNodeParser implements NodeParser<TourAdvanced> {
         }
 
         if (jsonNode.has("hotel_rating")) {
-            tour.setRating(findRating(jsonNode.path("hotel_rating").asText()));
+            tour.setRating(ratingStorage
+                    .findByName(jsonNode.path("hotel_rating")
+                            .asText()));
         }
 
         if (jsonNode.has("meal_type")) {
-            tour.setMealType(findMealType(jsonNode.path("meal_type").asText()));
+            tour.setMealType(mealTypeStorage
+                    .findByName(jsonNode.path("meal_type")
+                            .asText()));
         }
 
         if (jsonNode.has("adult_amount")) {
@@ -130,29 +133,26 @@ public class TourAdvancedNodeParser implements NodeParser<TourAdvanced> {
         }
 
         if (jsonNode.has("currency_id")) {
-            tour.setCurrency(findCurrency(jsonNode.path("currency_id").asText()));
+            tour.setCurrency(currencyStorage
+                    .findByName(jsonNode.path("currency_id")
+                            .asText()));
         }
 
         if (jsonNode.has("prices")) {
-            Price priceUsd = new Price();
-            priceUsd.setCurrency(findCurrency("1"));
-            priceUsd.setCost(jsonNode.path("prices").path("1").asInt());
-
-            Price priceUah = new Price();
-            priceUah.setCurrency(findCurrency("2"));
-            priceUah.setCost(jsonNode.path("prices").path("2").asInt());
-
-            Price priceEur = new Price();
-            priceEur.setCurrency(findCurrency("10"));
-            priceEur.setCost(jsonNode.path("prices").path("10").asInt());
-
-            tour.getPrices().add(priceUsd);
-            tour.getPrices().add(priceUah);
-            tour.getPrices().add(priceEur);
+            List<String> currencyArray = Arrays.asList("1", "2", "10");
+            currencyArray.forEach((p) -> {
+                tour.getPrices()
+                        .add(new Price(
+                                currencyStorage.findById(p),
+                                jsonNode.path("prices").path("1").asInt()
+                        ));
+            });
         }
 
         if (jsonNode.has("from_city")) {
-            tour.setCity(findCity(jsonNode.path("from_city").asText()));
+            tour.setCity(cityStorage
+                    .findById(jsonNode.path("from_city")
+                            .asText()));
         }
 
         if (jsonNode.has("transport_type")) {
@@ -177,68 +177,4 @@ public class TourAdvancedNodeParser implements NodeParser<TourAdvanced> {
 
         return tour;
     }
-
-    private Country findCountry(String name) {
-        for (Country country : countryStorage.getContent()) {
-            if (country.getName().equals(name)) {
-                return country;
-            }
-        }
-        return null;
-    }
-
-    private Type findType(String name) {
-        for (Type type : typeStorage.getContent()) {
-            if (type.getName().equals(name)) {
-                return type;
-            }
-        }
-        return null;
-    }
-
-    private Meal_Type findMealType(String name) {
-        for (Meal_Type type : mealTypeStorage.getContent()) {
-            if (type.getName().equals(name)) {
-                return type;
-            }
-        }
-        return null;
-    }
-
-    private Currency findCurrency(String id) {
-        for (Currency currency : currencyStorage.getContent()) {
-            if (currency.getId().equals(id)) {
-                return currency;
-            }
-        }
-        return null;
-    }
-
-    private From_Cities findCity(String name) {
-        for (From_Cities city : cityStorage.getContent()) {
-            if (city.getName().equals(name)) {
-                return city;
-            }
-        }
-        return null;
-    }
-
-    private Region findRegion(String id) {
-        for (Region region : regionStorage.getContent()) {
-            if (region.getId().equals(id)) {
-                return region;
-            }
-        }
-        return null;
-    }
-
-    private Hotel_Rating findRating(String name) {
-        for (Hotel_Rating rating : ratingStorage.getContent()) {
-            if (rating.getName().equals(name)) {
-                return rating;
-            }
-        }
-        return null;
-    }
-
 }

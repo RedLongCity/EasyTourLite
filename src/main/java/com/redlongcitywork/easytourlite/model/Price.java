@@ -37,6 +37,14 @@ public class Price {
     @Column(name="cost",unique=false,nullable=false)
     private Integer cost;
 
+    public Price() {
+    }
+
+    public Price(Currency currency, Integer cost) {
+        this.currency = currency;
+        this.cost = cost;
+    }
+    
     public Integer getId() {
         return id;
     }

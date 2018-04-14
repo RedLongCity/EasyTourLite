@@ -2,8 +2,8 @@ package test.dao;
 
 import com.redlongcitywork.easytourlite.dao.Meal_TypeDao;
 import com.redlongcitywork.easytourlite.model.Meal_Type;
+import javax.persistence.PersistenceException;
 import javax.validation.ConstraintViolationException;
-import org.hibernate.HibernateException;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -47,7 +47,7 @@ public class Meal_TypeDaoTest extends TestJPAConfig {
         assertFalse(dao.findAll().contains(type));
     }
 
-    @Test(expected = HibernateException.class)
+    @Test(expected = PersistenceException.class)
     public void exceptionTest() {
         type.setId(null);
         dao.save(type);

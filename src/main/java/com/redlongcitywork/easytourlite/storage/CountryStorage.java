@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
  * @author redlongcity 27/03/2018
  */
 @Service
-public class CountryStorage implements Storage<List<Country>> {
+public class CountryStorage implements Storage<List<Country>, Country> {
 
     private final CountryService service;
 
@@ -31,6 +31,28 @@ public class CountryStorage implements Storage<List<Country>> {
     @Override
     public void updateStorage() {
         content = service.findAll();
+    }
+
+    public Country findById(String id) {
+        Country result = null;
+        if (content != null) {
+            result = content.stream().filter(obj -> obj.getName()
+                    .equalsIgnoreCase(id))
+                    .findFirst()
+                    .get();
+        }
+        return result;
+    }
+
+    public Country findByName(String name) {
+        Country result = null;
+        if (content != null) {
+            result = content.stream().filter(obj -> obj.getName()
+                    .equalsIgnoreCase(name))
+                    .findFirst()
+                    .get();
+        }
+        return result;
     }
 
 }

@@ -25,14 +25,14 @@ public class TourAdvancedSaver implements Saver {
 
     private final SearchingRequestService requestService;
 
+    private final SearchConvertor convertor;
+
     private final TimeUtils utils;
 
-    public TourAdvancedSaver(
-            TourAdvancedSessionService sessionService,
-            SearchingRequestService requestService,
-            TimeUtils utils) {
+    public TourAdvancedSaver(TourAdvancedSessionService sessionService, SearchingRequestService requestService, SearchConvertor convertor, TimeUtils utils) {
         this.sessionService = sessionService;
         this.requestService = requestService;
+        this.convertor = convertor;
         this.utils = utils;
     }
 
@@ -41,7 +41,7 @@ public class TourAdvancedSaver implements Saver {
         if (item != null) {
             SearchingRequest request = (SearchingRequest) item.getRequest();
             SearchingRequest entity = requestService.
-                    findByCriterions(SearchConvertor.getRequestCriterions(request));
+                    findByCriterions(convertor.getRequestCriterions(request));
             TourAdvancedSession session = null;
             if (entity == null) {
                 request.setRequestTime(utils.getCurrentTime());

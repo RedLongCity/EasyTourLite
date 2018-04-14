@@ -1,9 +1,6 @@
 package com.redlongcitywork.easytourlite.parsers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.redlongcitywork.easytourlite.model.Currency;
-import com.redlongcitywork.easytourlite.model.From_Cities;
-import com.redlongcitywork.easytourlite.model.Meal_Type;
 import com.redlongcitywork.easytourlite.model.Price;
 import com.redlongcitywork.easytourlite.model.TourCasual;
 import com.redlongcitywork.easytourlite.storage.CityStorage;
@@ -11,6 +8,8 @@ import com.redlongcitywork.easytourlite.storage.CurrencyStorage;
 import com.redlongcitywork.easytourlite.storage.MealTypeStorage;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.stereotype.Service;
@@ -25,9 +24,9 @@ public class TourCasualNodeParser implements NodeParser<TourCasual> {
     private static final Logger LOG = Logger.getLogger(TourCasualNodeParser.class.getName());
 
     private final MealTypeStorage mealTypeStorage;
-    
+
     private final CurrencyStorage currencyStorage;
-    
+
     private final CityStorage cityStorage;
 
     public TourCasualNodeParser(MealTypeStorage mealTypeStorage, CurrencyStorage currencyStorage, CityStorage cityStorage) {
@@ -50,7 +49,9 @@ public class TourCasualNodeParser implements NodeParser<TourCasual> {
         }
 
         if (jsonNode.has("meal_type")) {
-            tour.setMealType(findMealType(jsonNode.path("meal_type").asText()));
+            tour.setMealType(mealTypeStorage
+                    .findByName(jsonNode.path("meal_type")
+                            .asText()));
         }
 
         if (jsonNode.has("room_type")) {
@@ -72,29 +73,24 @@ public class TourCasualNodeParser implements NodeParser<TourCasual> {
         }
 
         if (jsonNode.has("currency_id")) {
-            tour.setCurrency(findCurrency(jsonNode.path("currency_id").asText()));
+            tour.setCurrency(currencyStorage.findById(jsonNode.path("currency_id").asText()));
         }
 
         if (jsonNode.has("prices")) {
-            Price priceUsd = new Price();
-            priceUsd.setCurrency(findCurrency("1"));
-            priceUsd.setCost(jsonNode.path("prices").path("1").asInt());
-
-            Price priceUah = new Price();
-            priceUah.setCurrency(findCurrency("2"));
-            priceUah.setCost(jsonNode.path("prices").path("2").asInt());
-
-            Price priceEur = new Price();
-            priceEur.setCurrency(findCurrency("10"));
-            priceEur.setCost(jsonNode.path("prices").path("10").asInt());
-
-            tour.getPrices().add(priceUsd);
-            tour.getPrices().add(priceUah);
-            tour.getPrices().add(priceEur);
+            List<String> currencyArray = Arrays.asList("1", "2", "10");
+            currencyArray.forEach((p) -> {
+                tour.getPrices()
+                        .add(new Price(
+                                currencyStorage.findById(p),
+                                jsonNode.path("prices").path("1").asInt()
+                        ));
+            });
         }
 
         if (jsonNode.has("from_city")) {
-            tour.setCity(findCity(jsonNode.path("from_city").asText()));
+            tour.setCity(cityStorage
+                    .findByName(jsonNode.path("from_city")
+                            .asText()));
         }
 
         if (jsonNode.has("transport_type")) {
@@ -102,32 +98,5 @@ public class TourCasualNodeParser implements NodeParser<TourCasual> {
         }
 
         return tour;
-    }
-
-    private Meal_Type findMealType(String name) {
-        for (Meal_Type type : mealTypeStorage.getContent()) {
-            if (type.getName().equals(name)) {
-                return type;
-            }
-        }
-        return null;
-    }
-
-    private Currency findCurrency(String id) {
-        for (Currency currency : currencyStorage.getContent()) {
-            if (currency.getId().equals(id)) {
-                return currency;
-            }
-        }
-        return null;
-    }
-
-    private From_Cities findCity(String name) {
-        for (From_Cities city : cityStorage.getContent()) {
-            if (city.getName().equals(name)) {
-                return city;
-            }
-        }
-        return null;
     }
 }

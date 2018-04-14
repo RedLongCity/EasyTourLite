@@ -64,8 +64,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.redlongcitywork.easytourlite.dao.HotelFilterDao;
@@ -294,11 +294,6 @@ public class TestJPAConfig {
         }
 
         @Bean
-        public SearchConvertor searchConverter() {
-            return new SearchConvertor();
-        }
-
-        @Bean
         public TourAdvancedSessionDao tourAdvancedSessionDao() {
             return new TourAdvancedSessionDaoImpl();
         }
@@ -306,6 +301,11 @@ public class TestJPAConfig {
         @Bean
         public TourAdvancedSessionService tourAdvancedSessionService() {
             return new TourAdvancedSessionServiceImpl();
+        }
+
+        @Bean
+        public SearchConvertor searchConvertor() {
+            return new SearchConvertor();
         }
 
     }

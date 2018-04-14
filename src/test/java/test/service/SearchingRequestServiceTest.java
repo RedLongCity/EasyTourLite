@@ -8,8 +8,6 @@ import com.redlongcitywork.easytourlite.model.Meal_Type;
 import com.redlongcitywork.easytourlite.model.SearchingRequest;
 import com.redlongcitywork.easytourlite.service.SearchingRequestService;
 import java.sql.Date;
-import java.util.HashSet;
-import java.util.Set;
 import javax.validation.ConstraintViolationException;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -62,7 +60,7 @@ public class SearchingRequestServiceTest extends TestJPAConfig {
         request.setCountry(country);
         request.setCity(city);
         request.setHotel("HotelName");
-        request.getRatingSet().add(rating);
+        request.setRatings(rating.getId());
         request.setAdultAmount(1);
         request.setChildAmount(1);
         request.setChildAge("1");
@@ -70,7 +68,7 @@ public class SearchingRequestServiceTest extends TestJPAConfig {
         request.setNightTill(2);
         request.setDateFrom(instances.getDate());
         request.setDateTill(instances.getDate());
-        request.getMealTypes().add(type);
+        request.setMealTypes(type.getId());
         request.setPriceFrom(1);
         request.setPriceTill(2);
         request.setCurrency(currency);
@@ -108,16 +106,14 @@ public class SearchingRequestServiceTest extends TestJPAConfig {
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest_3() {
         request.setCity(city);
-        request.setRatingSet(null);
+        request.setRatings(null);
         service.saveSearchingRequest(request);
         service.findAll();
     }
 
     @Test(expected = ConstraintViolationException.class)
     public void exceptionTest_4() {
-        Set<Hotel_Rating> set = new HashSet<>();
-        set.add(rating);
-        request.setRatingSet(set);
+        request.setRatings(rating.getId());
         request.setAdultAmount(null);
         service.saveSearchingRequest(request);
         service.findAll();

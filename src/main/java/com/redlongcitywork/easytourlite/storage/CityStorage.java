@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
  * @author redlongcity 27/03/2018
  */
 @Service
-public class CityStorage implements Storage<List<From_Cities>> {
+public class CityStorage implements Storage<List<From_Cities>, From_Cities> {
 
     private final From_CitiesService service;
 
@@ -33,4 +33,27 @@ public class CityStorage implements Storage<List<From_Cities>> {
         content = service.findAll();
     }
 
+    @Override
+    public From_Cities findById(String id) {
+        From_Cities result = null;
+        if (content != null) {
+            result = content.stream().filter(obj -> obj.getName()
+                    .equalsIgnoreCase(id))
+                    .findFirst()
+                    .get();
+        }
+        return result;
+    }
+
+    @Override
+    public From_Cities findByName(String name) {
+        From_Cities result = null;
+        if (content != null) {
+            result = content.stream().filter(obj -> obj.getName()
+                    .equalsIgnoreCase(name))
+                    .findFirst()
+                    .get();
+        }
+        return result;
+    }
 }

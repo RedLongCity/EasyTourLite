@@ -34,17 +34,17 @@ public class SearchingRequestJson extends TestJPAConfig {
     @Before
     public void populate() {
         request = new SearchingRequest();
-//        request.setType(new Type("1"));
-//        request.setCountry(new Country("338", "Египет"));
-//        request.setCity(new From_Cities("2014", "Киев"));
-        request.getRegions().add(new Region("5996", "Шарм Эль Шейх"));
-//        request.getRatingSet().add(new Hotel_Rating("4", "4"));
-//        request.getMealTypes().add(new Meal_Type("388", "BB", "Завтрак"));
-//        request.setAdultAmount(2);
-//        request.setNightFrom(6);
-//        request.setNightTill(7);
-//        request.setDateFrom(parseForDate("2017-01-25"));
-//        request.setDateTill(parseForDate("2017-01-27"));
+        request.setType(new Type("1"));
+        request.setCountry(new Country("338", "Египет"));
+        request.setCity(new From_Cities("2014", "Киев"));
+        request.setRegions("5996");
+        request.setRatings("4");
+        request.setMealTypes("388");
+        request.setAdultAmount(2);
+        request.setNightFrom(6);
+        request.setNightTill(7);
+        request.setDateFrom(parseForDate("2017-01-25"));
+        request.setDateTill(parseForDate("2017-01-27"));
     }
 
     @Test

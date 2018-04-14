@@ -4,10 +4,13 @@ package com.redlongcitywork.easytourlite.storage;
  *
  * @author redlongcity 27/03/2018
  */
-public interface Storage<T> {
+public interface Storage<Collection, Element> {
 
-    T getContent();
+    Collection getContent();
 
     void updateStorage();
 
+    Element findById(String id);
+
+    Element findByName(String name);
 }

@@ -2,8 +2,8 @@ package test.dao;
 
 import com.redlongcitywork.easytourlite.dao.CurrencyDao;
 import com.redlongcitywork.easytourlite.model.Currency;
+import javax.persistence.PersistenceException;
 import javax.validation.ConstraintViolationException;
-import org.hibernate.HibernateException;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -45,7 +45,7 @@ public class CurencyDaoTest extends TestJPAConfig {
         assertFalse(dao.findAll().contains(currency));
     }
 
-    @Test(expected = HibernateException.class)
+    @Test(expected = PersistenceException.class)
     public void exceptionTest() {
         currency.setId(null);
         dao.save(currency);

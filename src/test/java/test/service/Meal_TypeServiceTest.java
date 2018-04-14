@@ -2,8 +2,8 @@ package test.service;
 
 import com.redlongcitywork.easytourlite.model.Meal_Type;
 import com.redlongcitywork.easytourlite.service.Meal_TypeService;
+import javax.persistence.PersistenceException;
 import javax.validation.ConstraintViolationException;
-import org.hibernate.HibernateException;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -16,14 +16,12 @@ import test.config.TestJPAConfig;
 
 /**
  *
- * @author redlongcity
- * 12/02/2018
+ * @author redlongcity 12/02/2018
  */
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-public class Meal_TypeServiceTest extends TestJPAConfig{
-    
+public class Meal_TypeServiceTest extends TestJPAConfig {
+
     @Autowired
     private Meal_TypeService service;
 
@@ -49,7 +47,7 @@ public class Meal_TypeServiceTest extends TestJPAConfig{
         assertFalse(service.findAll().contains(type));
     }
 
-    @Test(expected = HibernateException.class)
+    @Test(expected = PersistenceException.class)
     public void exceptionTest() {
         type.setId(null);
         service.saveMeal_Type(type);
@@ -62,6 +60,5 @@ public class Meal_TypeServiceTest extends TestJPAConfig{
         service.saveMeal_Type(type);
         service.findAll();
     }
-    
-    
+
 }

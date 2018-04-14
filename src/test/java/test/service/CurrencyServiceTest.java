@@ -2,8 +2,8 @@ package test.service;
 
 import com.redlongcitywork.easytourlite.model.Currency;
 import com.redlongcitywork.easytourlite.service.CurrencyService;
+import javax.persistence.PersistenceException;
 import javax.validation.ConstraintViolationException;
-import org.hibernate.HibernateException;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -45,7 +45,7 @@ public class CurrencyServiceTest extends TestJPAConfig {
         assertFalse(service.findAll().contains(currency));
     }
 
-    @Test(expected = HibernateException.class)
+    @Test(expected = PersistenceException.class)
     public void exceptionTest() {
         currency.setId(null);
         service.saveCurrency(currency);

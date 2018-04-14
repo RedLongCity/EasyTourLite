@@ -2,7 +2,7 @@ package test.service;
 
 import com.redlongcitywork.easytourlite.model.Country;
 import com.redlongcitywork.easytourlite.service.CountryService;
-import org.hibernate.HibernateException;
+import javax.persistence.PersistenceException;
 import javax.validation.ConstraintViolationException;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -45,7 +45,7 @@ public class CountryServiceTest extends TestJPAConfig {
         assertFalse(service.findAll().contains(country));
     }
 
-    @Test(expected = HibernateException.class)
+    @Test(expected = PersistenceException.class)
     public void exceptionTest() {
         country.setId(null);
         service.saveCountry(country);
@@ -58,5 +58,5 @@ public class CountryServiceTest extends TestJPAConfig {
         service.saveCountry(country);
         service.findAll();
     }
-    
+
 }

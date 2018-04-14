@@ -1,6 +1,9 @@
 package com.redlongcitywork.easytourlite.dao;
 
+import com.redlongcitywork.easytourlite.convertor.SearchConvertor;
+import com.redlongcitywork.easytourlite.model.Hotel_Rating;
 import com.redlongcitywork.easytourlite.model.SearchingRequest;
+import java.util.Collection;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
@@ -26,9 +29,6 @@ public class SearchingRequestDaoImpl extends AbstractDao<Integer, SearchingReque
                 Hibernate.initialize(request.getCity());
                 Hibernate.initialize(request.getCountry());
                 Hibernate.initialize(request.getCurrency());
-                Hibernate.initialize(request.getMealTypes());
-                Hibernate.initialize(request.getRatingSet());
-                Hibernate.initialize(request.getRegions());
             }
         }
         return list;
@@ -41,9 +41,6 @@ public class SearchingRequestDaoImpl extends AbstractDao<Integer, SearchingReque
             Hibernate.initialize(request.getCity());
             Hibernate.initialize(request.getCountry());
             Hibernate.initialize(request.getCurrency());
-            Hibernate.initialize(request.getMealTypes());
-            Hibernate.initialize(request.getRatingSet());
-            Hibernate.initialize(request.getRegions());
         }
         return request;
     }
@@ -81,12 +78,8 @@ public class SearchingRequestDaoImpl extends AbstractDao<Integer, SearchingReque
                 Hibernate.initialize(result.getCity());
                 Hibernate.initialize(result.getCountry());
                 Hibernate.initialize(result.getCurrency());
-                Hibernate.initialize(result.getMealTypes());
-                Hibernate.initialize(result.getRatingSet());
-                Hibernate.initialize(result.getRegions());
             }
         }
         return result;
     }
-
 }

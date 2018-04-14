@@ -28,6 +28,10 @@ public class Region {
     public Region() {
     }
 
+    public Region(String Id) {
+        this.Id = Id;
+    }
+    
     public Region(String Id, String name) {
         this.Id = Id;
         this.name = name;

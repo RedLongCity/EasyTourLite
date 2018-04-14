@@ -8,6 +8,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -17,6 +18,9 @@ import org.springframework.stereotype.Repository;
 @Repository("tourAdvancedDao")
 public class TourAdvancedDaoImpl extends AbstractDao<String, TourAdvanced>
         implements TourAdvancedDao {
+
+    @Autowired
+    private SearchConvertor convertor;
 
     @Override
     public List<TourAdvanced> findAll() {
@@ -110,7 +114,7 @@ public class TourAdvancedDaoImpl extends AbstractDao<String, TourAdvanced>
         Criteria crit = createCriteria();
         List<TourAdvanced> list = null;
         if (currency != null && (priceFrom != null || priceTill != null)) {
-            SearchConvertor.addPriceCriteria(crit, priceFrom, priceTill, currency);
+            convertor.addPriceCriteria(crit, priceFrom, priceTill, currency);
             list = crit.list();
             if (list != null) {
                 for (TourAdvanced tour : list) {
@@ -139,7 +143,7 @@ public class TourAdvancedDaoImpl extends AbstractDao<String, TourAdvanced>
         Criteria crit = createCriteria();
         List<TourAdvanced> list = null;
         if (currency != null && (priceFrom != null || priceTill != null)) {
-            SearchConvertor.addPriceCriteria(crit, priceFrom, priceTill, currency);
+            convertor.addPriceCriteria(crit, priceFrom, priceTill, currency);
             if (criterions != null) {
                 for (Criterion criterion : criterions) {
                     crit.add(criterion);

@@ -2,6 +2,7 @@ package test.dao;
 
 import com.redlongcitywork.easytourlite.dao.TypeDao;
 import com.redlongcitywork.easytourlite.model.Type;
+import javax.persistence.PersistenceException;
 import javax.validation.ConstraintViolationException;
 import org.hibernate.HibernateException;
 import static org.junit.Assert.assertFalse;
@@ -45,7 +46,7 @@ public class TypeDaoTest extends TestJPAConfig {
         assertFalse(dao.findAll().contains(type));
     }
 
-    @Test(expected = HibernateException.class)
+    @Test(expected = PersistenceException.class)
     public void exceptionTest() {
         type.setId(null);
         dao.save(type);
