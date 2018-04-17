@@ -2,13 +2,12 @@ package com.redlongcitywork.easytourlite.model;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.redlongcitywork.easytourlite.json.view.TourView;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  *
- * @author redlongcity
- * 20/03/2018
+ * @author redlongcity 20/03/2018
  */
 public class TourAdvancedResponse {
 
@@ -16,7 +15,7 @@ public class TourAdvancedResponse {
     private long comeBackDelay;
 
     @JsonView(TourView.class)
-    private List<TourAdvanced> tourList;
+    private Set<TourAdvanced> tourList;
 
     @JsonView(TourView.class)
     private Object request;
@@ -24,12 +23,12 @@ public class TourAdvancedResponse {
     public TourAdvancedResponse() {
     }
 
-    public TourAdvancedResponse(long comeBackDelay, List<TourAdvanced> tourList, Object request) {
+    public TourAdvancedResponse(long comeBackDelay, Set<TourAdvanced> tourList, Object request) {
         this.comeBackDelay = comeBackDelay;
         this.tourList = tourList;
         this.request = request;
     }
-    
+
     public long getComeBackDelay() {
         return comeBackDelay;
     }
@@ -38,11 +37,11 @@ public class TourAdvancedResponse {
         this.comeBackDelay = comeBackDelay;
     }
 
-    public List<TourAdvanced> getTourList() {
+    public Set<TourAdvanced> getTourList() {
         return tourList;
     }
 
-    public void setTourList(List<TourAdvanced> tourList) {
+    public void setTourList(Set<TourAdvanced> tourList) {
         this.tourList = tourList;
     }
 

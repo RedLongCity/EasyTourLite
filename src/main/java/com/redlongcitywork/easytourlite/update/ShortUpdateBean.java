@@ -49,7 +49,7 @@ public class ShortUpdateBean implements UpdateBean {
             if (command != null) {
                 LOG.log(Level.INFO, "New ShortJob Doing");
                 command.setProcessed(true);
-                ResponseItem item = responsePull.getEmptyResponseItem();
+                ResponseItem item = responsePull.getEmptyResponseItem(command.getRequest());
                 if (item != null) {
                     ResponseItem newItem = handler.execute(command);
                     if (newItem != null) {

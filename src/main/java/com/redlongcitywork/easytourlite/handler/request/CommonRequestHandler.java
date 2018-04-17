@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  * @author redlongcity 22/03/2018
  */
 @Service
-public class CommonRequestHandler implements RequestHandler<ResponseItem, RequestCommand> {
+public class CommonRequestHandler {
 
     private final SearchRequestHandler searchHandler;
 
@@ -30,21 +30,20 @@ public class CommonRequestHandler implements RequestHandler<ResponseItem, Reques
         this.utils = utils;
     }
 
-    @Override
-    public ResponseItem execute(RequestCommand command) {
+    public ResponseItem execute(Object request) {
         ResponseItem result = null;
         Object answer = null;
-        if (command instanceof HotToursRequestCommand) {
+        if (request instanceof HotToursRequest) {
             TourResponse response
-                    = hotHandler.execute((HotToursRequest) command.getRequest());
+                    = hotHandler.execute((HotToursRequest) request);
             if (response != null && response.getComeBackDelay() == 0) {
                 answer = response;
             }
         }
 
-        if (command instanceof TourAdvancedRequestCommand) {
+        if (request instanceof TourAdvancedRequestCommand) {
             TourAdvancedResponse response
-                    = searchHandler.execute((SearchingRequest) command.getRequest());
+                    = searchHandler.execute((SearchingRequest) request);
             if (response != null && response.getComeBackDelay() == 0) {
                 answer = response;
             }
@@ -52,7 +51,7 @@ public class CommonRequestHandler implements RequestHandler<ResponseItem, Reques
 
         if (answer != null) {
             result = new ResponseItem(
-                    command.getRequest(),
+                    request,
                     answer,
                     utils.getCurrentTime(),
                     utils.getFreezeeTime(),

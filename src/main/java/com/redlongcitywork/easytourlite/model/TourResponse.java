@@ -2,14 +2,12 @@ package com.redlongcitywork.easytourlite.model;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.redlongcitywork.easytourlite.json.view.TourView;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  *
- * @author redlongcity 
- * 14/09/2017 
- * class for incapsulating ItTours Hot Search
+ * @author redlongcity 14/09/2017 class for incapsulating ItTours Hot Search
  * response to client
  */
 public class TourResponse {
@@ -18,7 +16,7 @@ public class TourResponse {
     private long comeBackDelay;
 
     @JsonView(TourView.class)
-    private List<Tour> tourList;
+    private Set<Tour> tours;
 
     @JsonView(TourView.class)
     private Object request;
@@ -27,10 +25,10 @@ public class TourResponse {
     }
 
     public TourResponse(long comeBackDelay,
-            List<Tour> tourList,
+            Set<Tour> tours,
             Object request) {
         this.comeBackDelay = comeBackDelay;
-        this.tourList = tourList;
+        this.tours = tours;
         this.request = request;
     }
 
@@ -42,12 +40,12 @@ public class TourResponse {
         this.comeBackDelay = comeBackDelay;
     }
 
-    public List<Tour> getTourList() {
-        return tourList;
+    public Set<Tour> getTours() {
+        return tours;
     }
 
-    public void setTourList(List<Tour> tourList) {
-        this.tourList = tourList;
+    public void setTours(Set<Tour> tours) {
+        this.tours = tours;
     }
 
     public Object getRequest() {
@@ -62,7 +60,7 @@ public class TourResponse {
     public int hashCode() {
         int hash = 7;
         hash = 59 * hash + Objects.hashCode(this.comeBackDelay);
-        hash = 59 * hash + Objects.hashCode(this.tourList);
+        hash = 59 * hash + Objects.hashCode(this.tours);
         hash = 59 * hash + Objects.hashCode(this.request);
         return hash;
     }
@@ -82,7 +80,7 @@ public class TourResponse {
         if (!Objects.equals(this.comeBackDelay, other.comeBackDelay)) {
             return false;
         }
-        if (!Objects.equals(this.tourList, other.tourList)) {
+        if (!Objects.equals(this.tours, other.tours)) {
             return false;
         }
         if (!Objects.equals(this.request, other.request)) {
@@ -93,7 +91,7 @@ public class TourResponse {
 
     @Override
     public String toString() {
-        return "Response{" + "comeBackDelay=" + comeBackDelay + ", tourList=" + tourList + ", request=" + request + '}';
+        return "Response{" + "comeBackDelay=" + comeBackDelay + ", tourList=" + tours + ", request=" + request + '}';
     }
 
 }

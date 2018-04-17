@@ -43,6 +43,14 @@ public class TourAdvancedSession {
                 @JoinColumn(name = "tour_key")})
     private Set<TourAdvanced> tours = new HashSet<>();
 
+    public TourAdvancedSession() {
+    }
+
+    public TourAdvancedSession(SearchingRequest request, Set<TourAdvanced> tours) {
+        this.request = request;
+        this.tours = tours;
+    }
+
     public Integer getId() {
         return id;
     }

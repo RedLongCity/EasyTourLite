@@ -3,7 +3,6 @@ package com.redlongcitywork.easytourlite.controller;
 import com.redlongcitywork.easytourlite.handler.request.SearchRequestHandler;
 import com.redlongcitywork.easytourlite.model.Country;
 import com.redlongcitywork.easytourlite.model.From_Cities;
-import com.redlongcitywork.easytourlite.model.Hotel_Rating;
 import com.redlongcitywork.easytourlite.model.SearchingRequest;
 import com.redlongcitywork.easytourlite.model.TourAdvanced;
 import com.redlongcitywork.easytourlite.model.TourAdvancedResponse;

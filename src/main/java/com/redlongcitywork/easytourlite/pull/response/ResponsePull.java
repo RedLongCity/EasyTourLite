@@ -35,7 +35,7 @@ public class ResponsePull {
             Iterator<ResponseItem> it = pull.iterator();
             while (it.hasNext()) {
                 ResponseItem item = it.next();
-                if (item.getRequest() != null && item.getRequest().equals(request)) {
+                if (!item.isImmune() && item.getRequest().equals(request)) {
                     return item;
                 }
             }
@@ -43,7 +43,7 @@ public class ResponsePull {
         return null;
     }
 
-    public ResponseItem getEmptyResponseItem() {
+    public ResponseItem getEmptyResponseItem(Object request) {
         if (pull == null) {
             pull = new CopyOnWriteArrayList<ResponseItem>();
         }
@@ -76,7 +76,7 @@ public class ResponsePull {
         }
         if (item != null) {
 //            pull.remove(item);
-//            item.setRequest(request);
+            item.setRequest(request);
             item.setImmune(true);
 //            pull.add(item);
         }

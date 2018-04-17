@@ -3,8 +3,6 @@ package com.redlongcitywork.easytourlite.model;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.redlongcitywork.easytourlite.json.view.HotToursSessionView;
 import com.redlongcitywork.easytourlite.json.view.TourView;
-import com.redlongcitywork.easytourlite.model.HotToursRequest;
-import com.redlongcitywork.easytourlite.model.Tour;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -23,9 +21,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author redlongcity 
- * 24/12/2017 
- * model for keeping info about unit of request
+ * @author redlongcity 24/12/2017 model for keeping info about unit of request
  * from client
  */
 @Entity
@@ -50,6 +46,14 @@ public class HotToursSession {
             inverseJoinColumns = {
                 @JoinColumn(name = "tours_tour_key")})
     private Set<Tour> toursSet = new HashSet<Tour>();
+
+    public HotToursSession() {
+    }
+
+    public HotToursSession(HotToursRequest request, Set<Tour> tours) {
+        this.request = request;
+        this.toursSet = tours;
+    }
 
     public Integer getId() {
         return id;

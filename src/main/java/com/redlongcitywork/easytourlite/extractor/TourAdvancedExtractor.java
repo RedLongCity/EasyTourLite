@@ -7,7 +7,7 @@ import com.redlongcitywork.easytourlite.model.SearchingRequest;
 import com.redlongcitywork.easytourlite.model.TourAdvanced;
 import com.redlongcitywork.easytourlite.parsers.TourAdvancedArrayNodeParser;
 import com.redlongcitywork.easytourlite.utils.ItToursUrls;
-import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  * @author redlongcity 04/03/2018
  */
 @Service
-public class TourAdvancedExtractor implements Extractor<List<TourAdvanced>, SearchingRequest>, ItToursUrls {
+public class TourAdvancedExtractor implements Extractor<Set<TourAdvanced>, SearchingRequest>, ItToursUrls {
 
     private static final Logger LOG = Logger.getLogger(TourAdvancedExtractor.class.getName());
 
@@ -33,8 +33,8 @@ public class TourAdvancedExtractor implements Extractor<List<TourAdvanced>, Sear
     }
 
     @Override
-    public List<TourAdvanced> extract(SearchingRequest request) {
-        List<TourAdvanced> result = null;
+    public Set<TourAdvanced> extract(SearchingRequest request) {
+        Set<TourAdvanced> result = null;
         JsonNode node = service.getJsonNodeFromUrl(convertor.getURLByRequest(request));
         if (node != null) {
             result = parser.parseNode(node);
