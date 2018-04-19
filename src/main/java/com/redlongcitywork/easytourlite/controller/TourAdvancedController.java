@@ -7,8 +7,8 @@ import com.redlongcitywork.easytourlite.model.SearchingRequest;
 import com.redlongcitywork.easytourlite.model.TourAdvanced;
 import com.redlongcitywork.easytourlite.model.TourAdvancedResponse;
 import com.redlongcitywork.easytourlite.service.TourAdvancedService;
+import com.redlongcitywork.easytourlite.utils.TimeUtils;
 import java.sql.Date;
-import java.util.Calendar;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +32,9 @@ public class TourAdvancedController {
     @Autowired
     private TourAdvancedService service;
 
+    @Autowired
+    private TimeUtils timeUtils;
+
     @RequestMapping(value = "/tour", method = RequestMethod.GET)
     public ResponseEntity<List<TourAdvanced>> getAllTourAdvanceds() {
         List<TourAdvanced> tourList = service.findAll();
@@ -47,45 +50,49 @@ public class TourAdvancedController {
         if (request == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        if (request.getCountry() == null) {
-            request.setCountry(new Country("338"));
-        }
-
-        if (request.getCity() == null) {
-            request.setCity(new From_Cities("2014"));
-        }
-
-        if (request.getRatings() == null) {
-            request.setRatings("78:5");
-        }
-
-        if (request.getAdultAmount() == null) {
-            request.setAdultAmount(2);
-        }
-
-        if (request.getNightFrom() == null) {
-            request.setNightFrom(2);
-        }
-
-        if (request.getNightTill() == null) {
-            request.setNightTill(7);
-        }
-
-        if (request.getDateFrom() == null) {
-            request.setDateFrom(new Date(System.currentTimeMillis()));
-        }
-
-        if (request.getDateTill() == null) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.DAY_OF_MONTH, 7);
-            request.setDateTill((Date) calendar.getTime());
-        }
-
-        TourAdvancedResponse answer = handler.execute(request);
+        populateRequest(request);
+        TourAdvancedResponse answer = handler.handle(request);
         if (answer == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(answer, HttpStatus.OK);
+    }
+
+    private SearchingRequest populateRequest(SearchingRequest request) {
+        if (request != null) {
+            if (request.getCountry() == null) {
+                request.setCountry(new Country("338", "Египет"));
+            }
+
+            if (request.getCity() == null) {
+                request.setCity(new From_Cities("2014", "Киев"));
+            }
+
+            if (request.getRatings() == null) {
+                request.setRatings("3:78");
+            }
+
+            if (request.getAdultAmount() == null) {
+                request.setAdultAmount(2);
+            }
+
+            if (request.getNightFrom() == null) {
+                request.setNightFrom(2);
+            }
+
+            if (request.getNightTill() == null) {
+                request.setNightTill(2);
+            }
+
+            if (request.getDateFrom() == null) {
+                request.setDateFrom(new Date(timeUtils.getCurrentTime().getTime()));
+            }
+
+            if (request.getDateFrom() == null) {
+                request.setDateTill(new Date(timeUtils.getTimeAfterWeek().getTime()));
+            }
+        }
+        return request;
     }
 
 }

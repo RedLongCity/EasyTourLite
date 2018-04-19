@@ -63,7 +63,7 @@ public class TourController {
             request.setNight_Till(7);
         }
 
-        TourResponse answer = handler.execute(request);
+        TourResponse answer = handler.handle(request);
         if (answer == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

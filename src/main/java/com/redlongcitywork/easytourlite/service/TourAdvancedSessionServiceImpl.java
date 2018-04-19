@@ -6,12 +6,14 @@ import com.redlongcitywork.easytourlite.model.TourAdvancedSession;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author redlongcity 23/03/2018
  */
 @Service("tourAdvancedSessionService")
+@Transactional
 public class TourAdvancedSessionServiceImpl implements TourAdvancedSessionService {
     
     @Autowired

@@ -73,21 +73,21 @@ public class SearchRequestHandler implements RequestHandler<SearchingRequest, To
             Set<TourAdvanced> tours = extractor.extract(request);
             if (tours != null) {
                 result = new TourAdvancedResponse(0, tours, request);
-                SearchingRequest entity = (SearchingRequest) requestService
-                        .findByCriterions(convertor.getRequestCriterions(request));
-                if (entity != null) {
-                    TourAdvancedSession session = sessionService.findByRequest(entity);
-                    session.setTours(tours);
-                    sessionService.updateTourAdvancedSession(session);
-                    request.setRequestTime(utils.getCurrentTime());
-                    requestService.updateSearchingRequest(request);
-
-                } else {
-                    request.setRequestTime(utils.getCurrentTime());
-                    TourAdvancedSession session = new TourAdvancedSession(request, tours);
-                    requestService.saveOrUpdateSearchingRequest(request);
-                    sessionService.saveOrUpdateTourAdvancedSession(session);
-                }
+//                SearchingRequest entity = (SearchingRequest) requestService
+//                        .findByCriterions(convertor.getRequestCriterions(request));
+//                if (entity != null) {
+//                    TourAdvancedSession session = sessionService.findByRequest(entity);
+//                    session.setTours(tours);
+//                    sessionService.updateTourAdvancedSession(session);
+//                    request.setRequestTime(utils.getCurrentTime());
+//                    requestService.updateSearchingRequest(request);
+//
+//                } else {
+//                    request.setRequestTime(utils.getCurrentTime());
+//                    TourAdvancedSession session = new TourAdvancedSession(request, tours);
+//                    requestService.saveOrUpdateSearchingRequest(request);
+//                    sessionService.saveOrUpdateTourAdvancedSession(session);
+//                }
             }
         }
         return result;

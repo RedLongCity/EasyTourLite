@@ -42,7 +42,7 @@ public class TestHttpService implements HttpService {
             length = searchHotels.length;
         }
         if (contains(url, searchTours) && length < searchTours.length) {
-            result = getJsonFromFile("json/extractor_advanced.json");
+            result = getJsonFromFile("json/extractor_advanced.json").path("offers");
             length = searchTours.length;
         }
         if (contains(url, hotFilters) && length < hotFilters.length) {

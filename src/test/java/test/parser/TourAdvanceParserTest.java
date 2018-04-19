@@ -19,7 +19,8 @@ import com.redlongcitywork.easytourlite.storage.TypeStorage;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -135,7 +136,7 @@ public class TourAdvanceParserTest extends TestJsonConfig {
         tour.setTransportType("flight");
         tour.setRate("2.3");
         tour.setReviewCount("12");
-        List<TourAdvanced> list = new ArrayList<>();
+        Set<TourAdvanced> list = new HashSet<>();
         list.add(tour);
         assertTrue(arrayParser.parseNode(node).equals(list));
     }

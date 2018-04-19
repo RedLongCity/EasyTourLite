@@ -8,7 +8,7 @@ import com.redlongcitywork.easytourlite.model.TourAdvancedSession;
 import com.redlongcitywork.easytourlite.service.SearchingRequestService;
 import com.redlongcitywork.easytourlite.service.TourAdvancedSessionService;
 import com.redlongcitywork.easytourlite.utils.TimeUtils;
-import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 import org.springframework.stereotype.Service;
 
@@ -45,16 +45,15 @@ public class TourAdvancedSaver implements Saver {
             TourAdvancedSession session = null;
             if (entity == null) {
                 request.setRequestTime(utils.getCurrentTime());
-                requestService.saveSearchingRequest(request);
-                session = new TourAdvancedSession();
-                session.setRequest(request);
-                session.getTours().addAll((List<TourAdvanced>) item.getAnswer());
+                requestService.saveOrUpdateSearchingRequest(request);
+                session = new TourAdvancedSession(
+                        request,
+                        (Set<TourAdvanced>) item.getAnswer());
                 sessionService.saveTourAdvancedSession(session);
             } else {
                 session = sessionService.findByRequest(entity);
                 if (session != null) {
-                    session.getTours().clear();
-                    session.getTours().addAll((List<TourAdvanced>) item.getAnswer());
+                    session.setTours((Set<TourAdvanced>) item.getAnswer());
                     sessionService.updateTourAdvancedSession(session);
                     entity.setRequestTime(utils.getCurrentTime());
                     requestService.updateSearchingRequest(entity);

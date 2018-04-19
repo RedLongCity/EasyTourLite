@@ -43,4 +43,8 @@ public class TimeUtils {
         );
     }
 
+    public Timestamp getTimeAfterWeek() {
+        return new Timestamp(getCurrentTime().getTime() + 7 * 24 * 3600 * 1000);
+    }
+
 }

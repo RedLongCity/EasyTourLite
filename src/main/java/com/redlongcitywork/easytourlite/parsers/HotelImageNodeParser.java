@@ -17,15 +17,15 @@ public class HotelImageNodeParser implements NodeParser<Hotel_Image> {
 
     @Override
     public Hotel_Image parseNode(JsonNode jsonNode) {
-        if (jsonNode.isMissingNode()) {
+        if (jsonNode != null && jsonNode.isMissingNode()) {
             LOG.log(Level.WARNING, "Hotel_ImageNode: countriesNode is missing");
             return null;
         }
 
         Hotel_Image image = new Hotel_Image();
 
-        if (jsonNode.has("full:")) {
-            image.setFull(jsonNode.path("full:").asText());
+        if (jsonNode.has("full")) {
+            image.setFull(jsonNode.path("full").asText());
         }
 
         if (jsonNode.has("thumb")) {

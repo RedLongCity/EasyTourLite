@@ -30,20 +30,23 @@ public class CommonRequestHandler {
         this.utils = utils;
     }
 
-    public ResponseItem execute(Object request) {
+    public ResponseItem execute(Object command) {
         ResponseItem result = null;
         Object answer = null;
-        if (request instanceof HotToursRequest) {
-            TourResponse response
-                    = hotHandler.execute((HotToursRequest) request);
+        if (command instanceof HotToursRequestCommand) {
+            TourResponse response = hotHandler
+                    .execute((HotToursRequest) ((HotToursRequestCommand) command).
+                            getRequest());
             if (response != null && response.getComeBackDelay() == 0) {
                 answer = response;
             }
         }
 
-        if (request instanceof TourAdvancedRequestCommand) {
+        if (command instanceof TourAdvancedRequestCommand) {
             TourAdvancedResponse response
-                    = searchHandler.execute((SearchingRequest) request);
+                    = searchHandler
+                            .execute((SearchingRequest) ((TourAdvancedRequestCommand) command).
+                                    getRequest());
             if (response != null && response.getComeBackDelay() == 0) {
                 answer = response;
             }
@@ -51,7 +54,7 @@ public class CommonRequestHandler {
 
         if (answer != null) {
             result = new ResponseItem(
-                    request,
+                    ((RequestCommand) command).getRequest(),
                     answer,
                     utils.getCurrentTime(),
                     utils.getFreezeeTime(),

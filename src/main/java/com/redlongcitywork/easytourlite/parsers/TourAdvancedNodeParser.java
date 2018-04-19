@@ -59,7 +59,7 @@ public class TourAdvancedNodeParser implements NodeParser<TourAdvanced> {
 
     @Override
     public TourAdvanced parseNode(JsonNode jsonNode) {
-        if (jsonNode.isMissingNode()) {
+        if (jsonNode != null && jsonNode.isMissingNode()) {
             LOG.log(Level.WARNING, "TourAdvancedNode: node is missing");
             return null;
         }
@@ -68,6 +68,12 @@ public class TourAdvancedNodeParser implements NodeParser<TourAdvanced> {
 
         if (jsonNode.has("key")) {
             tour.setKey(jsonNode.path("key").asText());
+        }
+        
+        if(jsonNode.has("type")){
+            tour.setType(typeStorage
+                    .findById(jsonNode.path("type")
+                            .asText()));
         }
 
         if (jsonNode.has("country")) {
@@ -134,7 +140,7 @@ public class TourAdvancedNodeParser implements NodeParser<TourAdvanced> {
 
         if (jsonNode.has("currency_id")) {
             tour.setCurrency(currencyStorage
-                    .findByName(jsonNode.path("currency_id")
+                    .findById(jsonNode.path("currency_id")
                             .asText()));
         }
 
@@ -151,7 +157,7 @@ public class TourAdvancedNodeParser implements NodeParser<TourAdvanced> {
 
         if (jsonNode.has("from_city")) {
             tour.setCity(cityStorage
-                    .findById(jsonNode.path("from_city")
+                    .findByName(jsonNode.path("from_city")
                             .asText()));
         }
 

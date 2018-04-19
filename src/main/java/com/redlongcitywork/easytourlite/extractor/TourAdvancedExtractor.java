@@ -35,7 +35,9 @@ public class TourAdvancedExtractor implements Extractor<Set<TourAdvanced>, Searc
     @Override
     public Set<TourAdvanced> extract(SearchingRequest request) {
         Set<TourAdvanced> result = null;
-        JsonNode node = service.getJsonNodeFromUrl(convertor.getURLByRequest(request));
+        JsonNode node = service.getJsonNodeFromUrl(
+                api_base_url + api_search_by_keys
+                + convertor.getURLByRequest(request));
         if (node != null) {
             result = parser.parseNode(node);
         }

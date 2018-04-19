@@ -23,7 +23,7 @@ public class FacilityArrayNodeParser implements NodeParser<List<Facility>> {
 
     @Override
     public List<Facility> parseNode(JsonNode arrayNode) {
-        if (arrayNode.isMissingNode()) {
+        if (arrayNode != null && arrayNode.isMissingNode()) {
             LOG.log(Level.WARNING, "FacilityNode: arrayNode is missing");
             return null;
         }
