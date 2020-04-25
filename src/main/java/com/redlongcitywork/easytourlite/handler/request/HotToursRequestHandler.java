@@ -73,21 +73,21 @@ public class HotToursRequestHandler implements RequestHandler<HotToursRequest, T
             Set<Tour> tours = extractor.extract(request);
             if (tours != null) {
                 result = new TourResponse(0, tours, request);
-                HotToursRequest entity = (HotToursRequest) requestService
-                        .findByFields((request));
-                if (entity != null) {
-                    HotToursSession session = sessionService.findByRequest(entity);
-                    session.setToursSet(tours);
-                    sessionService.updateHotToursSession(session);
-                    request.setRequestTime(utils.getCurrentTime());
-                    requestService.updateHotToursRequest(request);
-
-                } else {
-                    request.setRequestTime(utils.getCurrentTime());
-                    HotToursSession session = new HotToursSession(request, tours);
-                    requestService.saveOrUpdateHotToursRequest(request);
-                    sessionService.saveOrUpdateHotToursSession(session);
-                }
+//                HotToursRequest entity = (HotToursRequest) requestService todo only for test
+//                        .findByFields((request));
+//                if (entity != null) {
+//                    HotToursSession session = sessionService.findByRequest(entity);
+//                    session.setToursSet(tours);
+//                    sessionService.updateHotToursSession(session);
+//                    request.setRequestTime(utils.getCurrentTime());
+//                    requestService.updateHotToursRequest(request);
+//
+//                } else {
+//                    request.setRequestTime(utils.getCurrentTime());
+//                    HotToursSession session = new HotToursSession(request, tours);
+//                    requestService.saveOrUpdateHotToursRequest(request);
+//                    sessionService.saveOrUpdateHotToursSession(session);
+//                } todo only for test
             }
         }
         return result;
@@ -96,11 +96,14 @@ public class HotToursRequestHandler implements RequestHandler<HotToursRequest, T
     @Override
     public TourResponse handle(HotToursRequest request) {
         ResponseItem item = responsePull.getResponse(request);
-        if (item != null && item.isImmune()) {
-            return new TourResponse(0, (Set<Tour>) item.getAnswer(), request);
+        if (item != null
+//                && item.isImmune() todo only for test
+        ) {
+            return new TourResponse(0, ((TourResponse) item.getAnswer()).getTours(), request);
         }
-        HotToursRequest entity = (HotToursRequest) requestService
-                .findByFields(request);
+        HotToursRequest entity = null;
+//        HotToursRequest entity = (HotToursRequest) requestService todo only for test
+//                .findByFields(request);
         if (entity != null) {
             if (entity.getRequestTime().after(utils.getRevelanceTime())) {
                 List<Tour> list = tourService.findByCriterions(

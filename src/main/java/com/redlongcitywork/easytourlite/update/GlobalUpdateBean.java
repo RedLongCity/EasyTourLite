@@ -41,8 +41,8 @@ public class GlobalUpdateBean implements UpdateBean {
         constants.setGlobalSuspended(false);
 
         hotMiner.mine();
-        searchMiner.mine();
-        filterParamsMiner.mine();
+//        searchMiner.mine();
+//        filterParamsMiner.mine();
     }
     
     @PostConstruct

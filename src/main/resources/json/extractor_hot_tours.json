@@ -23,20 +23,205 @@
             "currency_id": 1,
             "currency_symbol": "$",
             "prices": {
+                "1": 234,
+                "2": 6789,
+                "10": 345
+            },
+            "price_fall": 400,
+            "price_fall_percent": -6.25,
+            "from_city_id": 1212,
+            "from_city": "Запорожье",
+            "from_city_gen": "Запорожья",
+            "transport_type": "flight",
+            "hotel_images": [
+                {
+                    "full": "http://ittour.com.ua/images/hotel_image/1/7/9/1/5/file_name/17915.jpg",
+                    "thumb": "http://ittour.com.ua/images/hotel_image_thumb/1/7/9/1/5/file_name/17915.jpg"
+                }
+            ]
+        },        {
+            "key": "05-02-c1ab57906607ca7972e75fa3c1f8d5e3",
+            "type": 1,
+            "country_id": 318,
+            "country": "Турция",
+            "region": "Кемер",
+            "hotel_id": 24360,
+            "hotel": "Kemer Paradise",
+            "hotel_rating": "4",
+            "meal_type": "AI",
+            "meal_type_full": "Всё включено",
+            "room_type": "Dbl (Standard)",
+            "adult_amount": 2,
+            "child_amount": 0,
+            "accomodation": "DBL",
+            "duration": 8,
+            "date_from": "2017-05-06",
+            "date_from_unix": 1494018000,
+            "currency_id": 1,
+            "currency_symbol": "$",
+            "prices": {
+                "1": 456,
+                "2": 7890,
+                "10": 567
+            },
+            "price_fall": 400,
+            "price_fall_percent": -6.25,
+            "from_city_id": 1212,
+            "from_city": "Запорожье",
+            "from_city_gen": "Запорожья",
+            "transport_type": "flight",
+            "hotel_images": [
+                {
+                    "full": "https://www.ittour.com.ua/images/itt_country_image_rotation/5/3/3/file_name/1.jpg",
+                    "thumb": "https://www.ittour.com.ua/images/itt_country_image_rotation/5/3/3/file_name/1.jpg"
+                }
+            ]
+        },        {
+            "key": "05-02-c1ab57906607ca7972e75fa3c1f8d5e4",
+            "type": 1,
+            "country_id": 318,
+            "country": "Турция",
+            "region": "Аланья",
+            "hotel_id": 24360,
+            "hotel": "Kemer Paradise",
+            "hotel_rating": "5",
+            "meal_type": "AI",
+            "meal_type_full": "Всё включено",
+            "room_type": "Dbl (Standard)",
+            "adult_amount": 2,
+            "child_amount": 0,
+            "accomodation": "DBL",
+            "duration": 9,
+            "date_from": "2017-05-06",
+            "date_from_unix": 1494018000,
+            "currency_id": 1,
+            "currency_symbol": "$",
+            "prices": {
+                "1": 678,
+                "2": 15678,
+                "10": 789
+            },
+            "price_fall": 400,
+            "price_fall_percent": -6.25,
+            "from_city_id": 1212,
+            "from_city": "Запорожье",
+            "from_city_gen": "Запорожья",
+            "transport_type": "flight",
+            "hotel_images": [
+                {
+                    "full": "https://www.ittour.com.ua/images/itt_country_image_rotation/5/3/4/file_name/2.jpg",
+                    "thumb": "https://www.ittour.com.ua/images/itt_country_image_rotation/5/3/4/file_name/2.jpg"
+                }
+            ]
+        },        {
+            "key": "05-02-c1ab57906607ca7972e75fa3c1f8d5e5",
+            "type": 1,
+            "country_id": 318,
+            "country": "Турция",
+            "region": "Кемер",
+            "hotel_id": 24360,
+            "hotel": "Kemer Paradise",
+            "hotel_rating": "3",
+            "meal_type": "AI",
+            "meal_type_full": "Всё включено",
+            "room_type": "Dbl (Standard)",
+            "adult_amount": 2,
+            "child_amount": 0,
+            "accomodation": "DBL",
+            "duration": 5,
+            "date_from": "2017-05-06",
+            "date_from_unix": 1494018000,
+            "currency_id": 1,
+            "currency_symbol": "$",
+            "prices": {
+                "1": 123,
+                "2": 9712,
+                "10": 234
+            },
+            "price_fall": 400,
+            "price_fall_percent": -6.25,
+            "from_city_id": 1212,
+            "from_city": "Запорожье",
+            "from_city_gen": "Запорожья",
+            "transport_type": "flight",
+            "hotel_images": [
+                {
+                    "full": "https://www.ittour.com.ua/images/itt_country_image_rotation/5/3/6/file_name/4.png",
+                    "thumb": "https://www.ittour.com.ua/images/itt_country_image_rotation/5/3/6/file_name/4.png"
+                }
+            ]
+        },        {
+            "key": "05-02-c1ab57906607ca7972e75fa3c1f8d5e6",
+            "type": 1,
+            "country_id": 318,
+            "country": "Турция",
+            "region": "Кемер",
+            "hotel_id": 24360,
+            "hotel": "Kemer Paradise",
+            "hotel_rating": "3",
+            "meal_type": "AI",
+            "meal_type_full": "Всё включено",
+            "room_type": "Dbl (Standard)",
+            "adult_amount": 2,
+            "child_amount": 0,
+            "accomodation": "DBL",
+            "duration": 7,
+            "date_from": "2017-05-06",
+            "date_from_unix": 1494018000,
+            "currency_id": 1,
+            "currency_symbol": "$",
+            "prices": {
                 "1": 375,
                 "2": 9712,
                 "10": 337
             },
             "price_fall": 400,
             "price_fall_percent": -6.25,
-            "from_city_id": 2014,
-            "from_city": "Киев",
-            "from_city_gen": "Киева",
+            "from_city_id": 1212,
+            "from_city": "Запорожье",
+            "from_city_gen": "Запорожья",
             "transport_type": "flight",
             "hotel_images": [
                 {
-                    "full": "http://ittour.com.ua/images/hotel_image/1/7/9/1/5/file_name/17915.jpg",
-                    "thumb": "http://ittour.com.ua/images/hotel_image_thumb/1/7/9/1/5/file_name/17915.jpg"
+                    "full": "https://www.ittour.com.ua/images/itt_country_image_rotation/5/3/7/file_name/5.jpg",
+                    "thumb": "https://www.ittour.com.ua/images/itt_country_image_rotation/5/3/7/file_name/5.jpg"
+                }
+            ]
+        },        {
+            "key": "05-02-c1ab57906607ca7972e75fa3c1f8d5e7",
+            "type": 1,
+            "country_id": 318,
+            "country": "Турция",
+            "region": "Аланья",
+            "hotel_id": 24360,
+            "hotel": "Kemer Paradise",
+            "hotel_rating": "5",
+            "meal_type": "AI",
+            "meal_type_full": "Всё включено",
+            "room_type": "Dbl (Standard)",
+            "adult_amount": 2,
+            "child_amount": 0,
+            "accomodation": "DBL",
+            "duration": 7,
+            "date_from": "2017-05-06",
+            "date_from_unix": 1494018000,
+            "currency_id": 1,
+            "currency_symbol": "$",
+            "prices": {
+                "1": 987,
+                "2": 21234,
+                "10": 897
+            },
+            "price_fall": 400,
+            "price_fall_percent": -6.25,
+            "from_city_id": 1212,
+            "from_city": "Запорожье",
+            "from_city_gen": "Запорожья",
+            "transport_type": "flight",
+            "hotel_images": [
+                {
+                    "full": "https://www.ittour.com.ua/images/itt_country_image_rotation/1/0/6/0/file_name/10.jpg",
+                    "thumb": "https://www.ittour.com.ua/images/itt_country_image_rotation/1/0/6/0/file_name/10.jpg"
                 }
             ]
         }
