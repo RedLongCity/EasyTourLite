@@ -1,34 +1,96 @@
 {
-    "countries": [
-        {
-            "id": "338",
-            "name": "Египет"
-        }
-    ],
-    "from_cities": [
-        {
-            "id": "1212",
-            "name": "Запорожье",
-            "country_id": "338"
-        }
-    ],
-    "hotel_ratings": [
-        {
-            "id": "7",
-            "name": "2"
-        }
-    ],
-    "meal_types": [
-        {
-            "id": "512",
-            "name": "AI",
-            "name_full": "Все включено"
-        }
-    ],
-    "currencies": [
-        {
-            "id": "1",
-            "name": "USD"
-        }
-    ]
+  "countries": [
+    {
+      "id": "338",
+      "name": "Египет"
+    },
+    {
+      "id": "318",
+      "name": "Турция"
+    },
+    {
+      "id": "1",
+      "name": "Черногория"
+    },
+    {
+      "id": "2",
+      "name": "Болгария"
+    }
+  ],
+  "from_cities": [
+    {
+      "id": "1212",
+      "name": "Запорожье",
+      "country_id": "338"
+    },
+    {
+      "id": "1",
+      "name": "Киев",
+      "country_id": "338"
+    },
+    {
+      "id": "2",
+      "name": "Днепр",
+      "country_id": "338"
+    },
+    {
+      "id": "3",
+      "name": "Кривой Рог",
+      "country_id": "338"
+    }
+  ],
+  "hotel_ratings": [
+    {
+      "id": "7",
+      "name": "2"
+    },
+    {
+      "id": "3",
+      "name": "3"
+    },
+    {
+      "id": "4",
+      "name": "4"
+    },
+    {
+      "id": "5",
+      "name": "5"
+    }
+  ],
+  "meal_types": [
+    {
+      "id": "512",
+      "name": "AI",
+      "name_full": "Все включено"
+    },
+    {
+      "id": "1",
+      "name": "NA",
+      "name_full": "Без питания"
+    },
+    {
+      "id": "2",
+      "name": "BB",
+      "name_full": "Завтрак"
+    },
+    {
+      "id": "3",
+      "name": "FB",
+      "name_full": "Полный пансион"
+    }
+  ],
+  "currencies": [
+    {
+      "id": "1",
+      "name": "USD"
+    },
+    {
+      "id": "2",
+      "name": "UAH"
+    },
+    {
+      "id": "10",
+      "name": "EUR"
+    }
+  ]
 }

@@ -65,7 +65,7 @@ public class TourNodeParser implements NodeParser<Tour> {
 
         if (jsonNode.has("country_id")) {
             tour.setCountry(countryStorage
-                    .findByName(jsonNode.path("country_id")
+                    .findById(jsonNode.path("country_id")
                             .asText()));
         }
 

@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -27,6 +28,7 @@ import test.config.TestJPAConfig;
  * @author redlongcity 05/04/2018
  */
 @RunWith(SpringJUnit4ClassRunner.class)
+@Ignore("testWithoutDB")
 public class SearchingRequestJson extends TestJPAConfig {
 
     private SearchingRequest request;
