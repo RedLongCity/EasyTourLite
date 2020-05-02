@@ -39,6 +39,9 @@ public class TourNodeParser implements NodeParser<Tour> {
 
     private final CurrencyStorage currencyStorage;
 
+    private final List<String> currencyList = Arrays.asList("1", "2", "10");
+
+
     public TourNodeParser(CountryStorage countryStorage, CityStorage cityStorage, MealTypeStorage mealTypeStorage, HotelRatingStorage ratingStorage, CurrencyStorage currencyStorage) {
         this.countryStorage = countryStorage;
         this.cityStorage = cityStorage;
@@ -83,7 +86,7 @@ public class TourNodeParser implements NodeParser<Tour> {
 
         if (jsonNode.has("hotel_rating")) {
             tour.setHotel_Rating(ratingStorage
-                    .findByName(jsonNode.path("hotel_rating")
+                    .findById(jsonNode.path("hotel_rating")
                             .asText()));
         }
 
@@ -134,14 +137,11 @@ public class TourNodeParser implements NodeParser<Tour> {
         }
 
         if (jsonNode.has("prices")) {
-            List<String> currencyArray = Arrays.asList("1", "2", "10");
-            currencyArray.forEach((p) -> {
-                tour.getPrices()
-                        .add(new Price(
-                                currencyStorage.findById(p),
-                                jsonNode.path("prices").path("1").asInt()
-                        ));
-            });
+            currencyList.forEach((p) -> tour.getPrices()
+                    .add(new Price(
+                            currencyStorage.findById(p),
+                            jsonNode.path("prices").path(p).asInt()
+                    )));
         }
 
         if (jsonNode.has("price_old")) {
@@ -178,7 +178,6 @@ public class TourNodeParser implements NodeParser<Tour> {
                 tour.getHotel_ImageSet().add(hotel_Image);
             }
         }
-
         return tour;
     }
 }

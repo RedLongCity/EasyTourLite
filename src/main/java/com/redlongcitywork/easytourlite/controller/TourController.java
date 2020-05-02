@@ -8,11 +8,13 @@ import com.redlongcitywork.easytourlite.model.*;
 import com.redlongcitywork.easytourlite.service.TourService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
@@ -28,17 +30,16 @@ public class TourController {
 
     private final HotToursRequestHandler handler;
     private final TourService tourService;
+    private final List<String> ratings =
+            Lists.newArrayList("7", "3", "4", "5");
+    private final Comparator<Hotel_Rating> hotelRatingsComparator =
+            Comparator.comparingInt(r -> ratings.indexOf(r.getId()));
 
     public TourController(HotToursRequestHandler handler,
                           TourService tourService) {
         this.handler = handler;
         this.tourService = tourService;
     }
-
-    private final List<String> ratings =
-            Lists.newArrayList("7", "3", "4", "5");
-    private final Comparator<Hotel_Rating> hotelRatingsComparator =
-            Comparator.comparingInt(r -> ratings.indexOf(r.getId()));
 
     @JsonView(TourView.class)
     @RequestMapping(value = "/tour", method = RequestMethod.GET)
@@ -59,9 +60,9 @@ public class TourController {
         }
         if (request.getRatings() == null || request.getRatings().isEmpty()) {
             Hotel_Rating first = new Hotel_Rating();
-            first.setId("3");
+            first.setId("7");
             Hotel_Rating second = new Hotel_Rating();
-            second.setId("78");
+            second.setId("5");
             request.getRatings().add(first);
             request.getRatings().add(second);
         }
@@ -73,14 +74,18 @@ public class TourController {
         }
 
         TourResponse answer = handler.handle(request);
-        Set<Tour> filtered = answer.getTours().stream()
-                .filter(getCountryPredicate(request.getCountry()))
-                .filter(getFromCityPredicate(request.getFrom_Cities()))
-                .filter(getHotelRatingPredicate(request.getRatings()))
-                .filter(getMealTypePredicate(request.getMeal_Type()))
-                .filter(getNightFromPredicate(request.getNight_From()))
-                .filter(getNightTillPredicate(request.getNight_Till()))
-                .collect(Collectors.toSet());
+        Set<Tour> filtered;
+        if (answer.getTours() != null)
+            filtered = answer.getTours().stream()
+                    .filter(getCountryPredicate(request.getCountry()))
+                    .filter(getFromCityPredicate(request.getFrom_Cities()))
+                    .filter(getHotelRatingPredicate(request.getRatings()))
+                    .filter(getMealTypePredicate(request.getMeal_Type()))
+                    .filter(getNightFromPredicate(request.getNight_From()))
+                    .filter(getNightTillPredicate(request.getNight_Till()))
+                    .collect(Collectors.toSet());
+        else
+            filtered = Collections.emptySet();
 
         answer.setTours(filtered);
 
@@ -103,14 +108,18 @@ public class TourController {
     }
 
     private Predicate<Tour> getHotelRatingPredicate(Set<Hotel_Rating> set) {
-        Hotel_Rating low = set.stream().min(hotelRatingsComparator)
-                .orElse(new Hotel_Rating("7", "2"));
-        Hotel_Rating high = set.stream().max(hotelRatingsComparator)
-                .orElse(new Hotel_Rating("5", "5"));
-        return (tour) -> ratings.indexOf(tour.getHotel_Rating().getId())
-                >= ratings.indexOf(low.getId())
-                && ratings.indexOf(tour.getHotel_Rating().getId())
-                <= ratings.indexOf(high.getId());
+        if (CollectionUtils.isEmpty(set))
+            return (tour) -> true;
+        else {
+            Hotel_Rating low = set.stream().min(hotelRatingsComparator)
+                    .orElse(new Hotel_Rating("7", "2"));
+            Hotel_Rating high = set.stream().max(hotelRatingsComparator)
+                    .orElse(new Hotel_Rating("5", "5"));
+            return (tour) -> ratings.indexOf(tour.getHotel_Rating().getId())
+                    >= ratings.indexOf(low.getId())
+                    && ratings.indexOf(tour.getHotel_Rating().getId())
+                    <= ratings.indexOf(high.getId());
+        }
     }
 
     private Predicate<Tour> getMealTypePredicate(Meal_Type meal_type) {
