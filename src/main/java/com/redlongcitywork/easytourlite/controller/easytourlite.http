@@ -1,0 +1,14 @@
+POST http://localhost:8080/EasyTourLite/json/gettoursbyrequest/
+Accept: application/json
+Content-Type: application/json
+
+{
+  "country": {
+    "id": "1"
+  },
+  "from_Cities": {
+    "id": "1"
+  },
+  "night_From": 1,
+  "night_Till": 7
+}

@@ -2,6 +2,7 @@ package com.redlongcitywork.easytourlite.model;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.redlongcitywork.easytourlite.json.view.TourView;
+
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Objects;
@@ -20,10 +21,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
- *
  * @author redlongcity 11/12/2017 model for containing request parameters
  */
 @Entity
